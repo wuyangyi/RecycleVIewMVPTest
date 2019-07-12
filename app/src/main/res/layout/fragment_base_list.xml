@@ -7,11 +7,12 @@
         android:id="@+id/srl_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:background="#F2F1F3"/>
+            android:overScrollMode="never"/>
     </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>
+
+

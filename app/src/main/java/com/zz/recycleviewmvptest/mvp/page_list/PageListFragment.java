@@ -1,9 +1,13 @@
 package com.zz.recycleviewmvptest.mvp.page_list;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -17,9 +21,11 @@ import com.yanzhenjie.recyclerview.swipe.SwipeMenuItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 import com.yanzhenjie.recyclerview.swipe.widget.DefaultItemDecoration;
 import com.zz.recycleviewmvptest.R;
-import com.zz.recycleviewmvptest.bean.FlBean;
-import com.zz.recycleviewmvptest.mvp.BaseFragment;
+import com.zz.recycleviewmvptest.base.BaseListFragment;
+import com.zz.recycleviewmvptest.bean.FlListBean;
+import com.zz.recycleviewmvptest.base.BaseFragment;
 import com.zz.recycleviewmvptest.mvp.base_adapter.CommonAdapter;
+import com.zz.recycleviewmvptest.mvp.base_adapter.HeaderAndFooterWrapper;
 import com.zz.recycleviewmvptest.mvp.base_adapter.MultiItemTypeAdapter;
 import com.zz.recycleviewmvptest.mvp.base_adapter.ViewHolder;
 import com.zz.recycleviewmvptest.widget.CornerTransform;
@@ -28,64 +34,23 @@ import com.zz.recycleviewmvptest.widget.Utils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PageListFragment extends BaseFragment<PageListContract.Presenter> implements PageListContract.View {
+/**
+ * 实现的下拉加载
+ */
+public class PageListFragment extends BaseListFragment<PageListContract.Presenter, FlListBean.ResultsListBean> implements PageListContract.View {
     private SwipeMenuRecyclerView mRvList;
-    private List<FlBean.ResultsBean> mListData;
-    private CommonAdapter<FlBean.ResultsBean> adapter;
+    private CommonAdapter<FlListBean.ResultsListBean> mAdapter;
     @Override
     protected void initView(View rootView) {
-        mRvList = mRootView.findViewById(R.id.rv_list);
-    }
-
-    @Override
-    protected void initData() {
+        mRvList = rootView.findViewById(R.id.rv_list);
+        mSrlLayout = rootView.findViewById(R.id.srl_refresh_layout);
         mListData = new ArrayList<>();
-        mRvList.setAdapter(getAdapter());
-        if (mPresenter == null) {
-            mPresenter = new PageListPresenter(this);
+        getAdapter();
+        mHeaderAndFooterWrapper = new HeaderAndFooterWrapper(mAdapter);
+        if (isNeedLoadMore()) {
+            mHeaderAndFooterWrapper.addFootView(getFooterView());
         }
-        mPresenter.loadData();
-    }
-
-    @Override
-    protected int getBodyLayoutId() {
-        return R.layout.activity_page_list;
-    }
-
-    @Override
-    protected boolean showToolbar() {
-        return false;
-    }
-
-    @Override
-    public void sendDataSuccess(List<FlBean.ResultsBean> data) {
-        mListData.addAll(data);
-        adapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void failDeal() {
-        Toast.makeText(context, "网络加载异常", Toast.LENGTH_SHORT).show();
-    }
-
-    private RecyclerView.Adapter getAdapter() {
-        adapter = new CommonAdapter<FlBean.ResultsBean>(context, R.layout.item_list, mListData) {
-            @Override
-            protected void convert(ViewHolder holder, FlBean.ResultsBean data, int position) {
-                holder.setText(R.id.tv_content, data.get_id());
-                CornerTransform transform = new CornerTransform(mContext, Utils.dpToPixel(mContext, 5F));
-                Glide.with(context)
-                        .load(data.getUrl())
-                        .bitmapTransform(transform)
-                        .into(holder.getImageViwe(R.id.iv_head));
-
-            }
-        };
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mRvList.setLayoutManager(linearLayoutManager);
         mRvList.setItemAnimator(new DefaultItemAnimator());
-        mRvList.addItemDecoration(new DefaultItemDecoration(R.color.driver_color)); //添加item分割线--------设置分割线颜色为灰色
         //设置添加删除按钮
         mRvList.setSwipeMenuCreator(new SwipeMenuCreator() {
             @Override
@@ -101,6 +66,7 @@ public class PageListFragment extends BaseFragment<PageListContract.Presenter> i
                 swipeRightMenu.addMenuItem(deleteItem);
             }
         });
+        mRvList.addItemDecoration(new DefaultItemDecoration(getDriverColor())); //添加item分割线--------设置分割线
         //设置滑动菜单item监听
         mRvList.setSwipeMenuItemClickListener(new SwipeMenuItemClickListener() {
             @Override
@@ -113,12 +79,78 @@ public class PageListFragment extends BaseFragment<PageListContract.Presenter> i
 
                 if (direction == SwipeMenuRecyclerView.RIGHT_DIRECTION) {
                     mListData.remove(adapterPosition);//删除item
-                    adapter.notifyDataSetChanged();
+                    mAdapter.notifyDataSetChanged();
                     Toast.makeText(context, "删除" + adapterPosition, Toast.LENGTH_SHORT).show();
                 }
             }
         });
-        adapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
+        mRvList.setAdapter(mHeaderAndFooterWrapper);
+        if (isNeedListDriver()) {
+            mRvList.addItemDecoration(new DefaultItemDecoration(getDriverColor())); //添加item分割线--------设置分割线
+        }
+        mLayoutManager = new LinearLayoutManager(context);
+        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mRvList.setLayoutManager(mLayoutManager);
+        mSrlLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() { //实现下拉加载
+//                mPage = 1;
+//                mMaxId = 0;
+                mPresenter.requestNetData(mMaxId, false, mPage);
+            }
+        });
+        mSrlLayout.setEnabled(isNeedRefresh()); //下拉刷新的开启和关闭
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
+        mListData = new ArrayList<>();
+        mRvList.setAdapter(getAdapter());
+        if (mPresenter == null) {
+            mPresenter = new PageListPresenter(this);
+        }
+        mPresenter.requestNetData(0, false, 1);
+    }
+
+    @Override
+    protected String setCenterTitle() {
+        return "福利";
+    }
+
+    @Override
+    protected int getBodyLayoutId() {
+        return R.layout.activity_page_list;
+    }
+
+    @Override
+    public void onNetSuccess(List<FlListBean.ResultsListBean> data, boolean isLoadMore) {
+        List<FlListBean.ResultsListBean> mData = data;
+        mData.addAll(mListData);
+        mListData.clear();
+        mListData.addAll(mData);
+        mMaxId = getMaxId();
+        mPage = getPage(data);
+        mAdapter.notifyDataSetChanged();
+        hideRefreshState(isLoadMore);
+    }
+
+    @SuppressLint("ResourceAsColor")
+    @Override
+    public RecyclerView.Adapter getAdapter() {
+        mAdapter = new CommonAdapter<FlListBean.ResultsListBean>(context, R.layout.item_list, mListData) {
+            @Override
+            protected void convert(ViewHolder holder, FlListBean.ResultsListBean data, int position) {
+                holder.setText(R.id.tv_content, data.get_id());
+                CornerTransform transform = new CornerTransform(mContext, Utils.dpToPixel(mContext, 5F));
+                Glide.with(context)
+                        .load(data.getUrl())
+                        .bitmapTransform(transform)
+                        .into(holder.getImageViwe(R.id.iv_head));
+
+            }
+        };
+        mAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
                 Toast.makeText(context, "点击"+position, Toast.LENGTH_SHORT).show();
@@ -129,6 +161,6 @@ public class PageListFragment extends BaseFragment<PageListContract.Presenter> i
                 return false;
             }
         });
-        return adapter;
+        return mAdapter;
     }
 }

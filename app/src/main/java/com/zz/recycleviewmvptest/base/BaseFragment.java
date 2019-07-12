@@ -1,4 +1,4 @@
-package com.zz.recycleviewmvptest.mvp;
+package com.zz.recycleviewmvptest.base;
 
 import android.app.Activity;
 import android.content.Context;
@@ -17,6 +17,10 @@ import com.zz.recycleviewmvptest.R;
 
 import org.simple.eventbus.EventBus;
 
+/**
+ * Fragment的基类
+ * @param <P>
+ */
 public abstract class BaseFragment<P extends IBasePresenter> extends Fragment implements BaseView<P>  {
     protected View mRootView;
     protected Activity mActivity;
@@ -110,6 +114,12 @@ public abstract class BaseFragment<P extends IBasePresenter> extends Fragment im
         mLlTitle.setBackgroundColor(getResources().getColor(setTitleBg()));
         mTvCenterTitle.setText(setCenterTitle());
         mTvCenterTitle.setTextColor(getResources().getColor(setCenterTitleColor()));
+        mIbLeftImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setLeftImageClickListener();
+            }
+        });
     }
 
     protected abstract void initView(View rootView);
@@ -150,7 +160,7 @@ public abstract class BaseFragment<P extends IBasePresenter> extends Fragment im
      * @return
      */
     protected int setLeftImage() {
-        return R.mipmap.ic_go_back;
+        return R.mipmap.ic_go_back_white;
     }
 
     /**
@@ -158,11 +168,11 @@ public abstract class BaseFragment<P extends IBasePresenter> extends Fragment im
      * @return
      */
     protected int setTitleBg() {
-        return R.color.white;
+        return R.color.home_bottom;
     }
 
     protected int setCenterTitleColor() {
-        return R.color.title_color;
+        return R.color.white;
     }
 
     /**
@@ -178,6 +188,13 @@ public abstract class BaseFragment<P extends IBasePresenter> extends Fragment im
      */
     protected int getToolBarLayoutId() {
         return R.layout.fragment_title;
+    }
+
+    /**
+     * 左边图片的点击事件
+     */
+    protected void setLeftImageClickListener() {
+        mActivity.finish();
     }
 
 }

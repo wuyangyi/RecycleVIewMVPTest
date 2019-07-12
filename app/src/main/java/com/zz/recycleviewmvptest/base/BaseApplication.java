@@ -1,4 +1,4 @@
-package com.zz.recycleviewmvptest.mvp;
+package com.zz.recycleviewmvptest.base;
 
 import android.app.Application;
 

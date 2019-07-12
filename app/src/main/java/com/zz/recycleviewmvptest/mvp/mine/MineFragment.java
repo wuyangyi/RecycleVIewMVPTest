@@ -3,7 +3,7 @@ package com.zz.recycleviewmvptest.mvp.mine;
 import android.view.View;
 
 import com.zz.recycleviewmvptest.R;
-import com.zz.recycleviewmvptest.mvp.BaseFragment;
+import com.zz.recycleviewmvptest.base.BaseFragment;
 
 public class MineFragment extends BaseFragment<MineContract.Presenter> implements MineContract.View {
     @Override

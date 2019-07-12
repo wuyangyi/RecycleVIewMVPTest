@@ -2,7 +2,7 @@ package com.zz.recycleviewmvptest.bean;
 
 import java.util.List;
 
-public class PageListBean {
+public class PageListListBean extends BaseListBean {
 
     /**
      * count : 10
@@ -12,7 +12,7 @@ public class PageListBean {
 
     private int count;
     private boolean error;
-    private List<ResultsBean> results;
+    private List<ResultsListBean> results;
 
     public int getCount() {
         return count;
@@ -30,15 +30,15 @@ public class PageListBean {
         this.error = error;
     }
 
-    public List<ResultsBean> getResults() {
+    public List<ResultsListBean> getResults() {
         return results;
     }
 
-    public void setResults(List<ResultsBean> results) {
+    public void setResults(List<ResultsListBean> results) {
         this.results = results;
     }
 
-    public static class ResultsBean {
+    public static class ResultsListBean extends BaseListBean {
         /**
          * desc : 还在用ListView？
          * ganhuo_id : 57334c9d67765903fb61c418

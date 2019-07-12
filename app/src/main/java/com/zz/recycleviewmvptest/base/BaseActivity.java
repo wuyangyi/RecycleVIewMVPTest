@@ -1,4 +1,4 @@
-package com.zz.recycleviewmvptest.mvp;
+package com.zz.recycleviewmvptest.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,6 +10,11 @@ import com.zz.recycleviewmvptest.R;
 
 import org.simple.eventbus.EventBus;
 
+/**
+ * Activity的基类
+ * @param <P>
+ * @param <F>
+ */
 public abstract class BaseActivity<P extends BasePresenter, F extends Fragment> extends AppCompatActivity {
     protected BaseApplication mApplication;
     protected P mPresenter;

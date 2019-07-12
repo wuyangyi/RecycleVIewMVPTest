@@ -2,7 +2,7 @@ package com.zz.recycleviewmvptest.bean;
 
 import java.util.List;
 
-public class FlBean {
+public class FlListBean extends BaseListBean {
 
     /**
      * error : false
@@ -10,7 +10,7 @@ public class FlBean {
      */
 
     private boolean error;
-    private List<ResultsBean> results;
+    private List<ResultsListBean> results;
 
     public boolean isError() {
         return error;
@@ -20,15 +20,15 @@ public class FlBean {
         this.error = error;
     }
 
-    public List<ResultsBean> getResults() {
+    public List<ResultsListBean> getResults() {
         return results;
     }
 
-    public void setResults(List<ResultsBean> results) {
+    public void setResults(List<ResultsListBean> results) {
         this.results = results;
     }
 
-    public static class ResultsBean {
+    public static class ResultsListBean extends BaseListBean {
         /**
          * _id : 5ccdbc219d212239df927a93
          * createdAt : 2019-05-04T16:21:53.523Z

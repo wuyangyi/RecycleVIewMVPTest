@@ -16,4 +16,10 @@
     <dimen name="driver_height">0.5dp</dimen>
     <!--用户头像高宽-->
     <dimen name="user_head">50dp</dimen>
+    <!--没有更多数据view高度-->
+    <dimen name="view_no_more_data_height">35dp</dimen>
+    <!--没有更多数据字体大小-->
+    <dimen name="text_no_more_data_size">12sp</dimen>
+
+
 </resources>

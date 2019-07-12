@@ -1,4 +1,4 @@
-package com.zz.recycleviewmvptest.mvp;
+package com.zz.recycleviewmvptest.base;
 
 public interface BaseView<P> {
     void setPresenter(P presenter);

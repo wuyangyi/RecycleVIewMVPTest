@@ -2,17 +2,16 @@ package com.zz.recycleviewmvptest.mvp.home;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zz.recycleviewmvptest.R;
-import com.zz.recycleviewmvptest.mvp.BaseFragment;
+import com.zz.recycleviewmvptest.base.BaseFragment;
 import com.zz.recycleviewmvptest.mvp.page_list.PageListFragment;
 import com.zz.recycleviewmvptest.mvp.mine.MineFragment;
+import com.zz.recycleviewmvptest.mvp.web_page_list.WebPageListFragment;
 import com.zz.recycleviewmvptest.widget.viewpage.NoScrollViewPager;
 
 import java.util.ArrayList;
@@ -53,7 +52,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
      */
     private void initViewPage() {
         listFragment = new ArrayList<>();
-        listFragment.add(new PageListFragment());
+        listFragment.add(new WebPageListFragment());
         listFragment.add(new MineFragment());
         mVpHome.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override

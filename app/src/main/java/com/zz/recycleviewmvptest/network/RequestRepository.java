@@ -1,7 +1,7 @@
 package com.zz.recycleviewmvptest.network;
 
-import com.zz.recycleviewmvptest.bean.FlBean;
-import com.zz.recycleviewmvptest.bean.PageListBean;
+import com.zz.recycleviewmvptest.bean.FlListBean;
+import com.zz.recycleviewmvptest.bean.PageListListBean;
 import retrofit2.Call;
 
 public class RequestRepository {
@@ -12,11 +12,11 @@ public class RequestRepository {
     }
 
 
-    public Call<PageListBean> getPageData(int limit, int pageNumber) {
+    public Call<PageListListBean> getPageData(int limit, int pageNumber) {
         return mRequestClient.getPageData(limit, pageNumber);
     }
 
-    public Call<FlBean> getFlData(int limit, int pageNumber) {
+    public Call<FlListBean> getFlData(int limit, int pageNumber) {
         return mRequestClient.getFlData(limit, pageNumber);
     }
 

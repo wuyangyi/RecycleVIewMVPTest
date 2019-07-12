@@ -1,6 +1,6 @@
 package com.zz.recycleviewmvptest.mvp.mine;
 
-import com.zz.recycleviewmvptest.mvp.BasePresenter;
+import com.zz.recycleviewmvptest.base.BasePresenter;
 import com.zz.recycleviewmvptest.network.RequestRepository;
 
 /**
@@ -13,8 +13,4 @@ public class MinePresenter extends BasePresenter<MineContract.View> implements M
         mRequestRepository = new RequestRepository();
     }
 
-    @Override
-    public void loadData() {
-
-    }
 }

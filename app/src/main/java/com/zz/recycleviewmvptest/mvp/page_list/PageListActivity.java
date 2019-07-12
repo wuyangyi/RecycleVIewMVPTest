@@ -1,6 +1,6 @@
 package com.zz.recycleviewmvptest.mvp.page_list;
 
-import com.zz.recycleviewmvptest.mvp.BaseActivity;
+import com.zz.recycleviewmvptest.base.BaseActivity;
 
 public class PageListActivity extends BaseActivity<PageListPresenter, PageListFragment> {
 

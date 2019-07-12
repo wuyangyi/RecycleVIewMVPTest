@@ -1,4 +1,4 @@
-package com.zz.recycleviewmvptest.mvp;
+package com.zz.recycleviewmvptest.base;
 
 public abstract class BasePresenter<V extends BaseView> {
     protected V mRootView;

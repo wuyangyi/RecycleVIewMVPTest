@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/home_text_size"
                 android:textColor="@color/home_bottom_text_normal"
-                android:text="首页"/>
+                android:text="好友"/>
         </LinearLayout>
         <LinearLayout
             android:id="@+id/ll_mine"
