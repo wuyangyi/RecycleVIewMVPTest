@@ -112,7 +112,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         mTvHome.setTextColor(getResources().getColor(page == PAGE_HOME ? R.color.home_bottom : R.color.home_bottom_text_normal));
         mIvMine.setImageDrawable(getResources().getDrawable(page == PAGE_MINE ? R.mipmap.ic_mine_select : R.mipmap.ic_mine));
         mTvMine.setTextColor(getResources().getColor(page == PAGE_MINE ? R.color.home_bottom : R.color.home_bottom_text_normal));
-        mVpHome.setCurrentItem(page);
+        mVpHome.setCurrentItem(page, false);
     }
 
     @Override

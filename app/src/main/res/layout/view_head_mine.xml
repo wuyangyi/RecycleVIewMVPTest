@@ -23,9 +23,4 @@
         android:textSize="@dimen/title_text_size"
         android:text="掌声"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:overScrollMode="never"/>
 </LinearLayout>
