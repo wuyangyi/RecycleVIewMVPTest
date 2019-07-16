@@ -10,11 +10,12 @@
         android:id="@+id/iv_user_head"
         android:layout_width="@dimen/user_head"
         android:layout_height="@dimen/user_head"
-        android:layout_marginTop="@dimen/user_head"
+        android:layout_marginTop="40dp"
         android:layout_gravity="center"
         app:type="round"
         android:src="@mipmap/ic_launcher"/>
     <TextView
+        android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -22,5 +23,40 @@
         android:textColor="@color/title_color"
         android:textSize="@dimen/title_text_size"
         android:text="掌声"/>
-
+    <LinearLayout
+        android:id="@+id/ll_add"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/user_head"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:layout_marginTop="10dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp">
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@mipmap/ico_add"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/title_color"
+            android:textSize="15sp"
+            android:text="添加用户"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_go_to"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"
+        android:background="@color/driver_color"/>
 </LinearLayout>

@@ -44,6 +44,7 @@
         <activity
             android:name=".mvp.page_list.PageListActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".mvp.mine.add_user.AddUserActivity" />
     </application>
 
 </manifest>

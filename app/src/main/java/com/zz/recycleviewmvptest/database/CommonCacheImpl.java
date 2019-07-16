@@ -8,13 +8,6 @@ import com.zz.recycleviewmvptest.base.BaseApplication;
 import com.zz.recycleviewmvptest.bean.DaoMaster;
 import com.zz.recycleviewmvptest.bean.DaoSession;
 
-/**
- * @author LiuChao
- * @describe
- * @date 2016/12/30
- * @contact email:450127106@qq.com
- */
-
 public abstract class CommonCacheImpl<T> implements IDataBaseOperate<T> {
     @SuppressLint("StaticFieldLeak")
     private static final UpDBHelper sUpDBHelper = new UpDBHelper(BaseApplication.getContext(), DBConfig.DB_NAME);

@@ -21,5 +21,8 @@
     <!--没有更多数据字体大小-->
     <dimen name="text_no_more_data_size">12sp</dimen>
 
+    <!--button字体大小-->
+    <dimen name="button_text_size">14sp</dimen>
+
 
 </resources>

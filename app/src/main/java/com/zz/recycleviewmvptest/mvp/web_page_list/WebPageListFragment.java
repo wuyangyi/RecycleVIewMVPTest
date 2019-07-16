@@ -71,9 +71,19 @@ public class WebPageListFragment extends BaseListFragment<WebPageListContract.Pr
         return true;
     }
 
+    @Override
+    protected boolean setUseCenterLoading() {
+        return true;
+    }
+
+    @Override
+    protected boolean setUseCenterLoadingAnimation() {
+        return true;
+    }
 
     @Override
     public void onNetSuccess(List<PageListListBean.ResultsListBean> data, boolean isLoadMore) {
         super.onNetSuccess(data, isLoadMore);
+        closeLoadingView();
     }
 }

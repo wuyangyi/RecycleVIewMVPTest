@@ -1,7 +1,9 @@
 package com.zz.recycleviewmvptest.base;
 
+import android.animation.Animator;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,12 +12,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zz.recycleviewmvptest.R;
 
 import org.simple.eventbus.EventBus;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * Fragment的基类
@@ -32,10 +37,15 @@ public abstract class BaseFragment<P extends IBasePresenter> extends Fragment im
     protected ImageButton mIbRightImage; //右边的图片按钮
     protected LinearLayout mLlTitle; //标题栏布局
 
+    /**
+     * 加载
+     */
+    protected View mCenterLoadingView;
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mActivity=activity;
+        mActivity = activity;
     }
 
     @Nullable
@@ -85,8 +95,104 @@ public abstract class BaseFragment<P extends IBasePresenter> extends Fragment im
         }
         final View bodyContainer = mLayoutInflater.inflate(getBodyLayoutId(), null);
         bodyContainer.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        linearLayout.addView(bodyContainer);
+        // 加载动画
+        if (setUseCenterLoading()) {
+            FrameLayout frameLayout = new FrameLayout(mActivity);
+            frameLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            frameLayout.addView(bodyContainer);
+
+            mCenterLoadingView = mLayoutInflater.inflate(R.layout.view_center_loading, null);
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            if (!showToolbar()) {
+                params.setMargins(0, getstatusbarAndToolbarHeight(), 0, 0);
+            }
+            mCenterLoadingView.setLayoutParams(params);
+            if (setUseCenterLoadingAnimation()) {
+                ((AnimationDrawable) ((ImageView) mCenterLoadingView.findViewById(R.id.iv_center_load)).getDrawable()).start();
+            }
+            frameLayout.addView(mCenterLoadingView);
+            linearLayout.addView(frameLayout);
+
+        } else {
+            linearLayout.addView(bodyContainer);
+        }
         return linearLayout;
+    }
+
+    /**
+     * 获取状态栏和操作栏的高度
+     *
+     * @return
+     */
+    protected int getstatusbarAndToolbarHeight() {
+        return 0;
+    }
+
+    /**
+     * @return 是否需要中心加载动画，对应
+     */
+    protected boolean setUseCenterLoadingAnimation() {
+        return true;
+    }
+
+    /**
+     * 是否开启中心加载动画
+     * @return
+     */
+    protected boolean setUseCenterLoading() {
+        return false;
+    }
+
+    /**
+     * 关闭中心放大缩小加载动画
+     */
+    protected void closeLoadingView() {
+        if (mCenterLoadingView == null) {
+            return;
+        }
+        if (mCenterLoadingView.getVisibility() == View.VISIBLE) {
+            ((AnimationDrawable) ((ImageView) mCenterLoadingView.findViewById(R.id.iv_center_load)).getDrawable()).stop();
+            mCenterLoadingView.animate().alpha(0.3f).setListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animator) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animator) {
+                    if (mCenterLoadingView != null) {
+                        mCenterLoadingView.setVisibility(View.GONE);
+                    }
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animator) {
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animator) {
+
+                }
+            });
+        }
+    }
+
+    /**
+     * 开启中心放大缩小加载动画
+     */
+    protected void showLoadingView() {
+        if (mCenterLoadingView == null) {
+            return;
+        }
+        if (mCenterLoadingView.getVisibility() == View.GONE) {
+            mCenterLoadingView.findViewById(R.id
+                    .iv_center_load).setVisibility(View.VISIBLE);
+            ((AnimationDrawable) ((ImageView) mCenterLoadingView.findViewById(R.id
+                    .iv_center_load)).getDrawable()).start();
+            mCenterLoadingView.setAlpha(1);
+            mCenterLoadingView.setVisibility(View.VISIBLE);
+        }
     }
 
     /**

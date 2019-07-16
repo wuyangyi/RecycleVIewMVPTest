@@ -5,13 +5,21 @@ import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.zz.recycleviewmvptest.R;
 import com.zz.recycleviewmvptest.base.BaseFragment;
 import com.zz.recycleviewmvptest.base.BaseListFragment;
 import com.zz.recycleviewmvptest.bean.UserInfoBean;
 import com.zz.recycleviewmvptest.mvp.base_adapter.CommonAdapter;
+import com.zz.recycleviewmvptest.mvp.base_adapter.MultiItemTypeAdapter;
 import com.zz.recycleviewmvptest.mvp.base_adapter.ViewHolder;
+
+import org.simple.eventbus.Subscriber;
+
+import java.util.List;
+
+import static com.zz.recycleviewmvptest.mvp.mine.add_user.AddUserFragment.USER_ADD_SUCCESS;
 
 public class MineFragment extends BaseListFragment<MineContract.Presenter, UserInfoBean> implements MineContract.View {
     private CommonAdapter<UserInfoBean> adapter;
@@ -31,6 +39,7 @@ public class MineFragment extends BaseListFragment<MineContract.Presenter, UserI
     protected void initData() {
         super.initData();
         mPresenter = new MinePresenter(this);
+        mineHeaderView.setPresenter((MinePresenter) mPresenter);
         mPresenter.requestNetData(0, false, 1);
     }
 
@@ -49,7 +58,24 @@ public class MineFragment extends BaseListFragment<MineContract.Presenter, UserI
                 holder.setText(R.id.tv_time, userInfoBean.getCreate_time() + "");
             }
         };
+        adapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
+                mineHeaderView.setData(mListData.get(position - mHeaderAndFooterWrapper.getHeadersCount()));
+            }
+
+            @Override
+            public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
+                return false;
+            }
+        });
         return adapter;
+    }
+
+    @Override
+    public void onNetSuccess(List<UserInfoBean> data, boolean isLoadMore) {
+        super.onNetSuccess(data, isLoadMore);
+        adapter.notifyDataSetChanged();
     }
 
     private Bitmap getBitmapForPath(String path) {
@@ -58,6 +84,13 @@ public class MineFragment extends BaseListFragment<MineContract.Presenter, UserI
         Bitmap bmpDefaultPic;
         bmpDefaultPic = BitmapFactory.decodeFile(path, null);
         return bmpDefaultPic;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mPresenter != null)
+            mPresenter.requestNetData(0, false, 1);
     }
 
     @Override
@@ -74,4 +107,17 @@ public class MineFragment extends BaseListFragment<MineContract.Presenter, UserI
     protected boolean showToolbar() {
         return false;
     }
+
+//    @Override
+//    protected boolean useEventBus() {
+//        return true;
+//    }
+
+//    @Subscriber(tag = USER_ADD_SUCCESS)
+//    public void resuleData(boolean isAdd) {
+//        if (isAdd) {
+//            mPresenter.requestNetData(0, false, 1);
+//            Toast.makeText(context, "监听", Toast.LENGTH_SHORT).show();
+//        }
+//    }
 }

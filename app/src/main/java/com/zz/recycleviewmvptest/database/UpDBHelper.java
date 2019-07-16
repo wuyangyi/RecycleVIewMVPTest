@@ -7,10 +7,7 @@ import com.zz.recycleviewmvptest.bean.UserInfoBeanDao;
 import org.greenrobot.greendao.database.Database;
 
 /**
- * @author LiuChao
  * @describe 数据库升级
- * @date 2017/2/18
- * @contact email:450127106@qq.com
  */
 
 public class UpDBHelper extends DaoMaster.OpenHelper {

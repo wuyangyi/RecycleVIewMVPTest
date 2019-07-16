@@ -13,7 +13,7 @@
     <!--标题文字颜色 -->
     <color name="title_color">#363951</color>
     <!--分割线的颜色-->
-    <color name="driver_color">#b3b3b3</color>
+    <color name="driver_color">#F2F1F3</color>
     <!--没有更多数据的文字颜色-->
     <color name="footer_no_more_data">#b3b3b3</color>
 

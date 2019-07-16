@@ -15,10 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * @author LiuChao
  * @describe 数据库升级方法
- * @date 2017/2/18
- * @contact email:450127106@qq.com
  */
 
 public class MigrationHelper {
