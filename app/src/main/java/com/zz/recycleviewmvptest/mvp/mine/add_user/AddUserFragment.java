@@ -4,15 +4,15 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zz.recycleviewmvptest.R;
 import com.zz.recycleviewmvptest.base.BaseFragment;
 import com.zz.recycleviewmvptest.bean.UserInfoBean;
 import com.zz.recycleviewmvptest.widget.AntiShakeUtils;
 import com.zz.recycleviewmvptest.widget.imageview.MLImageView;
+import com.zz.recycleviewmvptest.widget.popwindow.ActivePopWindow;
 import com.zz.recycleviewmvptest.widget.view.CurrButtonFrameLayout;
-
-import org.simple.eventbus.EventBus;
 
 public class AddUserFragment extends BaseFragment<AddUserContract.Presenter> implements AddUserContract.View  {
     public final static String USER_ADD_SUCCESS = "user_add_success";
@@ -24,6 +24,10 @@ public class AddUserFragment extends BaseFragment<AddUserContract.Presenter> imp
     private EditText mEdSchool;
     private TextView mTvSave;
     private String headPath = ""; //头像的地址
+
+    private ActivePopWindow activePopWindow; //头像选择
+    private ActivePopWindow sexActivePopWindow; //性别
+
     @Override
     protected void initView(View rootView) {
         mLlHead = rootView.findViewById(R.id.ll_head);
@@ -37,6 +41,26 @@ public class AddUserFragment extends BaseFragment<AddUserContract.Presenter> imp
     }
 
     private void initListener() {
+        mLlHead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (AntiShakeUtils.isInvalidClick(v)) { //防抖
+                    return;
+                }
+                showPopWindow();
+            }
+        });
+
+        mClSex.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (AntiShakeUtils.isInvalidClick(v)) { //防抖
+                    return;
+                }
+                showSexPopWindow();
+            }
+        });
+
         mTvSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,5 +108,73 @@ public class AddUserFragment extends BaseFragment<AddUserContract.Presenter> imp
     public void saveSuccess() {
 //        EventBus.getDefault().post(true, USER_ADD_SUCCESS);
         mActivity.finish();
+    }
+
+    private void showPopWindow() {
+        if (activePopWindow == null) {
+            activePopWindow = ActivePopWindow.builder()
+                    .item1Str("相册")
+                    .item2Str("相机")
+                    .bottomStr("取消")
+                    .isOutsideTouch(true)
+                    .isFocus(true)
+                    .with(mActivity)
+                    .bottomClickListener(new ActivePopWindow.ActionPopupWindowBottomClickListener() {
+                        @Override
+                        public void onItemClicked() {
+                            activePopWindow.hide();
+                        }
+                    })
+                    .item1ClickListener(new ActivePopWindow.ActionPopupWindowItem1ClickListener() {
+                        @Override
+                        public void onItemClicked() {
+                            Toast.makeText(context, "相册", Toast.LENGTH_SHORT).show();
+                            activePopWindow.hide();
+                        }
+                    })
+                    .item2ClickListener(new ActivePopWindow.ActionPopupWindowItem2ClickListener() {
+                        @Override
+                        public void onItemClicked() {
+                            Toast.makeText(context, "相机", Toast.LENGTH_SHORT).show();
+                            activePopWindow.hide();
+                        }
+                    })
+                    .build();
+        }
+        activePopWindow.show();
+    }
+
+    private void showSexPopWindow() {
+        if (sexActivePopWindow == null) {
+            sexActivePopWindow = ActivePopWindow.builder()
+                    .item1Str("男")
+                    .item2Str("女")
+                    .bottomStr("取消")
+                    .isOutsideTouch(true)
+                    .isFocus(true)
+                    .with(mActivity)
+                    .bottomClickListener(new ActivePopWindow.ActionPopupWindowBottomClickListener() {
+                        @Override
+                        public void onItemClicked() {
+                            sexActivePopWindow.hide();
+                        }
+                    })
+                    .item1ClickListener(new ActivePopWindow.ActionPopupWindowItem1ClickListener() {
+                        @Override
+                        public void onItemClicked() {
+                            mClSex.getmTvRight().setText("男");
+                            sexActivePopWindow.hide();
+                        }
+                    })
+                    .item2ClickListener(new ActivePopWindow.ActionPopupWindowItem2ClickListener() {
+                        @Override
+                        public void onItemClicked() {
+                            mClSex.getmTvRight().setText("女");
+                            sexActivePopWindow.hide();
+                        }
+                    })
+                    .build();
+        }
+        sexActivePopWindow.show();
     }
 }

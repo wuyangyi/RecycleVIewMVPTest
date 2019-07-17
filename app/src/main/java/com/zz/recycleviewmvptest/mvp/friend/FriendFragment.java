@@ -27,7 +27,6 @@ public class FriendFragment  extends BaseListFragment<FriendContract.Presenter, 
         super.initData();
         mPresenter = new FriendPresenter(this);
         startRefrsh();
-//        mPresenter.requestNetData(mMaxId, false, mPage);
     }
 
     @Override
@@ -39,16 +38,6 @@ public class FriendFragment  extends BaseListFragment<FriendContract.Presenter, 
     @Override
     protected void initView(View rootView) {
         super.initView(rootView);
-    }
-
-    @Override
-    protected boolean isNeedRefresh() {
-        return true;
-    }
-
-    @Override
-    protected boolean isNeedLoadMore() {
-        return true;
     }
 
     @Override
@@ -65,4 +54,15 @@ public class FriendFragment  extends BaseListFragment<FriendContract.Presenter, 
     protected int getstatusbarAndToolbarHeight() {
         return 0;
     }
+
+    @Override
+    protected boolean showToolbar() {
+        return true;
+    }
+
+    @Override
+    protected boolean isNeedListDriver() {
+        return true;
+    }
+
 }

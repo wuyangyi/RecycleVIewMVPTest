@@ -17,4 +17,7 @@
     <!--没有更多数据的文字颜色-->
     <color name="footer_no_more_data">#b3b3b3</color>
 
+    <!--popwindow分割线-->
+    <color name="general_for_line_light">#ededed</color>
+
 </resources>
