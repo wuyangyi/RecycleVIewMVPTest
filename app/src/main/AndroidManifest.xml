@@ -45,6 +45,7 @@
             android:name=".mvp.page_list.PageListActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".mvp.mine.add_user.AddUserActivity" />
+        <activity android:name=".mvp.friend.FriendActivity" />
     </application>
 
 </manifest>

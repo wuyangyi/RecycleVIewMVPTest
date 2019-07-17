@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.zz.recycleviewmvptest.R;
 import com.zz.recycleviewmvptest.bean.UserInfoBean;
+import com.zz.recycleviewmvptest.mvp.friend.FriendActivity;
 import com.zz.recycleviewmvptest.mvp.mine.add_user.AddUserActivity;
 import com.zz.recycleviewmvptest.widget.AntiShakeUtils;
 
@@ -37,6 +38,15 @@ public class MineHeaderView {
                     return;
                 }
                 context.startActivity(new Intent(context, AddUserActivity.class));
+            }
+        });
+        mIvUserHead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (AntiShakeUtils.isInvalidClick(v)) {
+                    return;
+                }
+                context.startActivity(new Intent(context, FriendActivity.class));
             }
         });
     }
