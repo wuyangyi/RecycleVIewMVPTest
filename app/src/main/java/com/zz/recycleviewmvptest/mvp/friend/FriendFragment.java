@@ -9,11 +9,12 @@ import com.zz.recycleviewmvptest.bean.FlListBean;
 
 import java.util.List;
 
-public class FriendFragment  extends BaseListFragment<FriendContract.Presenter, FlListBean.ResultsListBean> implements FriendContract.View  {
+public class FriendFragment  extends BaseListFragment<FriendContract.Presenter, FlListBean.ResultsListBean> implements FriendContract.View, FriendAdapter.DelItemClick {
     private FriendAdapter adapter;
     @Override
     protected RecyclerView.Adapter getAdapter() {
         adapter = new FriendAdapter(context, R.layout.item_qq_list, mListData);
+        adapter.setDelItemClick(this);
         return adapter;
     }
 
@@ -65,4 +66,9 @@ public class FriendFragment  extends BaseListFragment<FriendContract.Presenter, 
         return true;
     }
 
+    @Override
+    public void delItemClickListener(int position) {
+        mListData.remove(position);
+        adapter.notifyDataSetChanged();
+    }
 }

@@ -1,8 +1,12 @@
 package com.zz.recycleviewmvptest.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
 import java.util.List;
 
-public class FlListBean extends BaseListBean {
+public class FlListBean extends BaseListBean  implements Parcelable {
 
     /**
      * error : false
@@ -11,6 +15,23 @@ public class FlListBean extends BaseListBean {
 
     private boolean error;
     private List<ResultsListBean> results;
+
+    protected FlListBean(Parcel in) {
+        error = in.readByte() != 0;
+        results = in.createTypedArrayList(ResultsListBean.CREATOR);
+    }
+
+    public static final Creator<FlListBean> CREATOR = new Creator<FlListBean>() {
+        @Override
+        public FlListBean createFromParcel(Parcel in) {
+            return new FlListBean(in);
+        }
+
+        @Override
+        public FlListBean[] newArray(int size) {
+            return new FlListBean[size];
+        }
+    };
 
     public boolean isError() {
         return error;
@@ -28,7 +49,18 @@ public class FlListBean extends BaseListBean {
         this.results = results;
     }
 
-    public static class ResultsListBean extends BaseListBean {
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeByte((byte) (error ? 1 : 0));
+        dest.writeTypedList(results);
+    }
+
+    public static class ResultsListBean extends BaseListBean implements Parcelable, Serializable {
         /**
          * _id : 5ccdbc219d212239df927a93
          * createdAt : 2019-05-04T16:21:53.523Z
@@ -50,6 +82,32 @@ public class FlListBean extends BaseListBean {
         private String url;
         private boolean used;
         private String who;
+
+        public ResultsListBean() {}
+
+        protected ResultsListBean(Parcel in) {
+            _id = in.readString();
+            createdAt = in.readString();
+            desc = in.readString();
+            publishedAt = in.readString();
+            source = in.readString();
+            type = in.readString();
+            url = in.readString();
+            used = in.readByte() != 0;
+            who = in.readString();
+        }
+
+        public static final Creator<ResultsListBean> CREATOR = new Creator<ResultsListBean>() {
+            @Override
+            public ResultsListBean createFromParcel(Parcel in) {
+                return new ResultsListBean(in);
+            }
+
+            @Override
+            public ResultsListBean[] newArray(int size) {
+                return new ResultsListBean[size];
+            }
+        };
 
         public String get_id() {
             return _id;
@@ -121,6 +179,24 @@ public class FlListBean extends BaseListBean {
 
         public void setWho(String who) {
             this.who = who;
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(_id);
+            dest.writeString(createdAt);
+            dest.writeString(desc);
+            dest.writeString(publishedAt);
+            dest.writeString(source);
+            dest.writeString(type);
+            dest.writeString(url);
+            dest.writeByte((byte) (used ? 1 : 0));
+            dest.writeString(who);
         }
     }
 }

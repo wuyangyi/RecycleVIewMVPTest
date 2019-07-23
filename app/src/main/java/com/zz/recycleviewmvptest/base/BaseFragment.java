@@ -261,6 +261,10 @@ public abstract class BaseFragment<P extends IBasePresenter> extends Fragment im
         return "";
     }
 
+    protected void setCenterTitle(String title) {
+        mTvCenterTitle.setText(title);
+    }
+
     /**
      * 设置左边图片
      * @return

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="@dimen/text_no_more_data_size"
+        android:textColor="@color/footer_no_more_data"
+        android:text="09-01 09:32"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:gravity="right">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center|end"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/ico_chat_my"
+                android:textColor="@color/title_color"
+                android:textSize="@dimen/button_text_size"
+                android:gravity="center|start"
+                android:layout_marginLeft="15dp"
+                tools:text="你好啊！我叫XXX，可以交个朋友吗？可以交个朋友吗"/>
+        </LinearLayout>
+
+        <com.zz.recycleviewmvptest.widget.imageview.CircleImageView
+            android:id="@+id/iv_user_head"
+            android:layout_width="@dimen/user_head"
+            android:layout_height="@dimen/user_head"
+            app:type="round"
+            tools:src="@mipmap/ic_logo"/>
+    </LinearLayout>
+</LinearLayout>

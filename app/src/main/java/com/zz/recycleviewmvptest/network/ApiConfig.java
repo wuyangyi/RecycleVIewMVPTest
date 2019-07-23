@@ -2,6 +2,7 @@ package com.zz.recycleviewmvptest.network;
 
 public class ApiConfig {
     public static final String APP_URL = "http://gank.io/api/"; //干货训练营
+    public static final String APP_TL_URL = "http://openapi.tuling123.com/"; //图灵机器人
 
     /**
      * 有分页的数据
@@ -12,4 +13,9 @@ public class ApiConfig {
      * 福利
      */
     public static final String APP_PATH_LIST_FL = "data/福利/{limit}/{pageNumber}";
+
+    /**
+     * 图灵智能机器人
+     */
+    public static final String APP_TL_CHAT = "openapi/api/v2";
 }

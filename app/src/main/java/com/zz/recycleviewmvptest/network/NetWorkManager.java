@@ -9,6 +9,7 @@ public class NetWorkManager {
 
     private static NetWorkManager mInstance;
     private static Retrofit retrofit;
+    private static Retrofit mTlRetrofit;
     private static volatile RequestClient request = null;
 
     public static NetWorkManager getInstance() {
@@ -37,12 +38,28 @@ public class NetWorkManager {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+
+        mTlRetrofit = new Retrofit.Builder()
+                .client(client)
+                .baseUrl(ApiConfig.APP_TL_URL)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
     }
 
     public static RequestClient getRequest() {
         if (request == null) {
             synchronized (RequestClient.class) {
                 request = retrofit.create(RequestClient.class);
+            }
+        }
+        return request;
+    }
+
+    public static RequestClient getRequestTL() {
+        if (request == null) {
+            synchronized (RequestClient.class) {
+                request = mTlRetrofit.create(RequestClient.class);
             }
         }
         return request;

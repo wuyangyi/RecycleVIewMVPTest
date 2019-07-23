@@ -49,7 +49,7 @@ public class MineFragment extends BaseListFragment<MineContract.Presenter, UserI
             @Override
             protected void convert(ViewHolder holder, UserInfoBean userInfoBean, int position) {
                 if (userInfoBean.getHead() == null || userInfoBean.getHead().isEmpty()) {
-                    holder.setImageResource(R.id.iv_head, R.mipmap.ic_launcher);
+                    holder.setImageResource(R.id.iv_head, R.mipmap.ic_logo);
                 } else {
                     holder.setImageBitmap(R.id.iv_head, getBitmapForPath(userInfoBean.getHead()));
                 }

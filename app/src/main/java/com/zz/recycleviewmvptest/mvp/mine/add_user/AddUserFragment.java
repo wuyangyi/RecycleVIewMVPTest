@@ -10,6 +10,7 @@ import com.zz.recycleviewmvptest.R;
 import com.zz.recycleviewmvptest.base.BaseFragment;
 import com.zz.recycleviewmvptest.bean.UserInfoBean;
 import com.zz.recycleviewmvptest.widget.AntiShakeUtils;
+import com.zz.recycleviewmvptest.widget.Utils;
 import com.zz.recycleviewmvptest.widget.imageview.MLImageView;
 import com.zz.recycleviewmvptest.widget.popwindow.ActivePopWindow;
 import com.zz.recycleviewmvptest.widget.view.CurrButtonFrameLayout;
@@ -142,6 +143,7 @@ public class AddUserFragment extends BaseFragment<AddUserContract.Presenter> imp
                     .build();
         }
         activePopWindow.show();
+        Utils.hideSoftKeyboard(context, mEtName);
     }
 
     private void showSexPopWindow() {
@@ -176,5 +178,6 @@ public class AddUserFragment extends BaseFragment<AddUserContract.Presenter> imp
                     .build();
         }
         sexActivePopWindow.show();
+        Utils.hideSoftKeyboard(context, mEtName);
     }
 }

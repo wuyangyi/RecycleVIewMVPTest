@@ -29,7 +29,7 @@
                 android:id="@+id/iv_home"
                 android:layout_width="@dimen/home_bottom_image"
                 android:layout_height="@dimen/home_bottom_image"
-                android:src="@mipmap/ic_launcher"/>
+                android:src="@mipmap/ic_logo"/>
             <TextView
                 android:id="@+id/tv_home"
                 android:layout_width="wrap_content"
@@ -49,7 +49,7 @@
                 android:id="@+id/iv_mine"
                 android:layout_width="@dimen/home_bottom_image"
                 android:layout_height="@dimen/home_bottom_image"
-                android:src="@mipmap/ic_launcher"/>
+                android:src="@mipmap/ic_logo"/>
             <TextView
                 android:id="@+id/tv_mine"
                 android:layout_width="wrap_content"

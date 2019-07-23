@@ -26,7 +26,7 @@ android {
  * targetGenDirTest 生成的单元测试的根目录。
  */
 greendao {
-    schemaVersion 3 //update on 2019-7-12
+    schemaVersion 7 //update on 2019-7-22
     daoPackage 'com.zz.recycleviewmvptest.bean'
     targetGenDir 'src/main/java'
 }
@@ -53,4 +53,5 @@ dependencies {
 //    // butterknife
 //    implementation "com.jakewharton:butterknife:8.4.0"
 //    implementation "com.jakewharton:butterknife-compiler:8.4.0"
+    implementation "com.android.support:design:28.0.0"
 }
