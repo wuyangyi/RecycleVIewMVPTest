@@ -46,7 +46,6 @@ public class MineHeaderView {
                 if (AntiShakeUtils.isInvalidClick(v)) {
                     return;
                 }
-                context.startActivity(new Intent(context, FriendActivity.class));
             }
         });
     }

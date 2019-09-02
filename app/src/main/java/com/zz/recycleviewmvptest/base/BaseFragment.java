@@ -3,10 +3,14 @@ package com.zz.recycleviewmvptest.base;
 import android.animation.Animator;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zz.recycleviewmvptest.R;
+import com.zz.recycleviewmvptest.widget.AntiShakeUtils;
 
 import org.simple.eventbus.EventBus;
 
@@ -36,6 +41,11 @@ public abstract class BaseFragment<P extends IBasePresenter> extends Fragment im
     protected TextView mTvCenterTitle; //中间标题
     protected ImageButton mIbRightImage; //右边的图片按钮
     protected LinearLayout mLlTitle; //标题栏布局
+
+    protected static final int REQUEST_STORAGE_READ_ACCESS_PERMISSION = 101;
+    protected static final int REQUEST_STORAGE_WRITE_ACCESS_PERMISSION = 102;
+
+    private AlertDialog mAlertDialog;
 
     /**
      * 加载
@@ -215,6 +225,15 @@ public abstract class BaseFragment<P extends IBasePresenter> extends Fragment im
         } else {
             mIbRightImage.setVisibility(View.VISIBLE);
             mIbRightImage.setImageDrawable(getResources().getDrawable(setRightImage()));
+            mIbRightImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (AntiShakeUtils.isInvalidClick(v)) {
+                        return;
+                    }
+                    setRightImageClick();
+                }
+            });
         }
         //标题栏背景
         mLlTitle.setBackgroundColor(getResources().getColor(setTitleBg()));
@@ -294,6 +313,13 @@ public abstract class BaseFragment<P extends IBasePresenter> extends Fragment im
     }
 
     /**
+     * 设置右边图片点击事件
+     */
+    protected void setRightImageClick() {
+
+    }
+
+    /**
      * 获取toolbar的布局文件,如果需要返回自定义的toolbar布局，重写该方法；否则默认返回缺省的toolbar
      */
     protected int getToolBarLayoutId() {
@@ -306,5 +332,41 @@ public abstract class BaseFragment<P extends IBasePresenter> extends Fragment im
     protected void setLeftImageClickListener() {
         mActivity.finish();
     }
+
+
+    /**
+     * 申请权限
+     */
+    protected void requestPermission(final String[] permission, String rationale, final int requestCode) {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), permission[0])) {
+            showAlertDialog("提示", rationale,
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ActivityCompat.requestPermissions(getActivity(),
+                                    permission, requestCode);
+                        }
+                    }, "确定", null, "取消");
+        } else {
+            ActivityCompat.requestPermissions(getActivity(), permission, requestCode);
+        }
+    }
+
+    /**
+     * 再次确定
+     */
+    protected void showAlertDialog(@Nullable String title, @Nullable String message,
+                                   @Nullable DialogInterface.OnClickListener onPositiveButtonClickListener,
+                                   @NonNull String positiveText,
+                                   @Nullable DialogInterface.OnClickListener onNegativeButtonClickListener,
+                                   @NonNull String negativeText) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setPositiveButton(positiveText, onPositiveButtonClickListener);
+        builder.setNegativeButton(negativeText, onNegativeButtonClickListener);
+        mAlertDialog = builder.show();
+    }
+
 
 }

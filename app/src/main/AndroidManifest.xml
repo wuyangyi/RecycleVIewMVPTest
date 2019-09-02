@@ -31,9 +31,11 @@
             <!--android:name="com.google.android.actions"-->
             <!--android:resource="@xml/attrs" />-->
 
+        <!--android:clearTaskOnLaunch="false" 为true时控制点击app图标重新打开-->
         <activity
             android:name=".mvp.home.HomeActivity"
             android:launchMode="singleTop"
+            android:clearTaskOnLaunch="false"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -48,6 +50,7 @@
         <activity android:name=".mvp.friend.FriendActivity" />
         <activity android:name=".mvp.chat.ChatActivity"
             android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".mvp.crop.CropActivity" />
     </application>
 
 </manifest>

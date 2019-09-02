@@ -1,5 +1,6 @@
 package com.zz.recycleviewmvptest.mvp.home;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.zz.recycleviewmvptest.R;
 import com.zz.recycleviewmvptest.base.BaseFragment;
+import com.zz.recycleviewmvptest.mvp.friend.FriendActivity;
 import com.zz.recycleviewmvptest.mvp.page_list.PageListFragment;
 import com.zz.recycleviewmvptest.mvp.mine.MineFragment;
 import com.zz.recycleviewmvptest.mvp.web_page_list.WebPageListFragment;
@@ -70,6 +72,16 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     @Override
     protected void initData() {
 
+    }
+
+    @Override
+    protected int setRightImage() {
+        return R.mipmap.ico_message;
+    }
+
+    @Override
+    protected void setRightImageClick() {
+        context.startActivity(new Intent(context, FriendActivity.class));
     }
 
     @Override
