@@ -14,15 +14,23 @@ import com.zz.recycleviewmvptest.mvp.base_adapter.ViewHolder;
 import com.zz.recycleviewmvptest.mvp.page_list.PageListActivity;
 import com.zz.recycleviewmvptest.widget.AntiShakeUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class WebPageListFragment extends BaseListFragment<WebPageListContract.Presenter, PageListListBean.ResultsListBean> implements WebPageListContract.View {
 
     private CommonAdapter<PageListListBean.ResultsListBean> adapter;
+    private WebPageListHeader mWebPageListHeader;
 
     @Override
     protected void initView(View rootView) {
         super.initView(rootView);
+        initHeader();
+    }
+
+    private void initHeader() {
+        mWebPageListHeader = new WebPageListHeader(getContext());
+        mHeaderAndFooterWrapper.addHeaderView(mWebPageListHeader.getmWebPageListHeader());
     }
 
     @Override
@@ -32,6 +40,30 @@ public class WebPageListFragment extends BaseListFragment<WebPageListContract.Pr
             mPresenter = new WebPageListPresenter(this);
         }
         startRefrsh();
+        List<String> list = new ArrayList<>();
+        list.add("http://img0.imgtn.bdimg.com/it/u=1352823040,1166166164&fm=27&gp=0.jpg");
+        list.add("http://img3.imgtn.bdimg.com/it/u=2293177440,3125900197&fm=27&gp=0.jpg");
+        list.add("http://img3.imgtn.bdimg.com/it/u=3967183915,4078698000&fm=27&gp=0.jpg");
+        list.add("http://img0.imgtn.bdimg.com/it/u=3184221534,2238244948&fm=27&gp=0.jpg");
+        list.add("http://img4.imgtn.bdimg.com/it/u=1794621527,1964098559&fm=27&gp=0.jpg");
+        list.add("http://img4.imgtn.bdimg.com/it/u=1243617734,335916716&fm=27&gp=0.jpg");
+        mWebPageListHeader.setBannerData(list);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mWebPageListHeader != null) {
+            mWebPageListHeader.getmMZBanner().start();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mWebPageListHeader != null) {
+            mWebPageListHeader.getmMZBanner().pause();
+        }
     }
 
     @Override
