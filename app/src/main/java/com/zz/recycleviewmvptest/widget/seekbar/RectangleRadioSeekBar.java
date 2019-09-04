@@ -9,7 +9,6 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 
@@ -28,12 +27,12 @@ public class RectangleRadioSeekBar extends View {
     private int mProColor;  //颜色
     private int mProBgColor = getResources().getColor(R.color.seek_bar_color_floor); //进度条底色
     private int mProgressNow; //进度条当前进度比例
-    private int mProgressMax; //最大进度值
+    private int mProgressMax = 100; //最大进度值(不能为0)
     private boolean mNeedCircle; //是否需要圆
     private String mCenterText; //中间文字
     private String mEndText; //末尾文字
     private float mTextSize; //文字大小
-    private float mTextToSeekbarHeight; //文字距离toolbar距离
+    private float mTextToSeekBarHeight; //文字距离toolbar距离
     private int mTextColor = getResources().getColor(R.color.white);//文字颜色，默认白色
 
     private int mTextPadding = 10; //文字的padding
@@ -135,7 +134,7 @@ public class RectangleRadioSeekBar extends View {
                         mTextSize = array.getDimension(attr, 30);
                         break;
                     case R.styleable.RectangleRadioSeekBar_text_to_seekbar_height:
-                        mTextToSeekbarHeight = array.getDimension(attr, 0);
+                        mTextToSeekBarHeight = array.getDimension(attr, 0);
                         break;
                     case R.styleable.RectangleRadioSeekBar_text_color:
                         mTextColor = array.getColor(attr, getResources().getColor(R.color.white));
@@ -199,6 +198,13 @@ public class RectangleRadioSeekBar extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        if (mProgressMax == 0) { //防止除数为0
+            return;
+        }
+        //当前进度大于最大进度时，当前进度为最大进度
+        if (mProgressNow > mProgressMax) {
+            mProgressNow = mProgressMax;
+        }
 
         int width = getMeasuredWidth();
         int height = getMeasuredHeight();
@@ -224,12 +230,19 @@ public class RectangleRadioSeekBar extends View {
             //画圆
             canvas.drawCircle((width - mEndTextWidth) / 2, mProHeight, mProHeight, mPaint);
             canvas.drawCircle(width - mProHeight/2 - mEndTextWidth, mProHeight, mProHeight, mPaint);
-            //画文字背景
-            canvas.drawRoundRect(new RectF((width - mEndTextWidth) / 2 - mCenterTextWidth, mProHeight*2 + mTextToSeekbarHeight, (width - mEndTextWidth) / 2 + mCenterTextWidth, mProHeight*2 + mTextToSeekbarHeight + mTextHeight + mTextPadding), 15, 15, mPaint);
-            canvas.drawRoundRect(new RectF(width - mEndTextWidth*2, mProHeight*2 + mTextToSeekbarHeight, width,mProHeight*2 + mTextToSeekbarHeight + mTextHeight + mTextPadding), 15, 15, mPaint);
-            //画text
-            canvas.drawText(mCenterText, (width - mEndTextWidth) / 2 - getTextWidth(paint, mCenterText) / 2, mProHeight*2 + mTextToSeekbarHeight + mTextHeight - mTextPadding / 2, paint);
-            canvas.drawText(mEndText, width - getTextWidth(paint, mEndText) - mTextPadding / 2, mProHeight*2 + mTextToSeekbarHeight + mTextHeight - mTextPadding / 2, paint);
+
+            if ((float) mProgressNow / (float) mProgressMax < 0.5) {
+                //画文字背景
+                canvas.drawRoundRect(new RectF((width - mEndTextWidth) / 2 - mCenterTextWidth, mProHeight * 2 + mTextToSeekBarHeight, (width - mEndTextWidth) / 2 + mCenterTextWidth, mProHeight * 2 + mTextToSeekBarHeight + mTextHeight + mTextPadding), 15, 15, mPaint);
+                //画text
+                canvas.drawText(mCenterText, (width - mEndTextWidth) / 2 - getTextWidth(paint, mCenterText) / 2, mProHeight*2 + mTextToSeekBarHeight + mTextHeight - mTextPadding / 2, paint);
+            }
+            if ((float) mProgressNow / (float) mProgressMax < 1) {
+                //画文字背景
+                canvas.drawRoundRect(new RectF(width - mEndTextWidth * 2, mProHeight * 2 + mTextToSeekBarHeight, width, mProHeight * 2 + mTextToSeekBarHeight + mTextHeight + mTextPadding), 15, 15, mPaint);
+                //画text
+                canvas.drawText(mEndText, width - getTextWidth(paint, mEndText) - mTextPadding / 2, mProHeight * 2 + mTextToSeekBarHeight + mTextHeight - mTextPadding / 2, paint);
+            }
         }
 
         //绘制进度条的进度
@@ -238,14 +251,14 @@ public class RectangleRadioSeekBar extends View {
         if (mNeedCircle) {
             if ((float) mProgressNow / (float) mProgressMax >= 0.5) {
                 canvas.drawCircle((width - mEndTextWidth) / 2, mProHeight, mProHeight, mPaint);
-                canvas.drawRoundRect(new RectF((width - mEndTextWidth) / 2 - mCenterTextWidth, mProHeight*2 + mTextToSeekbarHeight, (width - mEndTextWidth) / 2 + mCenterTextWidth, mProHeight*2 + mTextToSeekbarHeight + mTextHeight + mTextPadding), 15, 15, mPaint);
-                canvas.drawText(mCenterText, (width - mEndTextWidth) / 2 - getTextWidth(paint, mCenterText) / 2, mProHeight*2 + mTextToSeekbarHeight + mTextHeight - mTextPadding / 2, paint);
+                canvas.drawRoundRect(new RectF((width - mEndTextWidth) / 2 - mCenterTextWidth, mProHeight*2 + mTextToSeekBarHeight, (width - mEndTextWidth) / 2 + mCenterTextWidth, mProHeight*2 + mTextToSeekBarHeight + mTextHeight + mTextPadding), 15, 15, mPaint);
+                canvas.drawText(mCenterText, (width - mEndTextWidth) / 2 - getTextWidth(paint, mCenterText) / 2, mProHeight*2 + mTextToSeekBarHeight + mTextHeight - mTextPadding / 2, paint);
 
             }
             if ((float) mProgressNow / (float) mProgressMax >= 1) {
                 canvas.drawCircle(width - mProHeight/2 - mEndTextWidth, mProHeight, mProHeight, mPaint);
-                canvas.drawRoundRect(new RectF(width - mEndTextWidth*2, mProHeight*2 + mTextToSeekbarHeight, width,mProHeight*2 + mTextToSeekbarHeight + mTextHeight + mTextPadding), 15, 15, mPaint);
-                canvas.drawText(mEndText, width - getTextWidth(paint, mEndText) - mTextPadding / 2, mProHeight*2 + mTextToSeekbarHeight + mTextHeight - mTextPadding / 2, paint);
+                canvas.drawRoundRect(new RectF(width - mEndTextWidth*2, mProHeight*2 + mTextToSeekBarHeight, width,mProHeight*2 + mTextToSeekBarHeight + mTextHeight + mTextPadding), 15, 15, mPaint);
+                canvas.drawText(mEndText, width - getTextWidth(paint, mEndText) - mTextPadding / 2, mProHeight*2 + mTextToSeekBarHeight + mTextHeight - mTextPadding / 2, paint);
             }
         }
     }

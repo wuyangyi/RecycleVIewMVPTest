@@ -35,7 +35,7 @@
         app:pro_color="@color/seek_bar_color"
         app:pro_bg_color="@color/driver_color"
         app:schedule="50"
-        app:schedule_max="100"
+        app:schedule_max="10"
         app:center_text="基础信息"
         app:end_text="教育信息"
         app:text_size="12sp"
