@@ -59,4 +59,18 @@
         </attr>
         <attr name="middle_page_cover" format="boolean"/>
     </declare-styleable>
+
+    <!--自定义进度条-->
+    <declare-styleable name="RectangleRadioSeekBar">
+        <attr name="pro_color" format="color"/> <!--进度条颜色-->
+        <attr name="pro_width" format="dimension"/> <!--进度条宽-->
+        <attr name="pro_height" format="dimension"/> <!--进度条高-->
+        <attr name="schedule" format="reference|integer"/> <!--当前进度0-100-->
+        <attr name="schedule_max" format="reference|integer"/> <!--最大进度0-100-->
+        <attr name="need_text" format="boolean"/><!--是否中点和终点需要文字和圆球-->
+        <attr name="center_text" format="reference|string"/><!--中间文字-->
+        <attr name="end_text" format="reference|string"/><!--终点文字-->
+        <attr name="text_size" format="dimension"/> <!--文字大小-->
+        <attr name="text_to_seekbar_height" format="dimension"/> <!--文字距离seekbar距离-->
+    </declare-styleable>
 </resources>

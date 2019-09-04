@@ -23,6 +23,26 @@
         android:textColor="@color/title_color"
         android:textSize="@dimen/title_text_size"
         android:text="掌声"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp">
+        <com.zz.recycleviewmvptest.widget.seekbar.RectangleRadioSeekBar
+            android:id="@+id/sb_top"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            app:need_text="true"
+            app:pro_height="6dp"
+            app:pro_color="@color/seek_bar_color"
+            app:schedule="100"
+            app:schedule_max="100"
+            app:center_text="基础信息"
+            app:end_text="教育信息"
+            app:text_size="12sp"
+            app:text_to_seekbar_height="5dp"/>
+    </RelativeLayout>
     <LinearLayout
         android:id="@+id/ll_add"
         android:layout_width="match_parent"

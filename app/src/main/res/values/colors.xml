@@ -20,4 +20,7 @@
     <!--popwindow分割线-->
     <color name="general_for_line_light">#ededed</color>
 
+    <!--进度条-->
+    <color name="seek_bar_color">#00C3D7</color>
+    <color name="seek_bar_color_floor">#F2F1F3</color>
 </resources>
