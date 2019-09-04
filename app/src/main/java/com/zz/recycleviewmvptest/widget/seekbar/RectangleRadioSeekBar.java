@@ -26,6 +26,7 @@ public class RectangleRadioSeekBar extends View {
     private int mProWidth; //进度条宽度
     private int mProHeight; //高度
     private int mProColor;  //颜色
+    private int mProBgColor = getResources().getColor(R.color.seek_bar_color_floor); //进度条底色
     private int mProgressNow; //进度条当前进度比例
     private int mProgressMax; //最大进度值
     private boolean mNeedCircle; //是否需要圆
@@ -33,6 +34,7 @@ public class RectangleRadioSeekBar extends View {
     private String mEndText; //末尾文字
     private float mTextSize; //文字大小
     private float mTextToSeekbarHeight; //文字距离toolbar距离
+    private int mTextColor = getResources().getColor(R.color.white);//文字颜色，默认白色
 
     private int mTextPadding = 10; //文字的padding
 
@@ -103,6 +105,9 @@ public class RectangleRadioSeekBar extends View {
                     case R.styleable.RectangleRadioSeekBar_pro_color:
                         mProColor = array.getColor(attr, getResources().getColor(R.color.seek_bar_color));
                         break;
+                    case R.styleable.RectangleRadioSeekBar_pro_bg_color:
+                        mProBgColor = array.getColor(attr, getResources().getColor(R.color.seek_bar_color_floor));
+                        break;
                     case R.styleable.RectangleRadioSeekBar_pro_width:
                         mProWidth = array.getDimensionPixelOffset(R.styleable.RectangleRadioSeekBar_pro_width, getContext().getResources()
                                 .getDimensionPixelOffset(R.dimen.seekBar_width));
@@ -131,6 +136,9 @@ public class RectangleRadioSeekBar extends View {
                         break;
                     case R.styleable.RectangleRadioSeekBar_text_to_seekbar_height:
                         mTextToSeekbarHeight = array.getDimension(attr, 0);
+                        break;
+                    case R.styleable.RectangleRadioSeekBar_text_color:
+                        mTextColor = array.getColor(attr, getResources().getColor(R.color.white));
                         break;
                     default:
                         break;
@@ -196,7 +204,7 @@ public class RectangleRadioSeekBar extends View {
         int height = getMeasuredHeight();
 
         Paint paint = new Paint();
-        paint.setColor(getResources().getColor(R.color.white));
+        paint.setColor(mTextColor);
         paint.setStyle(Paint.Style.FILL);
         paint.setTextSize(mTextSize);
         int mEndTextWidth = 0; //末尾文字矩形宽度的一半
@@ -209,7 +217,7 @@ public class RectangleRadioSeekBar extends View {
         }
 
         //绘制灰色底部进度条的轨迹
-        mPaint.setColor(getResources().getColor(R.color.seek_bar_color_floor));
+        mPaint.setColor(mProBgColor);
         mPaint.setStyle(Paint.Style.FILL);
         canvas.drawRoundRect(new RectF(0, mProHeight / 2, width - mEndTextWidth, mProHeight + mProHeight / 2), 10, 10, mPaint);
         if (mNeedCircle) {
