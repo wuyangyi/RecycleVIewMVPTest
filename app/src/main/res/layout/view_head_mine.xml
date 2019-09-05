@@ -30,14 +30,15 @@
         android:layout_height="40dp"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
+        android:layout_marginTop="10dp"
         app:need_text="true"
         app:pro_height="6dp"
         app:pro_color="@color/seek_bar_color"
         app:pro_bg_color="@color/driver_color"
-        app:schedule="50"
+        app:schedule="0"
         app:schedule_max="10"
-        app:center_text="基础信息"
-        app:end_text="教育信息"
+        app:center_text="好友赢家"
+        app:end_text="人际达人"
         app:text_size="12sp"
         app:text_to_seekbar_height="5dp"/>
 

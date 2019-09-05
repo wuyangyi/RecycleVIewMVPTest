@@ -16,6 +16,7 @@ import com.zz.recycleviewmvptest.mvp.chess.ChessActivity;
 import com.zz.recycleviewmvptest.mvp.friend.FriendActivity;
 import com.zz.recycleviewmvptest.mvp.mine.add_user.AddUserActivity;
 import com.zz.recycleviewmvptest.widget.AntiShakeUtils;
+import com.zz.recycleviewmvptest.widget.seekbar.RectangleRadioSeekBar;
 
 public class MineHeaderView {
     private Context context;
@@ -24,6 +25,7 @@ public class MineHeaderView {
     private ImageView mIvUserHead;
     private TextView mTvName;
     private LinearLayout mLlAdd;
+    private RectangleRadioSeekBar mSbTop;
 
     public MineHeaderView(final Context context) {
         this.context = context;
@@ -32,6 +34,7 @@ public class MineHeaderView {
         mIvUserHead = mMineHeaderView.findViewById(R.id.iv_user_head);
         mTvName = mMineHeaderView.findViewById(R.id.tv_name);
         mLlAdd = mMineHeaderView.findViewById(R.id.ll_add);
+        mSbTop = mMineHeaderView.findViewById(R.id.sb_top);
         mLlAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,6 +58,10 @@ public class MineHeaderView {
                 context.startActivity(new Intent(context, ChessActivity.class));
             }
         });
+    }
+
+    public void setSeekBar(int number) {
+        mSbTop.setProgressNow(number);
     }
 
     public View getMineHeaderView() {

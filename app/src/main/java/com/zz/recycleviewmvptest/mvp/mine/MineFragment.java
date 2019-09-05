@@ -76,8 +76,10 @@ public class MineFragment extends BaseListFragment<MineContract.Presenter, UserI
     @Override
     public void onNetSuccess(List<UserInfoBean> data, boolean isLoadMore) {
         super.onNetSuccess(data, isLoadMore);
+        mineHeaderView.setSeekBar(mListData.size());
         adapter.notifyDataSetChanged();
         mHeaderAndFooterWrapper.notifyDataSetChanged();
+
     }
 
     private Bitmap getBitmapForPath(String path) {
