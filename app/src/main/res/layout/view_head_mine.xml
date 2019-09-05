@@ -40,6 +40,33 @@
         app:end_text="教育信息"
         app:text_size="12sp"
         app:text_to_seekbar_height="5dp"/>
+
+    <LinearLayout
+        android:id="@+id/ll_chess"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/user_head"
+        android:orientation="horizontal"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:gravity="center_vertical">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_mine"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/title_color"
+            android:textSize="15sp"
+            android:text="中国象棋"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_go_to"/>
+    </LinearLayout>
     <LinearLayout
         android:id="@+id/ll_add"
         android:layout_width="match_parent"

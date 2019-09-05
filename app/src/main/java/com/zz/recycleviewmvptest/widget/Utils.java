@@ -8,6 +8,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -20,6 +21,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Utils {
     //系统相册目录
@@ -159,5 +163,51 @@ public class Utils {
             e.printStackTrace();
         }
 
+    }
+
+    /**
+     * 获取当前系统时间
+     * @return
+     */
+    public static String getNowSystemTime() {
+        Date date = new Date();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return df.format(date);
+    }
+
+    /**
+     * 获得时间差
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    public static String getDateByString(String startTime, String endTime) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String time = "";
+        try {
+            Date startDate = sdf.parse(startTime);
+            Date endDate = sdf.parse(endTime);
+            long times = endDate.getTime() - startDate.getTime();
+            int day = (int) (times / (1000 * 60 * 60 * 12));
+            times = times - day * (1000 * 60 * 60 * 12);
+            int h = (int) (times / (1000 * 60 * 60));
+            times = times - (h * 1000 * 60 * 60);
+            int m = (int) (times / (1000 * 60));
+            times = times - (h * 1000 * 60);
+            int s = (int) (times / (1000));
+            time = time + (day > 0 ? day + "日" : "");
+            time = time + (day > 0 || h > 0 ? h + "时" : "");
+            time = time + (day > 0 || h > 0 || m > 0 ? m + "分" : "");
+            time = time + s + "秒";
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Log.d("时间差", time);
+        return time;
+    }
+
+    public static int sp2px(Context context, float sp) {
+        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
+        return (int) (sp * fontScale + 0.5f);
     }
 }

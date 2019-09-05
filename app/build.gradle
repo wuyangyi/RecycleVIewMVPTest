@@ -7,8 +7,8 @@ android {
         applicationId "com.zz.recycleviewmvptest"
         minSdkVersion 15
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -26,7 +26,7 @@ android {
  * targetGenDirTest 生成的单元测试的根目录。
  */
 greendao {
-    schemaVersion 7 //update on 2019-7-22
+    schemaVersion 8 //update on 2019-7-22
     daoPackage 'com.zz.recycleviewmvptest.bean'
     targetGenDir 'src/main/java'
 }

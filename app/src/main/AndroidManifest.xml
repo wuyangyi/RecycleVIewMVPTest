@@ -51,6 +51,8 @@
         <activity android:name=".mvp.chat.ChatActivity"
             android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".mvp.crop.CropActivity" />
+        <activity android:name=".mvp.chess.ChessActivity" />
+        <activity android:name=".mvp.chess.chess_list.ChessListActivity" />
     </application>
 
 </manifest>
