@@ -10,7 +10,8 @@ public class UserInfoBean extends BaseListBean {
     public final static int MAN = 1;  //男
     public final static int WOMEN = 2; //女
     @Id(autoincrement = true)
-    private long id;
+    private Long id;
+
     private String nickname;
     private String school;
     private int age;
@@ -18,14 +19,14 @@ public class UserInfoBean extends BaseListBean {
     private String head;
     private long create_time;
 
-
-
-    public UserInfoBean() {
+    public UserInfoBean(String nickname) {
+        this.nickname = nickname;
         create_time = System.currentTimeMillis();
     }
 
-    @Generated(hash = 1411067322)
-    public UserInfoBean(long id, String nickname, String school, int age, int sex,
+
+    @Generated(hash = 508122196)
+    public UserInfoBean(Long id, String nickname, String school, int age, int sex,
             String head, long create_time) {
         this.id = id;
         this.nickname = nickname;
@@ -36,11 +37,17 @@ public class UserInfoBean extends BaseListBean {
         this.create_time = create_time;
     }
 
-    public long getId() {
+
+    @Generated(hash = 1818808915)
+    public UserInfoBean() {
+    }
+
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

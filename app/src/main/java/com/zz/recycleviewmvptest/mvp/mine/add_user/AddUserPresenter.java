@@ -13,7 +13,7 @@ public class AddUserPresenter extends BasePresenter<AddUserContract.View> implem
 
     @Override
     public void saveUser(UserInfoBean userInfoBean) {
-        mUserInfoBeanDaoImpl.saveSingleData(userInfoBean);
+        mUserInfoBeanDaoImpl.insertOrReplace(userInfoBean);
         mRootView.saveSuccess();
     }
 }

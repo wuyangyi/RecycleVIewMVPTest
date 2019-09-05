@@ -91,10 +91,9 @@ public class AddUserFragment extends BaseFragment<AddUserContract.Presenter> imp
                 if (AntiShakeUtils.isInvalidClick(v)) {
                     return;
                 }
-                UserInfoBean u = new UserInfoBean();
+                UserInfoBean u = new UserInfoBean(mEtName.getText().toString());
                 u.setHead(headPath);
-                u.setNickname(mEtName.getText().toString());
-                u.setAge(Integer.parseInt(mClAge.getText().toString()));
+                u.setAge(Integer.parseInt(mClAge.getText().toString() == null ? "0" : mClAge.getText().toString()));
                 int sex = 0;
                 if (mClSex.getmTvRight().getText().equals("男")) {
                     sex = 1;

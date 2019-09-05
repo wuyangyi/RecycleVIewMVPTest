@@ -72,4 +72,10 @@ public class UserInfoBeanDaoImpl extends CommonCacheImpl<UserInfoBean> {
         UserInfoBeanDao userInfoBeanDao = getWDaoSession().getUserInfoBeanDao();
         return userInfoBeanDao.insertOrReplace(newData);
     }
+
+    public List<UserInfoBean> getAllList() {
+        return getWDaoSession().getUserInfoBeanDao().queryBuilder()
+                .orderAsc(UserInfoBeanDao.Properties.Create_time)
+                .list();
+    }
 }

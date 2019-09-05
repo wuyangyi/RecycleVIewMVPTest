@@ -22,7 +22,7 @@ public class UserInfoBeanDao extends AbstractDao<UserInfoBean, Long> {
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
-        public final static Property Id = new Property(0, long.class, "id", true, "_id");
+        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Nickname = new Property(1, String.class, "nickname", false, "NICKNAME");
         public final static Property School = new Property(2, String.class, "school", false, "SCHOOL");
         public final static Property Age = new Property(3, int.class, "age", false, "AGE");
@@ -44,7 +44,7 @@ public class UserInfoBeanDao extends AbstractDao<UserInfoBean, Long> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"USER_INFO_BEAN\" (" + //
-                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ," + // 0: id
+                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "\"NICKNAME\" TEXT," + // 1: nickname
                 "\"SCHOOL\" TEXT," + // 2: school
                 "\"AGE\" INTEGER NOT NULL ," + // 3: age
@@ -62,7 +62,11 @@ public class UserInfoBeanDao extends AbstractDao<UserInfoBean, Long> {
     @Override
     protected final void bindValues(DatabaseStatement stmt, UserInfoBean entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getId());
+ 
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
  
         String nickname = entity.getNickname();
         if (nickname != null) {
@@ -86,7 +90,11 @@ public class UserInfoBeanDao extends AbstractDao<UserInfoBean, Long> {
     @Override
     protected final void bindValues(SQLiteStatement stmt, UserInfoBean entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getId());
+ 
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
  
         String nickname = entity.getNickname();
         if (nickname != null) {
@@ -109,13 +117,13 @@ public class UserInfoBeanDao extends AbstractDao<UserInfoBean, Long> {
 
     @Override
     public Long readKey(Cursor cursor, int offset) {
-        return cursor.getLong(offset + 0);
+        return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
     }    
 
     @Override
     public UserInfoBean readEntity(Cursor cursor, int offset) {
         UserInfoBean entity = new UserInfoBean( //
-            cursor.getLong(offset + 0), // id
+            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // nickname
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // school
             cursor.getInt(offset + 3), // age
@@ -128,7 +136,7 @@ public class UserInfoBeanDao extends AbstractDao<UserInfoBean, Long> {
      
     @Override
     public void readEntity(Cursor cursor, UserInfoBean entity, int offset) {
-        entity.setId(cursor.getLong(offset + 0));
+        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setNickname(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setSchool(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setAge(cursor.getInt(offset + 3));
@@ -154,7 +162,7 @@ public class UserInfoBeanDao extends AbstractDao<UserInfoBean, Long> {
 
     @Override
     public boolean hasKey(UserInfoBean entity) {
-        throw new UnsupportedOperationException("Unsupported for entities with a non-null key");
+        return entity.getId() != null;
     }
 
     @Override

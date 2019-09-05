@@ -3,6 +3,7 @@ package com.zz.recycleviewmvptest.mvp.mine;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -76,6 +77,7 @@ public class MineFragment extends BaseListFragment<MineContract.Presenter, UserI
     public void onNetSuccess(List<UserInfoBean> data, boolean isLoadMore) {
         super.onNetSuccess(data, isLoadMore);
         adapter.notifyDataSetChanged();
+        mHeaderAndFooterWrapper.notifyDataSetChanged();
     }
 
     private Bitmap getBitmapForPath(String path) {

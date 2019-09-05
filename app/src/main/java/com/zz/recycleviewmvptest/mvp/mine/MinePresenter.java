@@ -19,6 +19,6 @@ public class MinePresenter extends BaseListPresenter<MineContract.View> implemen
 
     @Override
     public void requestNetData(int maxId, boolean isLoadMore, int page) {
-        mRootView.onNetSuccess(mUserInfoBeanDaoImpl.getMultiDataFromCache(), false);
+        mRootView.onNetSuccess(mUserInfoBeanDaoImpl.getAllList(), false);
     }
 }
