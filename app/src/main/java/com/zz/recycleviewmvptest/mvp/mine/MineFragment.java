@@ -15,6 +15,8 @@ import com.zz.recycleviewmvptest.bean.UserInfoBean;
 import com.zz.recycleviewmvptest.mvp.base_adapter.CommonAdapter;
 import com.zz.recycleviewmvptest.mvp.base_adapter.MultiItemTypeAdapter;
 import com.zz.recycleviewmvptest.mvp.base_adapter.ViewHolder;
+import com.zz.recycleviewmvptest.widget.Utils;
+import com.zz.recycleviewmvptest.widget.popwindow.ActivePopWindow;
 
 import org.simple.eventbus.Subscriber;
 
@@ -25,6 +27,7 @@ import static com.zz.recycleviewmvptest.mvp.mine.add_user.AddUserFragment.USER_A
 public class MineFragment extends BaseListFragment<MineContract.Presenter, UserInfoBean> implements MineContract.View {
     private CommonAdapter<UserInfoBean> adapter;
     private MineHeaderView mineHeaderView;
+    private ActivePopWindow itemActivePopWindow; //操作
     @Override
     protected void initView(View rootView) {
         super.initView(rootView);
@@ -67,16 +70,42 @@ public class MineFragment extends BaseListFragment<MineContract.Presenter, UserI
 
             @Override
             public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
-                return false;
+                position = position - mHeaderAndFooterWrapper.getHeadersCount();
+                showItemPopWindow(position);
+                return true;
             }
         });
         return adapter;
+    }
+
+    private void showItemPopWindow(int position) {
+        if (itemActivePopWindow == null) {
+            itemActivePopWindow = ActivePopWindow.builder()
+                    .item1Str("是否删除当前用户？")
+                    .item1Color(getResources().getColor(R.color.home_bottom))
+                    .item2Str("删除")
+                    .bottomStr("取消")
+                    .isOutsideTouch(true)
+                    .isFocus(true)
+                    .with(mActivity)
+                    .bottomClickListener(() -> itemActivePopWindow.hide())
+                    .item2ClickListener(() -> {
+                        mPresenter.delUser(mListData.get(position));
+                        startRefrsh();
+                        itemActivePopWindow.hide();
+                    })
+                    .build();
+        }
+        itemActivePopWindow.show();
     }
 
     @Override
     public void onNetSuccess(List<UserInfoBean> data, boolean isLoadMore) {
         super.onNetSuccess(data, isLoadMore);
         mineHeaderView.setSeekBar(mListData.size());
+        if (mListData.size() > 0 && !isLoadMore) {
+            mineHeaderView.setData(mListData.get(0));
+        }
         adapter.notifyDataSetChanged();
         mHeaderAndFooterWrapper.notifyDataSetChanged();
 
@@ -93,8 +122,9 @@ public class MineFragment extends BaseListFragment<MineContract.Presenter, UserI
     @Override
     public void onResume() {
         super.onResume();
-        if (mPresenter != null)
-            mPresenter.requestNetData(0, false, 1);
+        if (mPresenter != null) {
+            startRefrsh();
+        }
     }
 
     @Override

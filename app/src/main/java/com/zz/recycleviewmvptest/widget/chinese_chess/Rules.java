@@ -1,5 +1,7 @@
 package com.zz.recycleviewmvptest.widget.chinese_chess;
 
+import android.util.Log;
+
 /**
  * author: wuyangyi
  * date: 2019-09-05
@@ -265,7 +267,7 @@ public class Rules {
                                 }
                             }
                         } else {
-                            for (int i = toX - 1; i > fromX; i--) {
+                            for (int i = toX + 1; i < fromX; i++) {
                                 if (chessBoard[fromY][i] != 0) {
                                     count++;
                                 }

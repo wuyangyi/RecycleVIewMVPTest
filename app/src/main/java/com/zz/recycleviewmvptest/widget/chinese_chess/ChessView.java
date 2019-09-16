@@ -176,7 +176,7 @@ public class ChessView extends View {
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         long time = System.currentTimeMillis();
-        canvas.drawColor(Color.parseColor("#5500ff00"));  //画出白色背景
+        canvas.drawColor(Color.parseColor("#5500C3D7"));  //画出白色背景
         canvasBoard(canvas);    //画棋盘   --- 可以优化一下,保存一张bitmap,直接drawBitmap
         if (chooseStatus) {
             paint.setColor(Color.BLUE);

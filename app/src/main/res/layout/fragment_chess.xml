@@ -13,7 +13,7 @@
     <TextView
         android:id="@+id/tv_reStart"
         android:layout_width="80dp"
-        android:layout_height="40dp"
+        android:layout_height="30dp"
         android:gravity="center"
         android:background="#777EFF"
         android:layout_alignParentBottom="true"

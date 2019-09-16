@@ -91,9 +91,21 @@ public class AddUserFragment extends BaseFragment<AddUserContract.Presenter> imp
                 if (AntiShakeUtils.isInvalidClick(v)) {
                     return;
                 }
+                if (mEtName.getText().toString().isEmpty()) {
+                    Toast.makeText(getActivity(), "请输入昵称",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 UserInfoBean u = new UserInfoBean(mEtName.getText().toString());
                 u.setHead(headPath);
-                u.setAge(Integer.parseInt(mClAge.getText().toString() == null ? "0" : mClAge.getText().toString()));
+                if (mClAge.getText().toString().isEmpty()) {
+                    Toast.makeText(getActivity(), "请输入年龄",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                u.setAge(Integer.parseInt(mClAge.getText().toString().isEmpty() ? "0" : mClAge.getText().toString()));
+                if (mClSex.getmIvRight().toString().isEmpty()) {
+                    Toast.makeText(getActivity(), "请选择性别",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 int sex = 0;
                 if (mClSex.getmTvRight().getText().equals("男")) {
                     sex = 1;
@@ -101,6 +113,10 @@ public class AddUserFragment extends BaseFragment<AddUserContract.Presenter> imp
                     sex = 2;
                 }
                 u.setSex(sex);
+                if (mEdSchool.getText().toString().isEmpty()) {
+                    Toast.makeText(getActivity(), "请输入学校",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 u.setSchool(mEdSchool.getText().toString());
                 mPresenter.saveUser(u);
             }

@@ -12,6 +12,6 @@ public class MineContract {
     }
 
     interface Presenter extends IBaseListPresenter {
-
+        void delUser(UserInfoBean userInfoBean);
     }
 }
