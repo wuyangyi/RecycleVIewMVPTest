@@ -37,6 +37,9 @@ import java.util.List;
 /**
  * 实现的下拉加载
  */
+/**
+ * 福利
+ */
 public class PageListFragment extends BaseListFragment<PageListContract.Presenter, FlListBean.ResultsListBean> implements PageListContract.View {
     private SwipeMenuRecyclerView mRvList;
     private CommonAdapter<FlListBean.ResultsListBean> mAdapter;

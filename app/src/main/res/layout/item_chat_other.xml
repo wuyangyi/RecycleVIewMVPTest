@@ -12,13 +12,13 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textSize="@dimen/text_no_more_data_size"
+        android:paddingBottom="10dp"
         android:textColor="@color/footer_no_more_data"
         android:text="09-01 09:32"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp"
         android:gravity="left">
         <com.zz.recycleviewmvptest.widget.imageview.CircleImageView
             android:id="@+id/iv_user_head"
@@ -30,18 +30,35 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center|end"
+            android:layout_marginLeft="10dp"
+            android:gravity="center|left"
             android:orientation="vertical">
             <TextView
+                android:visibility="visible"
                 android:id="@+id/tv_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@mipmap/ico_chat_other"
                 android:textColor="@color/title_color"
+                android:lineSpacingMultiplier="1.3"
                 android:textSize="@dimen/button_text_size"
                 android:gravity="center|start"
                 android:layout_marginRight="15dp"
                 tools:text="你好啊！我叫XXX，可以交个朋友吗？可以交个朋友吗"/>
+            <com.zz.recycleviewmvptest.widget.imageview.MLImageView
+                android:id="@+id/iv_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="150dp"
+                android:maxHeight="200dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                app:ml_radius="10dp"
+                app:ml_shape_type="rectangle"
+                app:ml_border_width="0dp"
+                app:ml_border_color="@color/footer_no_more_data"
+                android:src="@drawable/ic_launcher_background"
+                android:visibility="gone"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

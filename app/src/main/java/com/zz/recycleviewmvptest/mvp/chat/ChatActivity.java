@@ -3,7 +3,9 @@ package com.zz.recycleviewmvptest.mvp.chat;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 
+import com.zz.recycleviewmvptest.R;
 import com.zz.recycleviewmvptest.base.BaseActivity;
 import com.zz.recycleviewmvptest.bean.FlListBean;
 
@@ -24,5 +26,11 @@ public class ChatActivity extends BaseActivity<ChatPresenter, ChatFragment> {
         bundle.putParcelable(CHAT_USER_INFO, user);
         intent.putExtras(bundle);
         context.startActivity(intent);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mContanierFragment.onActivityResult(requestCode, resultCode, data);
     }
 }

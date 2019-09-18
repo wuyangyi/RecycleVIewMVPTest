@@ -15,7 +15,7 @@ import org.simple.eventbus.EventBus;
  * @param <P>
  * @param <F>
  */
-public abstract class BaseActivity<P extends BasePresenter, F extends Fragment> extends AppCompatActivity {
+public abstract class BaseActivity<P extends BasePresenter, F extends Fragment> extends AppCompatActivity implements AnimationClick {
     protected BaseApplication mApplication;
     protected P mPresenter;
     /**
@@ -87,4 +87,9 @@ public abstract class BaseActivity<P extends BasePresenter, F extends Fragment> 
      * 数据初始化
      */
     protected void initData(){}
+
+    @Override
+    public void animation() {
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    }
 }

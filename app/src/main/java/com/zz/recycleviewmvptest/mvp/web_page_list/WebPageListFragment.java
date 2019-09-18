@@ -12,6 +12,7 @@ import com.zz.recycleviewmvptest.mvp.base_adapter.CommonAdapter;
 import com.zz.recycleviewmvptest.mvp.base_adapter.MultiItemTypeAdapter;
 import com.zz.recycleviewmvptest.mvp.base_adapter.ViewHolder;
 import com.zz.recycleviewmvptest.mvp.page_list.PageListActivity;
+import com.zz.recycleviewmvptest.mvp.webview.WebViewPageActivity;
 import com.zz.recycleviewmvptest.widget.AntiShakeUtils;
 
 import java.util.ArrayList;
@@ -82,7 +83,8 @@ public class WebPageListFragment extends BaseListFragment<WebPageListContract.Pr
                     Toast.makeText(context, "请勿重复点击", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                context.startActivity(new Intent(context, PageListActivity.class));
+//                context.startActivity(new Intent(context, PageListActivity.class));
+                WebViewPageActivity.startToWebViewPageActivity(context, mListData.get(position - mHeaderAndFooterWrapper.getHeadersCount()).getUrl());
             }
 
             @Override

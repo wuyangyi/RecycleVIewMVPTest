@@ -23,4 +23,7 @@
     <!--进度条-->
     <color name="seek_bar_color">#00C3D7</color>
     <color name="seek_bar_color_floor">#F2F1F3</color>
+    <!--网页进度条-->
+    <color name="bg_pb_cover">#59b6d7</color>
+
 </resources>

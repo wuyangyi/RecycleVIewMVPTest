@@ -23,6 +23,12 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    //Android 6 发布,就移除了对 Apache HTTP 客户端的支持
+    //Android 9 及更高版本为目标的应用可以向其 AndroidManifest.xml 添加以下内容：<uses-library android:name="org.apache.http.legacy" android:required="false"/>
+    android {
+        useLibrary 'org.apache.http.legacy'
+    }
 }
 
 /**
@@ -32,7 +38,7 @@ android {
  * targetGenDirTest 生成的单元测试的根目录。
  */
 greendao {
-    schemaVersion 8 //update on 2019-7-22
+    schemaVersion 9 //update on 2019-9-17
     daoPackage 'com.zz.recycleviewmvptest.bean'
     targetGenDir 'src/main/java'
 }

@@ -4,12 +4,15 @@ import android.animation.Animator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +25,8 @@ import android.widget.TextView;
 
 import com.zz.recycleviewmvptest.R;
 import com.zz.recycleviewmvptest.widget.AntiShakeUtils;
+import com.zz.recycleviewmvptest.widget.DeviceUtils;
+import com.zz.recycleviewmvptest.widget.StatusBarUtils;
 
 import org.simple.eventbus.EventBus;
 
@@ -41,6 +46,10 @@ public abstract class BaseFragment<P extends IBasePresenter> extends Fragment im
     protected TextView mTvCenterTitle; //中间标题
     protected ImageButton mIbRightImage; //右边的图片按钮
     protected LinearLayout mLlTitle; //标题栏布局
+    /**
+     * 当侵入状态栏时， 状态栏的占位控件
+     */
+    protected View mStatusPlaceholderView;
 
     protected static final int REQUEST_STORAGE_READ_ACCESS_PERMISSION = 101;
     protected static final int REQUEST_STORAGE_WRITE_ACCESS_PERMISSION = 102;
@@ -97,11 +106,38 @@ public abstract class BaseFragment<P extends IBasePresenter> extends Fragment im
         LinearLayout linearLayout = new LinearLayout(getActivity());
         linearLayout.setOrientation(LinearLayout.VERTICAL);
         linearLayout.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        // 是否添加和状态栏等高的占位 View
+        if (setUseSatusbar() && setUseStatusView()) {
+            mStatusPlaceholderView = new View(getContext());
+            mStatusPlaceholderView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DeviceUtils.getStatuBarHeight(getContext(), getActivity())));
+            if (StatusBarUtils.intgetType(getActivity().getWindow()) == 0 && ContextCompat.getColor(getContext(), setToolBarBackgroud()) == Color
+                    .WHITE) {
+                mStatusPlaceholderView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.home_bottom));
+            } else {
+                mStatusPlaceholderView.setBackgroundColor(ContextCompat.getColor(getContext(), setToolBarBackgroud()));
+            }
+            linearLayout.addView(mStatusPlaceholderView);
+        }
         // 在需要显示toolbar时，进行添加
         if (showToolbar()) {
             View toolBarContainer = mLayoutInflater.inflate(getToolBarLayoutId(), null);
             initDefaultToolBar(toolBarContainer);
             linearLayout.addView(toolBarContainer);
+        }
+        if (setUseSatusbar()) {
+            // 状态栏顶上去
+            StatusBarUtils.transparencyBar(getActivity());
+            linearLayout.setFitsSystemWindows(false);
+        } else {
+            // 状态栏不顶上去
+            StatusBarUtils.setStatusBarColor(getActivity(), setToolBarBackgroud());
+            linearLayout.setFitsSystemWindows(true);
+        }
+        // 是否设置状态栏文字图标灰色，对 小米、魅族、Android 6.0 及以上系统有效
+        if (setStatusbarGrey()) {
+            StatusBarUtils.statusBarLightMode(getActivity());
+        } else {
+            StatusBarUtils.statusBarLightModeWhile(getActivity());
         }
         final View bodyContainer = mLayoutInflater.inflate(getBodyLayoutId(), null);
         bodyContainer.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
@@ -333,6 +369,42 @@ public abstract class BaseFragment<P extends IBasePresenter> extends Fragment im
         mActivity.finish();
     }
 
+    /**
+     * 状态栏是否可用
+     *
+     * @return 默认不可用
+     */
+    protected boolean setUseSatusbar() {
+        return Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
+    }
+
+    /**
+     * 设置是否需要添加和状态栏等高的占位 view
+     *
+     * @return
+     */
+    protected boolean setUseStatusView() {
+        return Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
+    }
+
+    /**
+     * @return 状态栏 背景
+     */
+    protected int setToolBarBackgroud() {
+        return R.color.home_bottom;
+    }
+
+    /**
+     * 状态栏字体默认为白色
+     * 支持小米、魅族以及 6.0 以上机型
+     *
+     * @return
+     */
+    protected boolean setStatusbarGrey() {
+        return false;
+    }
+
+
 
     /**
      * 申请权限
@@ -368,5 +440,11 @@ public abstract class BaseFragment<P extends IBasePresenter> extends Fragment im
         mAlertDialog = builder.show();
     }
 
+    //使用动画跳转
+    protected void useAnimationIntent() {
+        if (getActivity() instanceof AnimationClick) {
+            ((AnimationClick)getActivity()).animation();
+        }
+    }
 
 }

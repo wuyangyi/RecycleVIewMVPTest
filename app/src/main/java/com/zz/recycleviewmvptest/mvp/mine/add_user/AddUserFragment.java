@@ -31,6 +31,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import static android.app.Activity.RESULT_OK;
+import static com.zz.recycleviewmvptest.widget.Utils.REQUEST_SELECT_PICTURE;
 
 public class AddUserFragment extends BaseFragment<AddUserContract.Presenter> implements AddUserContract.View  {
     public final static String USER_ADD_SUCCESS = "user_add_success";
@@ -47,7 +48,6 @@ public class AddUserFragment extends BaseFragment<AddUserContract.Presenter> imp
     private ActivePopWindow activePopWindow; //头像选择
     private ActivePopWindow sexActivePopWindow; //性别
 
-    private static final int REQUEST_SELECT_PICTURE = 0x01;
     // 剪切后图像文件
     private Uri mDestinationUri;
 
@@ -173,7 +173,7 @@ public class AddUserFragment extends BaseFragment<AddUserContract.Presenter> imp
                                     != PackageManager.PERMISSION_GRANTED) {
                                 requestPermission(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, "关闭该权限后部分功能将无法使用，是否继续？", REQUEST_STORAGE_READ_ACCESS_PERMISSION);
                             } else {
-                                pickFromGallery();
+                                Utils.pickFromGallery(getActivity());
                                 activePopWindow.hide();
                             }
                         }
@@ -191,16 +191,16 @@ public class AddUserFragment extends BaseFragment<AddUserContract.Presenter> imp
         Utils.hideSoftKeyboard(context, mEtName);
     }
 
-    /**
-     * 选择图片
-     */
-    private void pickFromGallery() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        startActivityForResult(Intent.createChooser(intent, "选择图片"), REQUEST_SELECT_PICTURE);
-    }
+//    /**
+//     * 选择图片
+//     */
+//    private void pickFromGallery() {
+//        Intent intent = new Intent();
+//        intent.setType("image/*");
+//        intent.setAction(Intent.ACTION_GET_CONTENT);
+//        intent.addCategory(Intent.CATEGORY_OPENABLE);
+//        startActivityForResult(Intent.createChooser(intent, "选择图片"), REQUEST_SELECT_PICTURE);
+//    }
 
     private void showSexPopWindow() {
         if (sexActivePopWindow == null) {

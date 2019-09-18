@@ -23,6 +23,7 @@ public class ChatBean extends BaseListBean {
     private String context; //发布的内容
     private boolean isMe; //是否是自己发的内容
     private String userId;
+    private String imagePath; //发送的图片地址
 
     public ChatBean(String context) {
         this.context = context;
@@ -30,9 +31,17 @@ public class ChatBean extends BaseListBean {
         send_time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
     }
 
-    @Generated(hash = 135916805)
+
+
+    @Generated(hash = 1872716502)
+    public ChatBean() {
+    }
+
+
+
+    @Generated(hash = 217327426)
     public ChatBean(Long id, FlListBean.ResultsListBean user, long create_time,
-            String send_time, String context, boolean isMe, String userId) {
+            String send_time, String context, boolean isMe, String userId, String imagePath) {
         this.id = id;
         this.user = user;
         this.create_time = create_time;
@@ -40,10 +49,7 @@ public class ChatBean extends BaseListBean {
         this.context = context;
         this.isMe = isMe;
         this.userId = userId;
-    }
-
-    @Generated(hash = 1872716502)
-    public ChatBean() {
+        this.imagePath = imagePath;
     }
 
     public Long getId() {
@@ -108,6 +114,14 @@ public class ChatBean extends BaseListBean {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     public static class UserConverter extends BaseConvert<FlListBean.ResultsListBean> {

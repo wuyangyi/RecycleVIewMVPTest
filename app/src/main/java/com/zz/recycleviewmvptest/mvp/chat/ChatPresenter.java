@@ -39,6 +39,7 @@ public class ChatPresenter extends BasePresenter<ChatContract.View> implements C
         ChatBean chatBean = new ChatBean(content);
         chatBean.setUser(mRootView.getUser());
         chatBean.setIsMe(true);
+        chatBean.setImagePath("");
         chatBean.setUserId(mRootView.getUser().get_id());
         mChatBeanDaoImpl.insertOrReplace(chatBean);
         mRootView.sendMessageSuccess(chatBean);
@@ -69,4 +70,14 @@ public class ChatPresenter extends BasePresenter<ChatContract.View> implements C
                     }
                 });
     }
+
+    @Override
+    public void sendImage(ChatBean chatBean) {
+        chatBean.setUser(mRootView.getUser());
+        chatBean.setIsMe(true);
+        chatBean.setUserId(mRootView.getUser().get_id());
+        mChatBeanDaoImpl.insertOrReplace(chatBean);
+        mRootView.sendMessageSuccess(chatBean);
+    }
+
 }

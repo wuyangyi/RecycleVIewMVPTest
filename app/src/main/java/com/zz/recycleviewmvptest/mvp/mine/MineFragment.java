@@ -55,7 +55,7 @@ public class MineFragment extends BaseListFragment<MineContract.Presenter, UserI
                 if (userInfoBean.getHead() == null || userInfoBean.getHead().isEmpty()) {
                     holder.setImageResource(R.id.iv_head, R.mipmap.ic_logo);
                 } else {
-                    holder.setImageBitmap(R.id.iv_head, getBitmapForPath(userInfoBean.getHead()));
+                    holder.setImageBitmap(R.id.iv_head, Utils.getBitmapForPath(userInfoBean.getHead()));
                 }
                 holder.setText(R.id.tv_name, userInfoBean.getNickname() == null || userInfoBean.getNickname().isEmpty() ? "" : userInfoBean.getNickname());
                 holder.setText(R.id.tv_school, userInfoBean.getSchool() == null || userInfoBean.getSchool().isEmpty() ? "" : userInfoBean.getSchool());
@@ -111,13 +111,13 @@ public class MineFragment extends BaseListFragment<MineContract.Presenter, UserI
 
     }
 
-    private Bitmap getBitmapForPath(String path) {
-//        String headPath = android.os.Environment.getExternalStorageDirectory()
-//                + "/" + "msg" + "/" + "head/"+"图片名" + ".jpg";
-        Bitmap bmpDefaultPic;
-        bmpDefaultPic = BitmapFactory.decodeFile(path, null);
-        return bmpDefaultPic;
-    }
+//    private Bitmap getBitmapForPath(String path) {
+////        String headPath = android.os.Environment.getExternalStorageDirectory()
+////                + "/" + "msg" + "/" + "head/"+"图片名" + ".jpg";
+//        Bitmap bmpDefaultPic;
+//        bmpDefaultPic = BitmapFactory.decodeFile(path, null);
+//        return bmpDefaultPic;
+//    }
 
     @Override
     public void onResume() {

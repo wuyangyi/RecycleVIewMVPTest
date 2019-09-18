@@ -32,6 +32,7 @@ public class ChatBeanDao extends AbstractDao<ChatBean, Long> {
         public final static Property Context = new Property(4, String.class, "context", false, "CONTEXT");
         public final static Property IsMe = new Property(5, boolean.class, "isMe", false, "IS_ME");
         public final static Property UserId = new Property(6, String.class, "userId", false, "USER_ID");
+        public final static Property ImagePath = new Property(7, String.class, "imagePath", false, "IMAGE_PATH");
     }
 
     private final UserConverter userConverter = new UserConverter();
@@ -54,7 +55,8 @@ public class ChatBeanDao extends AbstractDao<ChatBean, Long> {
                 "\"SEND_TIME\" TEXT," + // 3: send_time
                 "\"CONTEXT\" TEXT," + // 4: context
                 "\"IS_ME\" INTEGER NOT NULL ," + // 5: isMe
-                "\"USER_ID\" TEXT);"); // 6: userId
+                "\"USER_ID\" TEXT," + // 6: userId
+                "\"IMAGE_PATH\" TEXT);"); // 7: imagePath
     }
 
     /** Drops the underlying database table. */
@@ -93,6 +95,11 @@ public class ChatBeanDao extends AbstractDao<ChatBean, Long> {
         if (userId != null) {
             stmt.bindString(7, userId);
         }
+ 
+        String imagePath = entity.getImagePath();
+        if (imagePath != null) {
+            stmt.bindString(8, imagePath);
+        }
     }
 
     @Override
@@ -125,6 +132,11 @@ public class ChatBeanDao extends AbstractDao<ChatBean, Long> {
         if (userId != null) {
             stmt.bindString(7, userId);
         }
+ 
+        String imagePath = entity.getImagePath();
+        if (imagePath != null) {
+            stmt.bindString(8, imagePath);
+        }
     }
 
     @Override
@@ -141,7 +153,8 @@ public class ChatBeanDao extends AbstractDao<ChatBean, Long> {
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // send_time
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // context
             cursor.getShort(offset + 5) != 0, // isMe
-            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6) // userId
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // userId
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7) // imagePath
         );
         return entity;
     }
@@ -155,6 +168,7 @@ public class ChatBeanDao extends AbstractDao<ChatBean, Long> {
         entity.setContext(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
         entity.setIsMe(cursor.getShort(offset + 5) != 0);
         entity.setUserId(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setImagePath(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
      }
     
     @Override

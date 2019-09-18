@@ -1,6 +1,7 @@
 package com.zz.recycleviewmvptest.mvp.web_page_list;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.zz.recycleviewmvptest.R;
+import com.zz.recycleviewmvptest.mvp.page_list.PageListActivity;
 import com.zz.recycleviewmvptest.widget.CornerTransform;
 import com.zz.recycleviewmvptest.widget.banner.MZBannerView;
 import com.zz.recycleviewmvptest.widget.banner.MZHolderCreator;
@@ -80,6 +82,12 @@ public class WebPageListHeader {
                     .load(data)
                     .bitmapTransform(transform)
                     .into(mIvBanner);
+            mIvBanner.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    context.startActivity(new Intent(context, PageListActivity.class));
+                }
+            });
         }
     }
 }

@@ -27,5 +27,11 @@ public interface ChatContract {
          * @param content
          */
         void sendMessage(String content);
+
+        /**
+         * 发布图片
+         * @param chatBean
+         */
+        void sendImage(ChatBean chatBean);
     }
 }
