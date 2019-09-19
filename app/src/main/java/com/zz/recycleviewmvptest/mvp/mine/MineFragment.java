@@ -40,6 +40,11 @@ public class MineFragment extends BaseListFragment<MineContract.Presenter, UserI
     }
 
     @Override
+    protected boolean setUseStatusView() {
+        return false;
+    }
+
+    @Override
     protected void initData() {
         super.initData();
         mPresenter = new MinePresenter(this);

@@ -375,7 +375,7 @@ public abstract class BaseFragment<P extends IBasePresenter> extends Fragment im
      * @return 默认不可用
      */
     protected boolean setUseSatusbar() {
-        return Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
+        return false; //Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
     }
 
     /**
@@ -384,7 +384,7 @@ public abstract class BaseFragment<P extends IBasePresenter> extends Fragment im
      * @return
      */
     protected boolean setUseStatusView() {
-        return Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
+        return true;
     }
 
     /**

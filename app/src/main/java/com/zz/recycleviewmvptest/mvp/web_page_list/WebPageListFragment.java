@@ -32,6 +32,12 @@ public class WebPageListFragment extends BaseListFragment<WebPageListContract.Pr
         mHeaderAndFooterWrapper.addHeaderView(mWebPageListHeader.getmWebPageListHeader());
     }
 
+
+    @Override
+    protected boolean setUseStatusView() {
+        return false;
+    }
+
     @Override
     protected void initData() {
         super.initData();
