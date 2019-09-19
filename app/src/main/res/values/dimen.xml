@@ -32,4 +32,11 @@
     <!--seekBar高宽-->
     <dimen name="seekBar_width">260dp</dimen>
     <dimen name="seekBar_height">6dp</dimen>
+
+    <!--toolbar-->
+    <dimen name="toolbar_with_tab_height">45.5</dimen>
+    <dimen name="toolbar_padding_left">15dp</dimen>
+    <dimen name="toolbar_left_text_size">16sp</dimen>
+    <dimen name="spacing_large">20dp</dimen>
+    <dimen name="line_height">3dp</dimen>
 </resources>

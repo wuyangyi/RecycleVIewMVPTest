@@ -7,6 +7,9 @@ import com.zz.recycleviewmvptest.bean.TLInputBean;
 import com.zz.recycleviewmvptest.bean.TLOutputBean;
 import com.zz.recycleviewmvptest.bean.Take;
 
+import org.json.JSONObject;
+
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -26,4 +29,7 @@ public interface RequestClient {
 
     @POST(ApiConfig.APP_TL_CHAT)
     Call<Take> sendMessage(@Body Ask take);
+
+    @GET(ApiConfig.APP_PATH_RECOMMEND)
+    Call<ResponseBody> getRecommend();
 }

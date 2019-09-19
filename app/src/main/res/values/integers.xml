@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="tab_text_size_15">15</integer>
+    <integer name="tab_text_size_big">18</integer>
+    <integer name="tab_padding">0</integer>
+    <integer name="tab_line_height">3</integer>
+</resources>

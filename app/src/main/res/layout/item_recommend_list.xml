@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_item_select"
+    android:padding="15dp">
+    <ImageView
+        android:id="@+id/iv_head"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginRight="10dp"
+        android:scaleType="fitXY"
+        android:visibility="gone"
+        android:src="@drawable/ic_launcher_background"/>
+    <TextView
+        android:id="@+id/tvDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/title_text_size"
+        android:textColor="@color/title_color"
+        android:layout_toRightOf="@id/iv_head"
+        android:drawableLeft="@mipmap/ico_message_logo"
+        android:drawablePadding="5dp"
+        android:gravity="center_vertical"
+        android:singleLine="true" />
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:textColor="@color/normal_for_assist_text"
+        android:textSize="14sp"
+        android:layout_below="@id/tvDesc"
+        android:layout_toRightOf="@id/iv_head"
+        android:layout_marginTop="5dp"/>
+    <TextView
+        android:id="@+id/tvTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:textSize="13sp"
+        android:textColor="@color/general_for_hint"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/tvName"
+        android:layout_alignBottom="@id/tvName"/>
+</RelativeLayout>

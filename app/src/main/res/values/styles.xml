@@ -39,4 +39,11 @@
         <item name="android:activityCloseExitAnimation">@anim/fade_out</item>
     </style>
 
+    <style name="MyToolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="contentInsetStart">0dp</item>
+        <item name="contentInsetLeft">0dp</item>
+        <item name="contentInsetEnd">0dp</item>
+        <item name="titleMargin">0dp</item>
+    </style>
+
 </resources>

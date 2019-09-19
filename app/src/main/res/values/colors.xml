@@ -26,4 +26,12 @@
     <!--网页进度条-->
     <color name="bg_pb_cover">#59b6d7</color>
 
+    <!--未选择文字颜色-->
+    <color name="normal_for_assist_text">#999999</color>
+    <color name="important_for_content_new">#65FFFFFF</color>
+    <!--选择文字颜色-->
+    <color name="important_for_content">#363951</color>
+    <color name="important_for_white">#FFFFFF</color>
+    <color name="general_for_hint">#6C7582</color>
+
 </resources>

@@ -18,4 +18,9 @@ public class ApiConfig {
      * 图灵智能机器人
      */
     public static final String APP_TL_CHAT = "openapi/api/v2";
+
+    /**
+     * 每日推荐
+     */
+    public static final String APP_PATH_RECOMMEND = "day/2015/08/07";
 }

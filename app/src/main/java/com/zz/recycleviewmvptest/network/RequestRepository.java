@@ -7,6 +7,9 @@ import com.zz.recycleviewmvptest.bean.TLInputBean;
 import com.zz.recycleviewmvptest.bean.TLOutputBean;
 import com.zz.recycleviewmvptest.bean.Take;
 
+import org.json.JSONObject;
+
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 
 public class RequestRepository {
@@ -33,6 +36,14 @@ public class RequestRepository {
      */
     public Call<Take> sendMessage(Ask data) {
         return mRequestClientTl.sendMessage(data);
+    }
+
+    /**
+     * 每日推荐
+     * @return
+     */
+    public Call<ResponseBody> getRecommend() {
+        return mRequestClient.getRecommend();
     }
 
 }

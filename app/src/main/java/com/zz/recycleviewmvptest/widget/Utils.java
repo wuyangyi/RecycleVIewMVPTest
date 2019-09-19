@@ -8,11 +8,13 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.support.v4.content.ContextCompat;
 import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -219,6 +221,20 @@ public class Utils {
         return (int) (sp * fontScale + 0.5f);
     }
 
+    public static int px2sp(Context context, float pxVal) {
+        return (int) (pxVal / context.getResources().getDisplayMetrics().scaledDensity);
+    }
+
+    public static int dp2px(Context context, float dp) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dp * scale + 0.5f);
+    }
+
+    public static int px2dp(Context context, float pxVal) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (pxVal / scale);
+    }
+
     /**
      * 选择图片
      */
@@ -339,5 +355,21 @@ public class Utils {
         Bitmap bmpDefaultPic;
         bmpDefaultPic = BitmapFactory.decodeFile(path, null);
         return bmpDefaultPic;
+    }
+
+    /**
+     * Textview或者button设置Drawable
+     */
+    public static Drawable getCompoundDrawables(Context context, int imgRsID) {
+        if (imgRsID == 0) {
+            return null;
+        }
+        Drawable drawable = ContextCompat.getDrawable(context, imgRsID);
+        if (drawable == null) {
+            return null;
+        }
+        /// 这一步必须要做,否则不会显示.
+        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+        return drawable;
     }
 }

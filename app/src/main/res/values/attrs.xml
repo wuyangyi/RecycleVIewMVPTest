@@ -75,4 +75,18 @@
         <attr name="text_to_seekbar_height" format="dimension"/> <!--文字距离seekbar距离-->
         <attr name="text_color" format="color"/> <!--文字颜色-->
     </declare-styleable>
+
+    <!--ViewPage指示器-->
+    <declare-styleable name="TabIndicator">
+        <attr name="lineColor" format="color"/> <!--指示线的颜色-->
+        <attr name="lineHeight" format="dimension"/> <!--指示线的高度-->
+        <attr name="selectTextColor" format="color"/> <!--选中文字颜色-->
+        <attr name="noSelectTextColor" format="color"/> <!--未选中文字颜色-->
+        <attr name="textSize" format="dimension"/> <!--文字大小-->
+        <attr name="selectTextSize" format="dimension"/> <!--选中文字变大的文字大小-->
+        <attr name="isShowDriver" format="boolean"/> <!--是否显示底部分割线-->
+        <attr name="isAdjustMode" format="boolean"/> <!--标题是否平分屏幕宽度-->
+        <attr name="textLRPadding" format="dimension"/> <!--文字的左右padding-->
+        <attr name="indicatorPadding" format="dimension"/> <!--指示器左右padding-->
+    </declare-styleable>
 </resources>
