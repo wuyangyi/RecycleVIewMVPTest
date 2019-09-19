@@ -21,7 +21,7 @@ import com.zz.recycleviewmvptest.base.BaseFragment;
 import com.zz.recycleviewmvptest.bean.UserInfoBean;
 import com.zz.recycleviewmvptest.mvp.crop.CropActivity;
 import com.zz.recycleviewmvptest.widget.AntiShakeUtils;
-import com.zz.recycleviewmvptest.widget.ToastUtils;
+import com.zz.recycleviewmvptest.widget.toast.ToastUtils;
 import com.zz.recycleviewmvptest.widget.Utils;
 import com.zz.recycleviewmvptest.widget.imageview.MLImageView;
 import com.zz.recycleviewmvptest.widget.popwindow.ActivePopWindow;

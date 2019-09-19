@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.zz.recycleviewmvptest.R;
@@ -17,7 +16,7 @@ import com.zz.recycleviewmvptest.base.BaseFragment;
 import com.zz.recycleviewmvptest.bean.RecommendBean;
 import com.zz.recycleviewmvptest.mvp.base_adapter.ViewPagerAdapte;
 import com.zz.recycleviewmvptest.mvp.recommend_day.recomend_list.RecommendListFragment;
-import com.zz.recycleviewmvptest.widget.ToastUtils;
+import com.zz.recycleviewmvptest.widget.toast.ToastUtils;
 import com.zz.recycleviewmvptest.widget.viewpage_indicator.TabIndicator;
 
 import org.json.JSONArray;

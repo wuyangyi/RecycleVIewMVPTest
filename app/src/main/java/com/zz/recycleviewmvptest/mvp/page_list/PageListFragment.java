@@ -2,15 +2,12 @@ package com.zz.recycleviewmvptest.mvp.page_list;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
-import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
@@ -23,13 +20,12 @@ import com.yanzhenjie.recyclerview.swipe.widget.DefaultItemDecoration;
 import com.zz.recycleviewmvptest.R;
 import com.zz.recycleviewmvptest.base.BaseListFragment;
 import com.zz.recycleviewmvptest.bean.FlListBean;
-import com.zz.recycleviewmvptest.base.BaseFragment;
 import com.zz.recycleviewmvptest.mvp.base_adapter.CommonAdapter;
 import com.zz.recycleviewmvptest.mvp.base_adapter.HeaderAndFooterWrapper;
 import com.zz.recycleviewmvptest.mvp.base_adapter.MultiItemTypeAdapter;
 import com.zz.recycleviewmvptest.mvp.base_adapter.ViewHolder;
 import com.zz.recycleviewmvptest.widget.CornerTransform;
-import com.zz.recycleviewmvptest.widget.ToastUtils;
+import com.zz.recycleviewmvptest.widget.toast.ToastUtils;
 import com.zz.recycleviewmvptest.widget.Utils;
 
 import java.util.ArrayList;

@@ -20,7 +20,7 @@ import com.zz.recycleviewmvptest.mvp.page_list.PageListActivity;
 import com.zz.recycleviewmvptest.mvp.webview.WebViewPageActivity;
 import com.zz.recycleviewmvptest.widget.AntiShakeUtils;
 import com.zz.recycleviewmvptest.widget.CornerTransform;
-import com.zz.recycleviewmvptest.widget.ToastUtils;
+import com.zz.recycleviewmvptest.widget.toast.ToastUtils;
 import com.zz.recycleviewmvptest.widget.Utils;
 
 import java.util.ArrayList;

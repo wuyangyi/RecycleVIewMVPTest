@@ -25,7 +25,7 @@ import android.widget.Toast;
 import com.zz.recycleviewmvptest.BuildConfig;
 import com.zz.recycleviewmvptest.R;
 import com.zz.recycleviewmvptest.base.BaseFragment;
-import com.zz.recycleviewmvptest.widget.ToastUtils;
+import com.zz.recycleviewmvptest.widget.toast.ToastUtils;
 
 import static android.app.Activity.RESULT_OK;
 import static com.zz.recycleviewmvptest.mvp.webview.WebViewPageActivity.WEB_URL;

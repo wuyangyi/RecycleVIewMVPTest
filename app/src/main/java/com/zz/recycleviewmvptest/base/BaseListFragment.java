@@ -11,13 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.yanzhenjie.recyclerview.swipe.widget.DefaultItemDecoration;
 import com.zz.recycleviewmvptest.R;
 import com.zz.recycleviewmvptest.bean.BaseListBean;
 import com.zz.recycleviewmvptest.mvp.base_adapter.HeaderAndFooterWrapper;
-import com.zz.recycleviewmvptest.widget.ToastUtils;
+import com.zz.recycleviewmvptest.widget.toast.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;

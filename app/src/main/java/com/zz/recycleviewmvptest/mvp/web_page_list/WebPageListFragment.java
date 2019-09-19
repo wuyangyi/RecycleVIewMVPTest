@@ -1,9 +1,7 @@
 package com.zz.recycleviewmvptest.mvp.web_page_list;
 
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Toast;
 
 import com.zz.recycleviewmvptest.R;
 import com.zz.recycleviewmvptest.base.BaseListFragment;
@@ -11,10 +9,9 @@ import com.zz.recycleviewmvptest.bean.PageListListBean;
 import com.zz.recycleviewmvptest.mvp.base_adapter.CommonAdapter;
 import com.zz.recycleviewmvptest.mvp.base_adapter.MultiItemTypeAdapter;
 import com.zz.recycleviewmvptest.mvp.base_adapter.ViewHolder;
-import com.zz.recycleviewmvptest.mvp.page_list.PageListActivity;
 import com.zz.recycleviewmvptest.mvp.webview.WebViewPageActivity;
 import com.zz.recycleviewmvptest.widget.AntiShakeUtils;
-import com.zz.recycleviewmvptest.widget.ToastUtils;
+import com.zz.recycleviewmvptest.widget.toast.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;

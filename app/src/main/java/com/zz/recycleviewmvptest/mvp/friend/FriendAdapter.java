@@ -2,7 +2,6 @@ package com.zz.recycleviewmvptest.mvp.friend;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.zz.recycleviewmvptest.R;
@@ -12,7 +11,7 @@ import com.zz.recycleviewmvptest.mvp.base_adapter.ViewHolder;
 import com.zz.recycleviewmvptest.mvp.chat.ChatActivity;
 import com.zz.recycleviewmvptest.widget.AntiShakeUtils;
 import com.zz.recycleviewmvptest.widget.CornerTransform;
-import com.zz.recycleviewmvptest.widget.ToastUtils;
+import com.zz.recycleviewmvptest.widget.toast.ToastUtils;
 import com.zz.recycleviewmvptest.widget.Utils;
 import com.zz.recycleviewmvptest.widget.view.SlideLayout;
 

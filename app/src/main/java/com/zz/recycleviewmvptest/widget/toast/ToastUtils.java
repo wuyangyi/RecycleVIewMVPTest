@@ -1,6 +1,7 @@
-package com.zz.recycleviewmvptest.widget;
+package com.zz.recycleviewmvptest.widget.toast;
 
 import android.content.Context;
+import android.os.Build;
 import android.support.v4.app.NotificationManagerCompat;
 import android.view.Gravity;
 import android.view.View;
@@ -68,18 +69,19 @@ public class ToastUtils {
 
     /**
      * Toast防止时间累积
+     * android9.0，重复使用同一个Toast会hide掉当前的，则会为空，所以在android9.0以上直接每次使用就实例化一个Toast使用, 并不用防止重复的显示的问题
      */
     public static void showToast(final Context ctx, final int duration,
                                  final String text) {
         if (NotificationManagerCompat.from(ctx).areNotificationsEnabled()) { //通知权限是否打开
-            if (toastText != null) {
+            if (toastText != null && Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
                 toastText.setText(text);
-                toastText.show();
+                toastText.setDuration(duration);
             } else {
                 toastText = Toast.makeText(ctx, text, duration);
                 toastText.setGravity(Gravity.CENTER, 0, 0);
-                toastText.show();
             }
+            toastText.show();
         } else {
             com.hjq.toast.ToastUtils.show(text);
         }
@@ -89,7 +91,7 @@ public class ToastUtils {
      * toast一个自定义布局
      */
     public static void showToast(View v, Context context) {
-        if (toastView != null) {
+        if (toastView != null && Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
             toastView.setView(v);
             toastView.setDuration(Toast.LENGTH_SHORT);
             toastView.show();
