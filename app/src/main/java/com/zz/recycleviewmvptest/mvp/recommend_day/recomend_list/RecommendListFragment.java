@@ -1,5 +1,6 @@
 package com.zz.recycleviewmvptest.mvp.recommend_day.recomend_list;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
@@ -13,8 +14,13 @@ import com.zz.recycleviewmvptest.R;
 import com.zz.recycleviewmvptest.base.BaseFragment;
 import com.zz.recycleviewmvptest.bean.RecommendBean;
 import com.zz.recycleviewmvptest.mvp.base_adapter.CommonAdapter;
+import com.zz.recycleviewmvptest.mvp.base_adapter.MultiItemTypeAdapter;
 import com.zz.recycleviewmvptest.mvp.base_adapter.ViewHolder;
+import com.zz.recycleviewmvptest.mvp.page_list.PageListActivity;
+import com.zz.recycleviewmvptest.mvp.webview.WebViewPageActivity;
+import com.zz.recycleviewmvptest.widget.AntiShakeUtils;
 import com.zz.recycleviewmvptest.widget.CornerTransform;
+import com.zz.recycleviewmvptest.widget.ToastUtils;
 import com.zz.recycleviewmvptest.widget.Utils;
 
 import java.util.ArrayList;
@@ -82,6 +88,28 @@ public class RecommendListFragment extends BaseFragment {
                 }
             }
         };
+        mAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
+                if (AntiShakeUtils.isInvalidClick(view)) {
+                    return;
+                }
+                if (mListData.get(position).getUrl().endsWith(".jpg") || mListData.get(position).getUrl().endsWith(".png")) {
+                    startActivity(new Intent(getContext(), PageListActivity.class));
+                } else {
+                    WebViewPageActivity.startToWebViewPageActivity(getContext(), mListData.get(position).getUrl());
+                }
+            }
+
+            @Override
+            public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
+                boolean state = mListData.get(position).getUrl().endsWith(".jpg") || mListData.get(position).getUrl().endsWith(".png");
+                if (state) {
+                    ToastUtils.showToast("点击发现更多福利哦~");
+                }
+                return state;
+            }
+        });
         return mAdapter;
     }
 
