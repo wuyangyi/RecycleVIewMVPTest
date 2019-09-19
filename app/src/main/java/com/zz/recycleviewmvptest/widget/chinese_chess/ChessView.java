@@ -131,7 +131,6 @@ public class ChessView extends View {
                                 currentPosition[1] = y;
                                 invalidate();
                             } else {
-//                                Toast.makeText(getContext(), "不符合规则", Toast.LENGTH_SHORT).show();
                             }
                         }
                     } else { //黑棋走

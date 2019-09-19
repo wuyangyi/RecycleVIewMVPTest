@@ -35,6 +35,7 @@ import com.zz.recycleviewmvptest.mvp.base_adapter.MultiItemTypeAdapter;
 import com.zz.recycleviewmvptest.mvp.base_adapter.ViewHolder;
 import com.zz.recycleviewmvptest.mvp.image_show.ImageShowActivity;
 import com.zz.recycleviewmvptest.widget.SoftKeyBoardListener;
+import com.zz.recycleviewmvptest.widget.ToastUtils;
 import com.zz.recycleviewmvptest.widget.Utils;
 
 import java.util.ArrayList;
@@ -222,7 +223,7 @@ public class ChatFragment extends BaseFragment<ChatContract.Presenter> implement
         mIvHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "正在开发中~", Toast.LENGTH_SHORT).show();
+                ToastUtils.showToast("正在开发中~");
             }
         });
     }

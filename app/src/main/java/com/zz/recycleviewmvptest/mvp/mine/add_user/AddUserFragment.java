@@ -21,6 +21,7 @@ import com.zz.recycleviewmvptest.base.BaseFragment;
 import com.zz.recycleviewmvptest.bean.UserInfoBean;
 import com.zz.recycleviewmvptest.mvp.crop.CropActivity;
 import com.zz.recycleviewmvptest.widget.AntiShakeUtils;
+import com.zz.recycleviewmvptest.widget.ToastUtils;
 import com.zz.recycleviewmvptest.widget.Utils;
 import com.zz.recycleviewmvptest.widget.imageview.MLImageView;
 import com.zz.recycleviewmvptest.widget.popwindow.ActivePopWindow;
@@ -92,18 +93,19 @@ public class AddUserFragment extends BaseFragment<AddUserContract.Presenter> imp
                     return;
                 }
                 if (mEtName.getText().toString().isEmpty()) {
-                    Toast.makeText(getActivity(), "请输入昵称",Toast.LENGTH_SHORT).show();
+                    ToastUtils.showToast("请输入昵称");
                     return;
                 }
                 UserInfoBean u = new UserInfoBean(mEtName.getText().toString());
                 u.setHead(headPath);
                 if (mClAge.getText().toString().isEmpty()) {
-                    Toast.makeText(getActivity(), "请输入年龄",Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getActivity(), "请输入年龄",Toast.LENGTH_SHORT).show();
+                    ToastUtils.showToast("请输入年龄");
                     return;
                 }
                 u.setAge(Integer.parseInt(mClAge.getText().toString().isEmpty() ? "0" : mClAge.getText().toString()));
                 if (mClSex.getmIvRight().toString().isEmpty()) {
-                    Toast.makeText(getActivity(), "请选择性别",Toast.LENGTH_SHORT).show();
+                    ToastUtils.showToast("请选择性别");
                     return;
                 }
                 int sex = 0;
@@ -114,7 +116,8 @@ public class AddUserFragment extends BaseFragment<AddUserContract.Presenter> imp
                 }
                 u.setSex(sex);
                 if (mEdSchool.getText().toString().isEmpty()) {
-                    Toast.makeText(getActivity(), "请输入学校",Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getActivity(), "请输入学校",Toast.LENGTH_SHORT).show();
+                    ToastUtils.showToast("请输入学校");
                     return;
                 }
                 u.setSchool(mEdSchool.getText().toString());
@@ -167,7 +170,6 @@ public class AddUserFragment extends BaseFragment<AddUserContract.Presenter> imp
                     .item1ClickListener(new ActivePopWindow.ActionPopupWindowItem1ClickListener() {
                         @Override
                         public void onItemClicked() {
-//                            Toast.makeText(context, "相册", Toast.LENGTH_SHORT).show();
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN &&
                                     ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
                                     != PackageManager.PERMISSION_GRANTED) {
@@ -245,7 +247,7 @@ public class AddUserFragment extends BaseFragment<AddUserContract.Presenter> imp
                 if (selectedUri != null) {
                     startCropActivity(data.getData());
                 } else {
-                    Toast.makeText(context, "无法剪切选择图片", Toast.LENGTH_SHORT).show();
+                    ToastUtils.showToast("无法剪切选择图片");
                 }
             } else if (requestCode == UCrop.REQUEST_CROP) {
                 handleCropResult(data);

@@ -12,6 +12,7 @@ import com.zz.recycleviewmvptest.mvp.base_adapter.ViewHolder;
 import com.zz.recycleviewmvptest.mvp.chat.ChatActivity;
 import com.zz.recycleviewmvptest.widget.AntiShakeUtils;
 import com.zz.recycleviewmvptest.widget.CornerTransform;
+import com.zz.recycleviewmvptest.widget.ToastUtils;
 import com.zz.recycleviewmvptest.widget.Utils;
 import com.zz.recycleviewmvptest.widget.view.SlideLayout;
 
@@ -61,7 +62,6 @@ public class FriendAdapter extends CommonAdapter<FlListBean.ResultsListBean> {
                     return;
                 }
                 ChatActivity.startToChatActivity(mContext, resultsListBean);
-//                Toast.makeText(mContext, "点击了" + position, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -80,7 +80,8 @@ public class FriendAdapter extends CommonAdapter<FlListBean.ResultsListBean> {
                 if (AntiShakeUtils.isInvalidClick(v)) {
                     return;
                 }
-                Toast.makeText(mContext, "正在建设中~", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "正在建设中~", Toast.LENGTH_SHORT).show();
+                ToastUtils.showToast("正在建设中~");
             }
         });
     }

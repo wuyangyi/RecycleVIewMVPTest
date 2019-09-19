@@ -14,6 +14,7 @@ import com.zz.recycleviewmvptest.mvp.base_adapter.ViewHolder;
 import com.zz.recycleviewmvptest.mvp.page_list.PageListActivity;
 import com.zz.recycleviewmvptest.mvp.webview.WebViewPageActivity;
 import com.zz.recycleviewmvptest.widget.AntiShakeUtils;
+import com.zz.recycleviewmvptest.widget.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,7 +81,7 @@ public class WebPageListFragment extends BaseListFragment<WebPageListContract.Pr
             @Override
             public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
                 if (AntiShakeUtils.isInvalidClick(view)) {
-                    Toast.makeText(context, "请勿重复点击", Toast.LENGTH_SHORT).show();
+                    ToastUtils.showToast("请勿重复点击");
                     return;
                 }
 //                context.startActivity(new Intent(context, PageListActivity.class));

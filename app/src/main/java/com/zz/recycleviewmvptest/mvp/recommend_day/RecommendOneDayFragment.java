@@ -17,6 +17,7 @@ import com.zz.recycleviewmvptest.base.BaseFragment;
 import com.zz.recycleviewmvptest.bean.RecommendBean;
 import com.zz.recycleviewmvptest.mvp.base_adapter.ViewPagerAdapte;
 import com.zz.recycleviewmvptest.mvp.recommend_day.recomend_list.RecommendListFragment;
+import com.zz.recycleviewmvptest.widget.ToastUtils;
 import com.zz.recycleviewmvptest.widget.viewpage_indicator.TabIndicator;
 
 import org.json.JSONArray;
@@ -155,7 +156,7 @@ public class RecommendOneDayFragment extends BaseFragment<RecommendOneDayContrac
     @Override
     public void loadDataResult(boolean isSuccess, JSONObject jsonObject) {
         if (!isSuccess) { //加载失败
-            Toast.makeText(getContext(), "加载失败", Toast.LENGTH_SHORT).show();
+            ToastUtils.showToast("加载失败");
         } else {    //加载成功
             Log.d("返回的数据", jsonObject.toString());
             try {

@@ -146,11 +146,10 @@ public class Utils {
             if (null != outStream) {
                 bmp.compress(Bitmap.CompressFormat.PNG, 90, outStream);
             }
-            Toast.makeText(mContext, "保存成功", Toast.LENGTH_SHORT).show();
-
+            ToastUtils.showToast("保存成功");
         } catch (Exception e) {
             e.getStackTrace();
-            Toast.makeText(mContext, "保存失败", Toast.LENGTH_SHORT).show();
+            ToastUtils.showToast("保存失败");
         }finally {
             try {
                 if (outStream != null) {

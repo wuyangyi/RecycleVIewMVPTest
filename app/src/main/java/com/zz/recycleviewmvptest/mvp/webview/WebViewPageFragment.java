@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.zz.recycleviewmvptest.BuildConfig;
 import com.zz.recycleviewmvptest.R;
 import com.zz.recycleviewmvptest.base.BaseFragment;
+import com.zz.recycleviewmvptest.widget.ToastUtils;
 
 import static android.app.Activity.RESULT_OK;
 import static com.zz.recycleviewmvptest.mvp.webview.WebViewPageActivity.WEB_URL;
@@ -138,7 +139,7 @@ public class WebViewPageFragment extends BaseFragment {
             } catch (ActivityNotFoundException e)
             {
                 uploadMessage = null;
-                Toast.makeText(getContext(), "不能打开文件选择器", Toast.LENGTH_LONG).show();
+                ToastUtils.showToast("不能打开文件选择器");
                 return false;
             }
             return true;

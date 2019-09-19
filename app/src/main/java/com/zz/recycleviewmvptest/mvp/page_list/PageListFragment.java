@@ -29,6 +29,7 @@ import com.zz.recycleviewmvptest.mvp.base_adapter.HeaderAndFooterWrapper;
 import com.zz.recycleviewmvptest.mvp.base_adapter.MultiItemTypeAdapter;
 import com.zz.recycleviewmvptest.mvp.base_adapter.ViewHolder;
 import com.zz.recycleviewmvptest.widget.CornerTransform;
+import com.zz.recycleviewmvptest.widget.ToastUtils;
 import com.zz.recycleviewmvptest.widget.Utils;
 
 import java.util.ArrayList;
@@ -83,7 +84,7 @@ public class PageListFragment extends BaseListFragment<PageListContract.Presente
                 if (direction == SwipeMenuRecyclerView.RIGHT_DIRECTION) {
                     mListData.remove(adapterPosition);//删除item
                     mAdapter.notifyDataSetChanged();
-                    Toast.makeText(context, "删除" + adapterPosition, Toast.LENGTH_SHORT).show();
+                    ToastUtils.showToast("删除" + adapterPosition);
                 }
             }
         });
@@ -156,7 +157,8 @@ public class PageListFragment extends BaseListFragment<PageListContract.Presente
         mAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
-                Toast.makeText(context, "点击"+position, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "点击"+position, Toast.LENGTH_SHORT).show();
+                ToastUtils.showToast("点击" + position);
             }
 
             @Override

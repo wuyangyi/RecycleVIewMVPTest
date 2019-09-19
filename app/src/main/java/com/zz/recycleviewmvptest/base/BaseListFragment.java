@@ -17,6 +17,7 @@ import com.yanzhenjie.recyclerview.swipe.widget.DefaultItemDecoration;
 import com.zz.recycleviewmvptest.R;
 import com.zz.recycleviewmvptest.bean.BaseListBean;
 import com.zz.recycleviewmvptest.mvp.base_adapter.HeaderAndFooterWrapper;
+import com.zz.recycleviewmvptest.widget.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -248,7 +249,7 @@ public abstract class BaseListFragment<P extends IBaseListPresenter, B extends B
 
     @Override
     public void onNetFailing() {
-        Toast.makeText(context, "加载失败", Toast.LENGTH_SHORT).show();
+        ToastUtils.showToast("加载失败");
     }
 
 
