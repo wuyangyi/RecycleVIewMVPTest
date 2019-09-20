@@ -3,12 +3,14 @@ package com.zz.recycleviewmvptest.mvp.chat;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.zz.recycleviewmvptest.R;
 import com.zz.recycleviewmvptest.bean.ChatBean;
 import com.zz.recycleviewmvptest.mvp.base_adapter.ItemViewDelegate;
 import com.zz.recycleviewmvptest.mvp.base_adapter.ViewHolder;
 import com.zz.recycleviewmvptest.widget.AntiShakeUtils;
+import com.zz.recycleviewmvptest.widget.DataUtils;
 import com.zz.recycleviewmvptest.widget.Utils;
 
 import java.util.List;
@@ -23,6 +25,7 @@ public class ChatItem implements ItemViewDelegate<ChatBean> {
     private List<ChatBean> mListBean;
     private OnViewLongClick mOnViewLongClick;
     private ImageClick mImageClick;
+    private SoundClick mSoundClick;
 
     public ChatItem(Context context, List<ChatBean> listBean) {
         this.context = context;
@@ -40,6 +43,10 @@ public class ChatItem implements ItemViewDelegate<ChatBean> {
 
     public void setOnViewLongClick(OnViewLongClick onViewLongClick) {
         this.mOnViewLongClick = onViewLongClick;
+    }
+
+    public void setSoundClick(SoundClick soundClick) {
+        this.mSoundClick = soundClick;
     }
 
     public void setImageClick(ImageClick imageClick) {
@@ -77,10 +84,16 @@ public class ChatItem implements ItemViewDelegate<ChatBean> {
             holder.getTextView(R.id.tv_content).setVisibility(View.VISIBLE);
         }
         if (chatBean.getImagePath() != null && !chatBean.getImagePath().isEmpty()) {
-            holder.setImageBitmap(R.id.iv_image, Utils.getBitmapForPath(chatBean.getImagePath()));
+            holder.setImageBitmap(R.id.iv_image, DataUtils.isEmoji(chatBean.getImagePath()) ? Utils.getBitmapByName(context, chatBean.getImagePath()) : Utils.getBitmapForPath(chatBean.getImagePath()));
             holder.getImageViwe(R.id.iv_image).setVisibility(View.VISIBLE);
         } else {
             holder.getImageViwe(R.id.iv_image).setVisibility(View.GONE);
+        }
+        if (chatBean.getSoundPath() != null && !chatBean.getSoundPath().isEmpty()) {
+            holder.getView(R.id.llSound).setVisibility(View.VISIBLE);
+            holder.getTextView(R.id.tvSoundTime).setText((int)chatBean.getSoundTime() + "\"");
+        } else {
+            holder.getView(R.id.llSound).setVisibility(View.GONE);
         }
         holder.getImageViwe(R.id.iv_image).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +107,12 @@ public class ChatItem implements ItemViewDelegate<ChatBean> {
 
             }
         });
+        holder.getView(R.id.llSound).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSoundClick.OnSoundClickListener(chatBean.getSoundPath(), holder.getImageViwe(R.id.ivSound), chatBean.isMe());
+            }
+        });
     }
 
     public interface OnViewLongClick{
@@ -103,5 +122,10 @@ public class ChatItem implements ItemViewDelegate<ChatBean> {
     //图片点击事件
     public interface ImageClick{
         void onImageClickListener(String path);
+    }
+
+    //语音点击事件
+    public interface SoundClick{
+        void OnSoundClickListener(String path, ImageView imageView, boolean isMe);
     }
 }

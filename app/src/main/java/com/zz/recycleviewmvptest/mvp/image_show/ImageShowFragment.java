@@ -7,6 +7,7 @@ import android.widget.ImageView;
 
 import com.zz.recycleviewmvptest.R;
 import com.zz.recycleviewmvptest.base.BaseFragment;
+import com.zz.recycleviewmvptest.widget.DataUtils;
 import com.zz.recycleviewmvptest.widget.Utils;
 
 import static com.zz.recycleviewmvptest.mvp.image_show.ImageShowActivity.IMAGE_PATH;
@@ -27,7 +28,8 @@ public class ImageShowFragment extends BaseFragment {
     protected void initView(View rootView) {
         imageView = rootView.findViewById(R.id.iv_image);
         if (getArguments() != null) {
-            imageView.setImageBitmap(Utils.getBitmapForPath(getArguments().getString(IMAGE_PATH)));
+            String path = getArguments().getString(IMAGE_PATH);
+            imageView.setImageBitmap(DataUtils.isEmoji(path) ? Utils.getBitmapByName(getContext(), path) :Utils.getBitmapForPath(path));
         }
         rootView.setOnClickListener(new View.OnClickListener() {
             @Override

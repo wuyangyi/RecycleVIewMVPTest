@@ -53,6 +53,7 @@ public abstract class BaseFragment<P extends IBasePresenter> extends Fragment im
 
     protected static final int REQUEST_STORAGE_READ_ACCESS_PERMISSION = 101;
     protected static final int REQUEST_STORAGE_WRITE_ACCESS_PERMISSION = 102;
+    protected static final int REQUEST_RECORD_AUDIO = 103;
 
     private AlertDialog mAlertDialog;
 

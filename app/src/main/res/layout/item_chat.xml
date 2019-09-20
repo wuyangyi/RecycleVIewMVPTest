@@ -52,6 +52,26 @@
                 android:gravity="center|start"
                 android:layout_marginLeft="15dp"
                 tools:text="你好啊！我叫XXX，可以交个朋友吗？可以交个朋友吗"/>
+            <LinearLayout
+                android:id="@+id/llSound"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center|end"
+                android:background="@mipmap/ico_chat_my"
+                android:visibility="gone">
+                <TextView
+                    android:id="@+id/tvSoundTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:layout_marginRight="5dp"
+                    android:textColor="@color/home_bottom_text_normal" />
+                <ImageView
+                    android:id="@+id/ivSound"
+                    android:layout_width="40dp"
+                    android:layout_height="20dp"
+                    android:src="@mipmap/tt_voice_node_mine"/>
+            </LinearLayout>
         </LinearLayout>
 
         <com.zz.recycleviewmvptest.widget.imageview.CircleImageView

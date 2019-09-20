@@ -59,6 +59,27 @@
                 app:ml_border_color="@color/footer_no_more_data"
                 android:src="@drawable/ic_launcher_background"
                 android:visibility="gone"/>
+            <LinearLayout
+                android:id="@+id/llSound"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center|left"
+                android:background="@mipmap/ico_chat_other"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/ivSound"
+                    android:layout_width="40dp"
+                    android:layout_height="20dp"
+                    android:src="@mipmap/tt_voice_node_other"/>
+                <TextView
+                    android:id="@+id/tvSoundTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:layout_marginLeft="5dp"
+                    android:textColor="@color/home_bottom_text_normal" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

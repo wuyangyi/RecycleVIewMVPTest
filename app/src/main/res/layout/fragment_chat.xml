@@ -23,8 +23,31 @@
         android:paddingTop="12.5dp"
         android:paddingBottom="12.5dp"
         android:paddingRight="15dp"
+        android:paddingLeft="15dp"
         android:gravity="bottom"
         android:background="@color/white">
+        <ImageView
+            android:id="@+id/ivDown"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="15dp"
+            android:src="@mipmap/ico_speck"/>
+        <com.zz.recycleviewmvptest.widget.button.SpeckButton
+            android:id="@+id/tvDownSpeck"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:paddingTop="7.5dp"
+            android:paddingBottom="7.5dp"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:layout_marginRight="14.5dp"
+            android:gravity="center"
+            android:textColor="@color/title_color"
+            android:textSize="14sp"
+            android:text="按住 说话"
+            android:background="@drawable/bg_speck_no_down"
+            android:visibility="gone"/>
         <EditText
             android:id="@+id/et_import"
             android:layout_width="0dp"
@@ -32,7 +55,6 @@
             android:layout_height="wrap_content"
             android:background="@drawable/bg_search_radus"
             android:maxLines="5"
-            android:layout_marginLeft="15dp"
             android:layout_marginRight="14.5dp"
             android:paddingTop="7.5dp"
             android:paddingBottom="7.5dp"
@@ -70,34 +92,26 @@
             android:textSize="12sp"
             android:visibility="gone"/>
     </LinearLayout>
-    <ViewSwitcher
+    <LinearLayout
         android:id="@+id/ll_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:persistentDrawingCache="animation"
-        android:inAnimation="@anim/slide_in_bottom"
-        android:outAnimation="@anim/slide_out_bottom"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:gravity="center"
         android:visibility="gone">
-        <LinearLayout
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@color/white"
-            android:gravity="center_horizontal">
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/driver_color"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"/>
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rvMenu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:overScrollMode="never"/>
-        </LinearLayout>
-    </ViewSwitcher>
+            android:layout_height="0.5dp"
+            android:background="@color/driver_color"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:overScrollMode="never"/>
+    </LinearLayout>
 
 
 </LinearLayout>

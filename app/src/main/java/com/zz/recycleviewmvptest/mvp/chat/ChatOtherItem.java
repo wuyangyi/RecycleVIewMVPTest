@@ -10,6 +10,7 @@ import com.zz.recycleviewmvptest.bean.ChatBean;
 import com.zz.recycleviewmvptest.mvp.base_adapter.ItemViewDelegate;
 import com.zz.recycleviewmvptest.mvp.base_adapter.ViewHolder;
 import com.zz.recycleviewmvptest.widget.AntiShakeUtils;
+import com.zz.recycleviewmvptest.widget.DataUtils;
 import com.zz.recycleviewmvptest.widget.Utils;
 
 import java.text.ParseException;
@@ -25,6 +26,7 @@ public class ChatOtherItem implements ItemViewDelegate<ChatBean> {
     private List<ChatBean> mListBean;
     public final static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private ChatItem.ImageClick mImageClick;
+    private ChatItem.SoundClick mSoundClick;
 
     public ChatOtherItem(Context context, List<ChatBean> listBean) {
         this.context = context;
@@ -37,6 +39,10 @@ public class ChatOtherItem implements ItemViewDelegate<ChatBean> {
 
     public void setImageClick(ChatItem.ImageClick imageClick) {
         this.mImageClick = imageClick;
+    }
+
+    public void setSoundClick(ChatItem.SoundClick soundClick) {
+        this.mSoundClick = soundClick;
     }
 
     @Override
@@ -73,10 +79,16 @@ public class ChatOtherItem implements ItemViewDelegate<ChatBean> {
             holder.getTextView(R.id.tv_content).setVisibility(View.VISIBLE);
         }
         if (chatBean.getImagePath() != null && !chatBean.getImagePath().isEmpty()) {
-            holder.setImageBitmap(R.id.iv_image, Utils.getBitmapForPath(chatBean.getImagePath()));
+            holder.setImageBitmap(R.id.iv_image, DataUtils.isEmoji(chatBean.getImagePath()) ? Utils.getBitmapByName(context, chatBean.getImagePath()) : Utils.getBitmapForPath(chatBean.getImagePath()));
             holder.getImageViwe(R.id.iv_image).setVisibility(View.VISIBLE);
         } else {
             holder.getImageViwe(R.id.iv_image).setVisibility(View.GONE);
+        }
+        if (chatBean.getSoundPath() != null && !chatBean.getSoundPath().isEmpty()) {
+            holder.getView(R.id.llSound).setVisibility(View.VISIBLE);
+            holder.getTextView(R.id.tvSoundTime).setText((int)chatBean.getSoundTime() + "\"");
+        } else {
+            holder.getView(R.id.llSound).setVisibility(View.GONE);
         }
         holder.getImageViwe(R.id.iv_image).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,6 +100,12 @@ public class ChatOtherItem implements ItemViewDelegate<ChatBean> {
                     mImageClick.onImageClickListener(chatBean.getImagePath());
                 }
 
+            }
+        });
+        holder.getView(R.id.llSound).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSoundClick.OnSoundClickListener(chatBean.getSoundPath(), holder.getImageViwe(R.id.ivSound), chatBean.isMe());
             }
         });
     }

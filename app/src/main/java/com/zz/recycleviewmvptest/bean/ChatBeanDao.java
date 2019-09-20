@@ -33,6 +33,8 @@ public class ChatBeanDao extends AbstractDao<ChatBean, Long> {
         public final static Property IsMe = new Property(5, boolean.class, "isMe", false, "IS_ME");
         public final static Property UserId = new Property(6, String.class, "userId", false, "USER_ID");
         public final static Property ImagePath = new Property(7, String.class, "imagePath", false, "IMAGE_PATH");
+        public final static Property SoundPath = new Property(8, String.class, "soundPath", false, "SOUND_PATH");
+        public final static Property SoundTime = new Property(9, float.class, "soundTime", false, "SOUND_TIME");
     }
 
     private final UserConverter userConverter = new UserConverter();
@@ -56,7 +58,9 @@ public class ChatBeanDao extends AbstractDao<ChatBean, Long> {
                 "\"CONTEXT\" TEXT," + // 4: context
                 "\"IS_ME\" INTEGER NOT NULL ," + // 5: isMe
                 "\"USER_ID\" TEXT," + // 6: userId
-                "\"IMAGE_PATH\" TEXT);"); // 7: imagePath
+                "\"IMAGE_PATH\" TEXT," + // 7: imagePath
+                "\"SOUND_PATH\" TEXT," + // 8: soundPath
+                "\"SOUND_TIME\" REAL NOT NULL );"); // 9: soundTime
     }
 
     /** Drops the underlying database table. */
@@ -100,6 +104,12 @@ public class ChatBeanDao extends AbstractDao<ChatBean, Long> {
         if (imagePath != null) {
             stmt.bindString(8, imagePath);
         }
+ 
+        String soundPath = entity.getSoundPath();
+        if (soundPath != null) {
+            stmt.bindString(9, soundPath);
+        }
+        stmt.bindDouble(10, entity.getSoundTime());
     }
 
     @Override
@@ -137,6 +147,12 @@ public class ChatBeanDao extends AbstractDao<ChatBean, Long> {
         if (imagePath != null) {
             stmt.bindString(8, imagePath);
         }
+ 
+        String soundPath = entity.getSoundPath();
+        if (soundPath != null) {
+            stmt.bindString(9, soundPath);
+        }
+        stmt.bindDouble(10, entity.getSoundTime());
     }
 
     @Override
@@ -154,7 +170,9 @@ public class ChatBeanDao extends AbstractDao<ChatBean, Long> {
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // context
             cursor.getShort(offset + 5) != 0, // isMe
             cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // userId
-            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7) // imagePath
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // imagePath
+            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // soundPath
+            cursor.getFloat(offset + 9) // soundTime
         );
         return entity;
     }
@@ -169,6 +187,8 @@ public class ChatBeanDao extends AbstractDao<ChatBean, Long> {
         entity.setIsMe(cursor.getShort(offset + 5) != 0);
         entity.setUserId(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
         entity.setImagePath(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setSoundPath(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
+        entity.setSoundTime(cursor.getFloat(offset + 9));
      }
     
     @Override

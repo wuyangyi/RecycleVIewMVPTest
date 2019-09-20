@@ -372,4 +372,14 @@ public class Utils {
         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
         return drawable;
     }
+
+    /**
+     * 根据图片名称获取bitmap
+     * @param name
+     * @return
+     */
+    public static Bitmap getBitmapByName(Context context, String name) {
+        int resID = context.getResources().getIdentifier(name, "mipmap", context.getPackageName());
+        return BitmapFactory.decodeResource(context.getResources(), resID);
+    }
 }
