@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Build;
@@ -24,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zz.recycleviewmvptest.R;
+import com.zz.recycleviewmvptest.mvp.home.HomeActivity;
 import com.zz.recycleviewmvptest.widget.AntiShakeUtils;
 import com.zz.recycleviewmvptest.widget.DeviceUtils;
 import com.zz.recycleviewmvptest.widget.StatusBarUtils;
@@ -54,6 +56,7 @@ public abstract class BaseFragment<P extends IBasePresenter> extends Fragment im
     protected static final int REQUEST_STORAGE_READ_ACCESS_PERMISSION = 101;
     protected static final int REQUEST_STORAGE_WRITE_ACCESS_PERMISSION = 102;
     protected static final int REQUEST_RECORD_AUDIO = 103;
+    public static final int REQUEST_STORAGE_CAMERA_TAKE_PHOTO = 104; //相机
 
     private AlertDialog mAlertDialog;
 
@@ -284,6 +287,11 @@ public abstract class BaseFragment<P extends IBasePresenter> extends Fragment im
         });
     }
 
+    /**
+     * 获取toolbar下方的布局文件
+     */
+    protected abstract int getBodyLayoutId();
+
     protected abstract void initView(View rootView);
 
     protected abstract void initData();
@@ -296,11 +304,6 @@ public abstract class BaseFragment<P extends IBasePresenter> extends Fragment im
     protected boolean useEventBus() {
         return false;
     }
-
-    /**
-     * 获取toolbar下方的布局文件
-     */
-    protected abstract int getBodyLayoutId();
 
     /**
      * 是否显示toolbar,默认显示
@@ -445,6 +448,13 @@ public abstract class BaseFragment<P extends IBasePresenter> extends Fragment im
     protected void useAnimationIntent() {
         if (getActivity() instanceof AnimationClick) {
             ((AnimationClick)getActivity()).animation();
+        }
+    }
+
+    protected void goHome(boolean isFinish) {
+        startActivity(new Intent(mActivity, HomeActivity.class));
+        if (isFinish) {
+            mActivity.finish();
         }
     }
 

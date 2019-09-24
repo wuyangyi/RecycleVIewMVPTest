@@ -75,33 +75,18 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     }
 
     @Override
-    protected int setRightImage() {
-        return R.mipmap.ico_message;
+    protected boolean showToolbar() {
+        return false;
     }
 
     @Override
-    protected void setRightImageClick() {
-        context.startActivity(new Intent(context, FriendActivity.class));
+    protected boolean setStatusbarGrey() {
+        return false;
     }
 
     @Override
-    protected int setLeftImage() {
-        return 0;
-    }
-
-    @Override
-    protected String setCenterTitle() {
-        return "My App";
-    }
-
-    @Override
-    protected int setTitleBg() {
-        return R.color.home_bottom;
-    }
-
-    @Override
-    protected int setCenterTitleColor() {
-        return R.color.white;
+    protected boolean setUseSatusbar() {
+        return true;
     }
 
     @Override

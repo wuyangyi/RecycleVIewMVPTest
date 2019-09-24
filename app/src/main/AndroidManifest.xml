@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.zz.recycleviewmvptest">
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -19,6 +20,7 @@
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.hardware.camera.autofocus"/> <!--自动聚焦权限-->
 
     <application
         android:name=".base.BaseApplication"
@@ -35,18 +37,39 @@
 
         <uses-library android:name="org.apache.http.legacy" android:required="false" />
 
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            tools:replace="android:authorities">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"
+                tools:replace="android:resource"/>
+        </provider>
+
+
         <!--android:clearTaskOnLaunch="false" 为true时控制点击app图标重新打开-->
         <activity
-            android:name=".mvp.home.HomeActivity"
+            android:name=".mvp.start.StartActivity"
             android:launchMode="singleTop"
             android:clearTaskOnLaunch="false"
-            android:screenOrientation="portrait">
+            android:theme="@style/BackGroundLauncherTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".mvp.login.LoginActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".mvp.home.HomeActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".mvp.page_list.PageListActivity"
             android:screenOrientation="portrait" />
@@ -60,9 +83,11 @@
         <activity android:name=".mvp.chess.chess_list.ChessListActivity" />
         <activity android:name=".mvp.image_show.ImageShowActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"/>
-        <activity android:name=".base.BaseActivity" />
         <activity android:name=".mvp.webview.WebViewPageActivity" />
         <activity android:name=".mvp.recommend_day.RecommendOneDayActivity" />
+        <activity android:name=".mvp.setting.SettingActivity" />
+        <activity android:name=".mvp.password.UpPasswordActivity" />
+
     </application>
 
 </manifest>

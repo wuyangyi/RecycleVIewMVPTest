@@ -26,6 +26,8 @@ public class ChatBean extends BaseListBean {
     private String imagePath; //发送的图片地址
     private String soundPath; //语言地址
     private float soundTime; //语音时长
+    @Convert(converter = MyUserConverter.class, columnType = String.class)
+    private MyInfoBean myInfoBean; //发件人信息
 
     public ChatBean(String context) {
         this.context = context;
@@ -41,10 +43,10 @@ public class ChatBean extends BaseListBean {
 
 
 
-    @Generated(hash = 68771653)
+    @Generated(hash = 1262334286)
     public ChatBean(Long id, FlListBean.ResultsListBean user, long create_time,
             String send_time, String context, boolean isMe, String userId, String imagePath,
-            String soundPath, float soundTime) {
+            String soundPath, float soundTime, MyInfoBean myInfoBean) {
         this.id = id;
         this.user = user;
         this.create_time = create_time;
@@ -55,9 +57,8 @@ public class ChatBean extends BaseListBean {
         this.imagePath = imagePath;
         this.soundPath = soundPath;
         this.soundTime = soundTime;
+        this.myInfoBean = myInfoBean;
     }
-
-
 
 
     public Long getId() {
@@ -148,7 +149,19 @@ public class ChatBean extends BaseListBean {
         this.soundTime = soundTime;
     }
 
+    public MyInfoBean getMyInfoBean() {
+        return myInfoBean;
+    }
+
+    public void setMyInfoBean(MyInfoBean myInfoBean) {
+        this.myInfoBean = myInfoBean;
+    }
+
     public static class UserConverter extends BaseConvert<FlListBean.ResultsListBean> {
+
+    }
+
+    public static class MyUserConverter extends BaseConvert<MyInfoBean> {
 
     }
 }

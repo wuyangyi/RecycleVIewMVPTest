@@ -23,6 +23,7 @@ public class DaoMaster extends AbstractDaoMaster {
     public static void createAllTables(Database db, boolean ifNotExists) {
         ChatBeanDao.createTable(db, ifNotExists);
         ChessListBeanDao.createTable(db, ifNotExists);
+        MyInfoBeanDao.createTable(db, ifNotExists);
         UserInfoBeanDao.createTable(db, ifNotExists);
     }
 
@@ -30,6 +31,7 @@ public class DaoMaster extends AbstractDaoMaster {
     public static void dropAllTables(Database db, boolean ifExists) {
         ChatBeanDao.dropTable(db, ifExists);
         ChessListBeanDao.dropTable(db, ifExists);
+        MyInfoBeanDao.dropTable(db, ifExists);
         UserInfoBeanDao.dropTable(db, ifExists);
     }
 
@@ -51,6 +53,7 @@ public class DaoMaster extends AbstractDaoMaster {
         super(db, SCHEMA_VERSION);
         registerDaoClass(ChatBeanDao.class);
         registerDaoClass(ChessListBeanDao.class);
+        registerDaoClass(MyInfoBeanDao.class);
         registerDaoClass(UserInfoBeanDao.class);
     }
 

@@ -15,6 +15,7 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -22,6 +23,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
+import com.zz.recycleviewmvptest.BuildConfig;
 import com.zz.recycleviewmvptest.widget.toast.ToastUtils;
 
 import java.io.ByteArrayInputStream;
@@ -35,12 +37,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static com.zz.recycleviewmvptest.base.BaseFragment.REQUEST_STORAGE_CAMERA_TAKE_PHOTO;
+
 public class Utils {
-    //系统相册目录
-    public static String galleryPath= Environment.getExternalStorageDirectory()
-            + File.separator + Environment.DIRECTORY_DCIM
-            +File.separator+"Camera"+File.separator;
+    public static String APP_SYSTEM_PATH = Environment.getExternalStorageDirectory() + "/小熊爱睡觉/";//app文件目录
+    public static String galleryPath= APP_SYSTEM_PATH + "Camera/"; //图片保存目录
     public static final int REQUEST_SELECT_PICTURE = 0x01; //相册选择图片
+    public static final int REQUEST_TAKE_PICTURE = 0x02; //相机拍照
 
 
     public static String converTimeFormat(String time) {
@@ -49,10 +52,6 @@ public class Utils {
             return parts[0] + "." + parts[1];
         }
         return time;
-    }
-
-    public static float dpToPixel(Context context, float dp) {
-        return dp * (getDisplayMetrics(context).densityDpi / 160f);
     }
 
     /**
@@ -83,7 +82,7 @@ public class Utils {
                     view.getWindowToken(), 0);
         }
     }
-
+    //String转对象
     public static <T> T base64Str2Object(String productBase64) {
         T device = null;
         if (productBase64 == null) {
@@ -105,6 +104,7 @@ public class Utils {
         return device;
     }
 
+    //对象转String
     public static <T> String object2Base64Str(T object) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try {   //Device为自定义类
@@ -235,6 +235,10 @@ public class Utils {
         return (int) (pxVal / scale);
     }
 
+    public static float dpToPixel(Context context, float dp) {
+        return dp * (getDisplayMetrics(context).densityDpi / 160f);
+    }
+
     /**
      * 选择图片
      */
@@ -244,6 +248,27 @@ public class Utils {
         intent.setAction(Intent.ACTION_GET_CONTENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         activity.startActivityForResult(Intent.createChooser(intent, "选择图片"), REQUEST_SELECT_PICTURE);
+    }
+
+    //拍照
+    public static String takePicture(Activity activity) {
+        String state = Environment.getExternalStorageState();
+        String picFileFullName="";
+        if (state.equals(Environment.MEDIA_MOUNTED)) {
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            File outDir = new File(galleryPath);
+            if (!outDir.exists()) {
+                outDir.mkdirs();
+            }
+            File outFile = new File(outDir, System.currentTimeMillis() + ".jpg");
+            picFileFullName = outFile.getAbsolutePath();
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(activity.getApplicationContext(), BuildConfig.APPLICATION_ID+".provider", outFile));
+            intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
+            activity.startActivityForResult(intent, REQUEST_STORAGE_CAMERA_TAKE_PHOTO);
+        } else {
+            /*Log.e(TAG, "请确认已经插入SD卡");*/
+        }
+        return picFileFullName;
     }
 
     /**

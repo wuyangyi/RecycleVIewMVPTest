@@ -29,6 +29,10 @@ public class UserInfoBeanDao extends AbstractDao<UserInfoBean, Long> {
         public final static Property Sex = new Property(4, int.class, "sex", false, "SEX");
         public final static Property Head = new Property(5, String.class, "head", false, "HEAD");
         public final static Property Create_time = new Property(6, long.class, "create_time", false, "CREATE_TIME");
+        public final static Property Password = new Property(7, String.class, "password", false, "PASSWORD");
+        public final static Property Phone = new Property(8, String.class, "phone", false, "PHONE");
+        public final static Property IsLogin = new Property(9, boolean.class, "isLogin", false, "IS_LOGIN");
+        public final static Property IsAdmin = new Property(10, boolean.class, "isAdmin", false, "IS_ADMIN");
     }
 
 
@@ -50,7 +54,11 @@ public class UserInfoBeanDao extends AbstractDao<UserInfoBean, Long> {
                 "\"AGE\" INTEGER NOT NULL ," + // 3: age
                 "\"SEX\" INTEGER NOT NULL ," + // 4: sex
                 "\"HEAD\" TEXT," + // 5: head
-                "\"CREATE_TIME\" INTEGER NOT NULL );"); // 6: create_time
+                "\"CREATE_TIME\" INTEGER NOT NULL ," + // 6: create_time
+                "\"PASSWORD\" TEXT," + // 7: password
+                "\"PHONE\" TEXT," + // 8: phone
+                "\"IS_LOGIN\" INTEGER NOT NULL ," + // 9: isLogin
+                "\"IS_ADMIN\" INTEGER NOT NULL );"); // 10: isAdmin
     }
 
     /** Drops the underlying database table. */
@@ -85,6 +93,18 @@ public class UserInfoBeanDao extends AbstractDao<UserInfoBean, Long> {
             stmt.bindString(6, head);
         }
         stmt.bindLong(7, entity.getCreate_time());
+ 
+        String password = entity.getPassword();
+        if (password != null) {
+            stmt.bindString(8, password);
+        }
+ 
+        String phone = entity.getPhone();
+        if (phone != null) {
+            stmt.bindString(9, phone);
+        }
+        stmt.bindLong(10, entity.getIsLogin() ? 1L: 0L);
+        stmt.bindLong(11, entity.getIsAdmin() ? 1L: 0L);
     }
 
     @Override
@@ -113,6 +133,18 @@ public class UserInfoBeanDao extends AbstractDao<UserInfoBean, Long> {
             stmt.bindString(6, head);
         }
         stmt.bindLong(7, entity.getCreate_time());
+ 
+        String password = entity.getPassword();
+        if (password != null) {
+            stmt.bindString(8, password);
+        }
+ 
+        String phone = entity.getPhone();
+        if (phone != null) {
+            stmt.bindString(9, phone);
+        }
+        stmt.bindLong(10, entity.getIsLogin() ? 1L: 0L);
+        stmt.bindLong(11, entity.getIsAdmin() ? 1L: 0L);
     }
 
     @Override
@@ -129,7 +161,11 @@ public class UserInfoBeanDao extends AbstractDao<UserInfoBean, Long> {
             cursor.getInt(offset + 3), // age
             cursor.getInt(offset + 4), // sex
             cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // head
-            cursor.getLong(offset + 6) // create_time
+            cursor.getLong(offset + 6), // create_time
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // password
+            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // phone
+            cursor.getShort(offset + 9) != 0, // isLogin
+            cursor.getShort(offset + 10) != 0 // isAdmin
         );
         return entity;
     }
@@ -143,6 +179,10 @@ public class UserInfoBeanDao extends AbstractDao<UserInfoBean, Long> {
         entity.setSex(cursor.getInt(offset + 4));
         entity.setHead(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
         entity.setCreate_time(cursor.getLong(offset + 6));
+        entity.setPassword(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setPhone(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
+        entity.setIsLogin(cursor.getShort(offset + 9) != 0);
+        entity.setIsAdmin(cursor.getShort(offset + 10) != 0);
      }
     
     @Override

@@ -9,6 +9,7 @@ import org.greenrobot.greendao.internal.DaoConfig;
 import org.greenrobot.greendao.database.Database;
 import org.greenrobot.greendao.database.DatabaseStatement;
 
+import com.zz.recycleviewmvptest.bean.ChatBean.MyUserConverter;
 import com.zz.recycleviewmvptest.bean.ChatBean.UserConverter;
 import com.zz.recycleviewmvptest.bean.FlListBean.ResultsListBean;
 
@@ -35,9 +36,11 @@ public class ChatBeanDao extends AbstractDao<ChatBean, Long> {
         public final static Property ImagePath = new Property(7, String.class, "imagePath", false, "IMAGE_PATH");
         public final static Property SoundPath = new Property(8, String.class, "soundPath", false, "SOUND_PATH");
         public final static Property SoundTime = new Property(9, float.class, "soundTime", false, "SOUND_TIME");
+        public final static Property MyInfoBean = new Property(10, String.class, "myInfoBean", false, "MY_INFO_BEAN");
     }
 
     private final UserConverter userConverter = new UserConverter();
+    private final MyUserConverter myInfoBeanConverter = new MyUserConverter();
 
     public ChatBeanDao(DaoConfig config) {
         super(config);
@@ -60,7 +63,8 @@ public class ChatBeanDao extends AbstractDao<ChatBean, Long> {
                 "\"USER_ID\" TEXT," + // 6: userId
                 "\"IMAGE_PATH\" TEXT," + // 7: imagePath
                 "\"SOUND_PATH\" TEXT," + // 8: soundPath
-                "\"SOUND_TIME\" REAL NOT NULL );"); // 9: soundTime
+                "\"SOUND_TIME\" REAL NOT NULL ," + // 9: soundTime
+                "\"MY_INFO_BEAN\" TEXT);"); // 10: myInfoBean
     }
 
     /** Drops the underlying database table. */
@@ -110,6 +114,11 @@ public class ChatBeanDao extends AbstractDao<ChatBean, Long> {
             stmt.bindString(9, soundPath);
         }
         stmt.bindDouble(10, entity.getSoundTime());
+ 
+        MyInfoBean myInfoBean = entity.getMyInfoBean();
+        if (myInfoBean != null) {
+            stmt.bindString(11, myInfoBeanConverter.convertToDatabaseValue(myInfoBean));
+        }
     }
 
     @Override
@@ -153,6 +162,11 @@ public class ChatBeanDao extends AbstractDao<ChatBean, Long> {
             stmt.bindString(9, soundPath);
         }
         stmt.bindDouble(10, entity.getSoundTime());
+ 
+        MyInfoBean myInfoBean = entity.getMyInfoBean();
+        if (myInfoBean != null) {
+            stmt.bindString(11, myInfoBeanConverter.convertToDatabaseValue(myInfoBean));
+        }
     }
 
     @Override
@@ -172,7 +186,8 @@ public class ChatBeanDao extends AbstractDao<ChatBean, Long> {
             cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // userId
             cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // imagePath
             cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // soundPath
-            cursor.getFloat(offset + 9) // soundTime
+            cursor.getFloat(offset + 9), // soundTime
+            cursor.isNull(offset + 10) ? null : myInfoBeanConverter.convertToEntityProperty(cursor.getString(offset + 10)) // myInfoBean
         );
         return entity;
     }
@@ -189,6 +204,7 @@ public class ChatBeanDao extends AbstractDao<ChatBean, Long> {
         entity.setImagePath(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
         entity.setSoundPath(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
         entity.setSoundTime(cursor.getFloat(offset + 9));
+        entity.setMyInfoBean(cursor.isNull(offset + 10) ? null : myInfoBeanConverter.convertToEntityProperty(cursor.getString(offset + 10)));
      }
     
     @Override

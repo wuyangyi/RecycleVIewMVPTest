@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao'
 //apply plugin: 'com.jakewharton.butterknife'
+apply plugin: 'com.mob.sdk'
 
 android {
     compileSdkVersion 28
@@ -48,6 +49,14 @@ greendao {
     daoPackage 'com.zz.recycleviewmvptest.bean'
     targetGenDir 'src/main/java'
 }
+/**
+ * 集成SMSSDK短信验证
+ */
+MobSDK {
+    appKey "2c8f1d4d54ebe"
+    appSecret "fb68261d285999e3ae869596a9d8d101"
+    SMSSDK {}
+}
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -76,4 +85,6 @@ dependencies {
     implementation 'com.github.hackware1993:MagicIndicator:1.5.0' //指示器
 
     implementation "com.hjq:toast:6.0" //未打开通知管理器时的Toast提示
+
+    implementation 'com.google.zxing:core:3.3.0'//二维码
 }

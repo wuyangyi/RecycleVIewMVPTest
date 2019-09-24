@@ -89,4 +89,29 @@
         <attr name="textLRPadding" format="dimension"/> <!--文字的左右padding-->
         <attr name="indicatorPadding" format="dimension"/> <!--指示器左右padding-->
     </declare-styleable>
+
+    <!--密码或者文本输入框，带清除和密码可见按钮-->
+    <declare-styleable name="EditTextDelOrSee">
+        <!--editText hint文字-->
+        <attr name="edtHintText" format="reference|string"/>
+        <!--输入的类型-->
+        <attr name="inputType" format="enum">
+            <enum name="text" value="0"/>
+            <enum name="phone" value="1"/>
+            <enum name="number" value="2"/>
+            <enum name="password" value="3"/>
+        </attr>
+        <!--edittext最多输入长度-->
+        <attr name="maxLength" format="integer|reference"/>
+    </declare-styleable>
+
+    <!--图形验证码-->
+    <declare-styleable name="CodeImageView">
+        <attr name="codeLength" format="integer"/> <!--验证码长度-->
+        <attr name="bgColor" format="color"/> <!--背景色-->
+        <attr name="lineNumber" format="integer"/> <!--干扰性数目-->
+        <attr name="mTextSize" format="dimension"/> <!--文字大小-->
+        <attr name="width" format="dimension" />
+        <attr name="height" format="dimension"/>
+    </declare-styleable>
 </resources>

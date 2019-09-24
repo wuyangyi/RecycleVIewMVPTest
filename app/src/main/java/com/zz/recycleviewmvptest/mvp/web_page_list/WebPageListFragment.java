@@ -1,7 +1,11 @@
 package com.zz.recycleviewmvptest.mvp.web_page_list;
 
+import android.app.Dialog;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.zz.recycleviewmvptest.R;
 import com.zz.recycleviewmvptest.base.BaseListFragment;
@@ -11,6 +15,8 @@ import com.zz.recycleviewmvptest.mvp.base_adapter.MultiItemTypeAdapter;
 import com.zz.recycleviewmvptest.mvp.base_adapter.ViewHolder;
 import com.zz.recycleviewmvptest.mvp.webview.WebViewPageActivity;
 import com.zz.recycleviewmvptest.widget.AntiShakeUtils;
+import com.zz.recycleviewmvptest.widget.Utils;
+import com.zz.recycleviewmvptest.widget.ZXingUtils;
 import com.zz.recycleviewmvptest.widget.toast.ToastUtils;
 
 import java.util.ArrayList;
@@ -20,6 +26,7 @@ public class WebPageListFragment extends BaseListFragment<WebPageListContract.Pr
 
     private CommonAdapter<PageListListBean.ResultsListBean> adapter;
     private WebPageListHeader mWebPageListHeader;
+    private Dialog dialog;
 
     @Override
     protected void initView(View rootView) {
@@ -32,10 +39,9 @@ public class WebPageListFragment extends BaseListFragment<WebPageListContract.Pr
         mHeaderAndFooterWrapper.addHeaderView(mWebPageListHeader.getmWebPageListHeader());
     }
 
-
     @Override
-    protected boolean setUseStatusView() {
-        return false;
+    protected int setToolBarBackgroud() {
+        return R.color.white;
     }
 
     @Override
@@ -93,10 +99,22 @@ public class WebPageListFragment extends BaseListFragment<WebPageListContract.Pr
 
             @Override
             public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
-                return false;
+                position = position - mHeaderAndFooterWrapper.getHeadersCount();
+                showCodeImageDialog(mListData.get(position).getUrl());
+                return true;
             }
         });
         return adapter;
+    }
+
+    private void showCodeImageDialog(String url) {
+        dialog = new Dialog(getContext(), R.style.TheDialog);
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_code_image_view, null);
+        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        view.findViewById(R.id.ivClear).setOnClickListener(v -> dialog.dismiss());
+        ((ImageView)view.findViewById(R.id.ivCode)).setImageBitmap(ZXingUtils.createQRImage(url, Utils.dp2px(getContext(), 200), Utils.dp2px(getContext(), 200)));
+        dialog.addContentView(view, layoutParams);
+        dialog.show();
     }
 
     @Override

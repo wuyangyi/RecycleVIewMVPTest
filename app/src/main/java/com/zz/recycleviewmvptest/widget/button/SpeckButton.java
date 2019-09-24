@@ -16,6 +16,8 @@ import com.zz.recycleviewmvptest.widget.Utils;
 import com.zz.recycleviewmvptest.widget.manager.AudioPlayerManager;
 import com.zz.recycleviewmvptest.widget.manager.ChatDialogManager;
 
+import static com.zz.recycleviewmvptest.widget.Utils.APP_SYSTEM_PATH;
+
 /**
  * author: wuyangyi
  * date: 2019-09-19
@@ -41,7 +43,7 @@ public class SpeckButton extends android.support.v7.widget.AppCompatTextView {
     public SpeckButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mChatDialogManager = ChatDialogManager.getInstance(context);
-        String dir = Environment.getExternalStorageDirectory() + "/小熊爱睡觉/recorder_audio";
+        String dir = APP_SYSTEM_PATH + "recorder_audio";
         mAudioPlayerManager = AudioPlayerManager.getInstance(dir);
     }
 

@@ -1,43 +1,75 @@
 package com.zz.recycleviewmvptest.mvp.mine;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.zz.recycleviewmvptest.R;
 import com.zz.recycleviewmvptest.base.BaseFragment;
-import com.zz.recycleviewmvptest.base.BaseListFragment;
-import com.zz.recycleviewmvptest.bean.UserInfoBean;
-import com.zz.recycleviewmvptest.mvp.base_adapter.CommonAdapter;
-import com.zz.recycleviewmvptest.mvp.base_adapter.MultiItemTypeAdapter;
-import com.zz.recycleviewmvptest.mvp.base_adapter.ViewHolder;
+import com.zz.recycleviewmvptest.bean.MyInfoBean;
+import com.zz.recycleviewmvptest.mvp.chess.ChessActivity;
+import com.zz.recycleviewmvptest.mvp.friend.FriendActivity;
+import com.zz.recycleviewmvptest.mvp.login.LoginActivity;
+import com.zz.recycleviewmvptest.mvp.setting.SettingActivity;
 import com.zz.recycleviewmvptest.widget.Utils;
-import com.zz.recycleviewmvptest.widget.popwindow.ActivePopWindow;
+import com.zz.recycleviewmvptest.widget.seekbar.RectangleRadioSeekBar;
+import com.zz.recycleviewmvptest.widget.toast.ToastUtils;
 
-import org.simple.eventbus.Subscriber;
+public class MineFragment extends BaseFragment<MineContract.Presenter> implements MineContract.View, View.OnClickListener {
 
-import java.util.List;
+    private ImageView mIvUserHead;
+    private TextView mTvName;
+    private LinearLayout mLlChess;
+    private LinearLayout mLlSetting;
+    private RectangleRadioSeekBar mSbTop;
+    private View llHead;
+    private ImageView ivMessage;
 
-import static com.zz.recycleviewmvptest.mvp.mine.add_user.AddUserFragment.USER_ADD_SUCCESS;
+    private MyInfoBean mMyInfoBean;
 
-public class MineFragment extends BaseListFragment<MineContract.Presenter, UserInfoBean> implements MineContract.View {
-    private CommonAdapter<UserInfoBean> adapter;
-    private MineHeaderView mineHeaderView;
-    private ActivePopWindow itemActivePopWindow; //操作
+    @Override
+    protected boolean showToolbar() {
+        return false;
+    }
+
+    @Override
+    protected int setToolBarBackgroud() {
+        return R.color.white;
+    }
+
+
+    @Override
+    protected boolean setStatusbarGrey() {
+        return true;
+    }
+
+    @Override
+    protected int getBodyLayoutId() {
+        return R.layout.view_head_mine;
+    }
+
     @Override
     protected void initView(View rootView) {
-        super.initView(rootView);
-        initHeader();
+        mIvUserHead = rootView.findViewById(R.id.iv_user_head);
+        mTvName = rootView.findViewById(R.id.tv_name);
+        mLlChess = rootView.findViewById(R.id.ll_chess);
+        mSbTop = rootView.findViewById(R.id.sb_top);
+        llHead = rootView.findViewById(R.id.llHead);
+        ivMessage = rootView.findViewById(R.id.ivMessage);
+        mLlSetting = rootView.findViewById(R.id.ll_setting);
+        initListener();
     }
 
-    private void initHeader() {
-        mineHeaderView = new MineHeaderView(context);
-        mHeaderAndFooterWrapper.addHeaderView(mineHeaderView.getMineHeaderView());
+    private void initListener() {
+        mLlChess.setOnClickListener(this);
+        mSbTop.setOnClickListener(this);
+        ivMessage.setOnClickListener(this);
+        mLlSetting.setOnClickListener(this);
+        llHead.setOnClickListener(this);
     }
+
 
     @Override
     protected boolean setUseStatusView() {
@@ -46,117 +78,53 @@ public class MineFragment extends BaseListFragment<MineContract.Presenter, UserI
 
     @Override
     protected void initData() {
-        super.initData();
         mPresenter = new MinePresenter(this);
-        mineHeaderView.setPresenter((MinePresenter) mPresenter);
-        mPresenter.requestNetData(0, false, 1);
-    }
-
-    @Override
-    protected RecyclerView.Adapter getAdapter() {
-        adapter = new CommonAdapter<UserInfoBean>(context, R.layout.item_user_list, mListData) {
-            @Override
-            protected void convert(ViewHolder holder, UserInfoBean userInfoBean, int position) {
-                if (userInfoBean.getHead() == null || userInfoBean.getHead().isEmpty()) {
-                    holder.setImageResource(R.id.iv_head, R.mipmap.ic_logo);
-                } else {
-                    holder.setImageBitmap(R.id.iv_head, Utils.getBitmapForPath(userInfoBean.getHead()));
-                }
-                holder.setText(R.id.tv_name, userInfoBean.getNickname() == null || userInfoBean.getNickname().isEmpty() ? "" : userInfoBean.getNickname());
-                holder.setText(R.id.tv_school, userInfoBean.getSchool() == null || userInfoBean.getSchool().isEmpty() ? "" : userInfoBean.getSchool());
-                holder.setText(R.id.tv_time, userInfoBean.getCreate_time() + "");
-            }
-        };
-        adapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
-                mineHeaderView.setData(mListData.get(position - mHeaderAndFooterWrapper.getHeadersCount()));
-            }
-
-            @Override
-            public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
-                position = position - mHeaderAndFooterWrapper.getHeadersCount();
-                showItemPopWindow(position);
-                return true;
-            }
-        });
-        return adapter;
-    }
-
-    private void showItemPopWindow(int position) {
-        if (itemActivePopWindow == null) {
-            itemActivePopWindow = ActivePopWindow.builder()
-                    .item1Str("是否删除当前用户？")
-                    .item1Color(getResources().getColor(R.color.home_bottom))
-                    .item2Str("删除")
-                    .bottomStr("取消")
-                    .isOutsideTouch(true)
-                    .isFocus(true)
-                    .with(mActivity)
-                    .bottomClickListener(() -> itemActivePopWindow.hide())
-                    .item2ClickListener(() -> {
-                        mPresenter.delUser(mListData.get(position));
-                        startRefrsh();
-                        itemActivePopWindow.hide();
-                    })
-                    .build();
-        }
-        itemActivePopWindow.show();
-    }
-
-    @Override
-    public void onNetSuccess(List<UserInfoBean> data, boolean isLoadMore) {
-        super.onNetSuccess(data, isLoadMore);
-        mineHeaderView.setSeekBar(mListData.size());
-        if (mListData.size() > 0 && !isLoadMore) {
-            mineHeaderView.setData(mListData.get(0));
-        }
-        adapter.notifyDataSetChanged();
-        mHeaderAndFooterWrapper.notifyDataSetChanged();
 
     }
 
-//    private Bitmap getBitmapForPath(String path) {
-////        String headPath = android.os.Environment.getExternalStorageDirectory()
-////                + "/" + "msg" + "/" + "head/"+"图片名" + ".jpg";
-//        Bitmap bmpDefaultPic;
-//        bmpDefaultPic = BitmapFactory.decodeFile(path, null);
-//        return bmpDefaultPic;
-//    }
 
     @Override
     public void onResume() {
         super.onResume();
         if (mPresenter != null) {
-            startRefrsh();
+            mPresenter.sendUserInfo();
+        }
+    }
+
+
+    @Override
+    public void getUserInfo(MyInfoBean myInfoBean) {
+        if (myInfoBean != null) {
+            mMyInfoBean = myInfoBean;
+            mIvUserHead.setImageBitmap(Utils.getBitmapForPath(myInfoBean.getHead()));
+            mTvName.setText(myInfoBean.getNickname());
         }
     }
 
     @Override
-    protected boolean isNeedLoadMore() {
-        return false;
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.ll_chess:
+                startActivity(new Intent(getActivity(), ChessActivity.class));
+                break;
+            case R.id.sb_top:
+                ToastUtils.showLongToast("正在建设中~");
+                break;
+            case R.id.ivMessage:
+                if (mMyInfoBean == null) {
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                } else {
+                    startActivity(new Intent(getActivity(), FriendActivity.class));
+                }
+                break;
+            case R.id.ll_setting: //设置
+                startActivity(new Intent(getActivity(), SettingActivity.class));
+                break;
+            case R.id.llHead:
+                if (mMyInfoBean == null) {
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                }
+                break;
+        }
     }
-
-    @Override
-    protected boolean isNeedRefresh() {
-        return false;
-    }
-
-    @Override
-    protected boolean showToolbar() {
-        return false;
-    }
-
-//    @Override
-//    protected boolean useEventBus() {
-//        return true;
-//    }
-
-//    @Subscriber(tag = USER_ADD_SUCCESS)
-//    public void resuleData(boolean isAdd) {
-//        if (isAdd) {
-//            mPresenter.requestNetData(0, false, 1);
-//            Toast.makeText(context, "监听", Toast.LENGTH_SHORT).show();
-//        }
-//    }
 }

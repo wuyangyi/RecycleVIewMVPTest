@@ -79,6 +79,6 @@
             android:layout_width="@dimen/user_head"
             android:layout_height="@dimen/user_head"
             app:type="round"
-            tools:src="@mipmap/ic_logo"/>
+            tools:src="@mipmap/ico_head_mr"/>
     </LinearLayout>
 </LinearLayout>

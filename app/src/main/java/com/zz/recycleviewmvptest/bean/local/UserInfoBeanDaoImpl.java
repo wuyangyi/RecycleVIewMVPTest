@@ -78,4 +78,27 @@ public class UserInfoBeanDaoImpl extends CommonCacheImpl<UserInfoBean> {
                 .orderAsc(UserInfoBeanDao.Properties.Create_time)
                 .list();
     }
+
+    public UserInfoBean pwdLogin(String phone, String pwd) {
+        List<UserInfoBean> userInfoBeans = getWDaoSession().getUserInfoBeanDao().queryBuilder()
+                .orderAsc(UserInfoBeanDao.Properties.Create_time)
+                .where(UserInfoBeanDao.Properties.Phone.eq(phone))
+                .where(UserInfoBeanDao.Properties.Password.eq(pwd))
+                .list();
+        if (userInfoBeans != null && userInfoBeans.size() > 0) {
+            return userInfoBeans.get(0);
+        }
+        return null;
+    }
+
+    public UserInfoBean selectByPhone(String phone) {
+        List<UserInfoBean> userInfoBeans = getWDaoSession().getUserInfoBeanDao().queryBuilder()
+                .orderAsc(UserInfoBeanDao.Properties.Create_time)
+                .where(UserInfoBeanDao.Properties.Phone.eq(phone))
+                .list();
+        if (userInfoBeans != null && userInfoBeans.size() > 0) {
+            return userInfoBeans.get(0);
+        }
+        return null;
+    }
 }

@@ -6,7 +6,9 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +20,7 @@ import android.widget.Toast;
 import com.kevin.crop.UCrop;
 import com.zz.recycleviewmvptest.R;
 import com.zz.recycleviewmvptest.base.BaseFragment;
+import com.zz.recycleviewmvptest.bean.MyInfoBean;
 import com.zz.recycleviewmvptest.bean.UserInfoBean;
 import com.zz.recycleviewmvptest.mvp.crop.CropActivity;
 import com.zz.recycleviewmvptest.widget.AntiShakeUtils;
@@ -32,6 +35,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import static android.app.Activity.RESULT_OK;
+import static com.zz.recycleviewmvptest.mvp.mine.add_user.AddUserActivity.LOGIN_PHONE;
 import static com.zz.recycleviewmvptest.widget.Utils.REQUEST_SELECT_PICTURE;
 
 public class AddUserFragment extends BaseFragment<AddUserContract.Presenter> implements AddUserContract.View  {
@@ -44,6 +48,7 @@ public class AddUserFragment extends BaseFragment<AddUserContract.Presenter> imp
     private EditText mEdSchool;
     private TextView mTvSave;
     private String headPath = ""; //头像的地址
+    private String mPhone; //手机号
 
 
     private ActivePopWindow activePopWindow; //头像选择
@@ -51,6 +56,16 @@ public class AddUserFragment extends BaseFragment<AddUserContract.Presenter> imp
 
     // 剪切后图像文件
     private Uri mDestinationUri;
+
+    private String fileName;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mPhone = getArguments().getString(LOGIN_PHONE);
+        }
+    }
 
     @Override
     protected void initView(View rootView) {
@@ -97,6 +112,7 @@ public class AddUserFragment extends BaseFragment<AddUserContract.Presenter> imp
                     return;
                 }
                 UserInfoBean u = new UserInfoBean(mEtName.getText().toString());
+                u.setPhone(mPhone);
                 u.setHead(headPath);
                 if (mClAge.getText().toString().isEmpty()) {
 //                    Toast.makeText(getActivity(), "请输入年龄",Toast.LENGTH_SHORT).show();
@@ -121,6 +137,7 @@ public class AddUserFragment extends BaseFragment<AddUserContract.Presenter> imp
                     return;
                 }
                 u.setSchool(mEdSchool.getText().toString());
+                u.setLogin(true);
                 mPresenter.saveUser(u);
             }
         });
@@ -133,7 +150,7 @@ public class AddUserFragment extends BaseFragment<AddUserContract.Presenter> imp
 
     @Override
     protected String setCenterTitle() {
-        return "添加用户";
+        return "完善信息";
     }
 
     @Override
@@ -149,7 +166,7 @@ public class AddUserFragment extends BaseFragment<AddUserContract.Presenter> imp
     @Override
     public void saveSuccess() {
 //        EventBus.getDefault().post(true, USER_ADD_SUCCESS);
-        mActivity.finish();
+        goHome(true);
     }
 
     private void showPopWindow() {
@@ -173,7 +190,7 @@ public class AddUserFragment extends BaseFragment<AddUserContract.Presenter> imp
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN &&
                                     ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
                                     != PackageManager.PERMISSION_GRANTED) {
-                                requestPermission(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, "关闭该权限后部分功能将无法使用，是否继续？", REQUEST_STORAGE_READ_ACCESS_PERMISSION);
+                                requestPermission(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, "您已禁用内存读写权限，当前无法打开相册，是否打开权限？", REQUEST_STORAGE_READ_ACCESS_PERMISSION);
                             } else {
                                 Utils.pickFromGallery(getActivity());
                                 activePopWindow.hide();
@@ -183,7 +200,14 @@ public class AddUserFragment extends BaseFragment<AddUserContract.Presenter> imp
                     .item2ClickListener(new ActivePopWindow.ActionPopupWindowItem2ClickListener() {
                         @Override
                         public void onItemClicked() {
-                            Toast.makeText(context, "相机", Toast.LENGTH_SHORT).show();
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN &&
+                                    ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA)
+                                            != PackageManager.PERMISSION_GRANTED) {
+                                requestPermission(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, "您已禁用相机权限，当前无法打开相机，是否打开权限？", REQUEST_STORAGE_CAMERA_TAKE_PHOTO);
+                            } else {
+                                fileName = Utils.takePicture(getActivity());
+                                activePopWindow.hide();
+                            }
                             activePopWindow.hide();
                         }
                     })
@@ -192,17 +216,6 @@ public class AddUserFragment extends BaseFragment<AddUserContract.Presenter> imp
         activePopWindow.show();
         Utils.hideSoftKeyboard(context, mEtName);
     }
-
-//    /**
-//     * 选择图片
-//     */
-//    private void pickFromGallery() {
-//        Intent intent = new Intent();
-//        intent.setType("image/*");
-//        intent.setAction(Intent.ACTION_GET_CONTENT);
-//        intent.addCategory(Intent.CATEGORY_OPENABLE);
-//        startActivityForResult(Intent.createChooser(intent, "选择图片"), REQUEST_SELECT_PICTURE);
-//    }
 
     private void showSexPopWindow() {
         if (sexActivePopWindow == null) {
@@ -242,15 +255,22 @@ public class AddUserFragment extends BaseFragment<AddUserContract.Presenter> imp
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            if (requestCode == REQUEST_SELECT_PICTURE) {
+            if (requestCode == REQUEST_SELECT_PICTURE) { //相册
                 final Uri selectedUri = data.getData();
                 if (selectedUri != null) {
                     startCropActivity(data.getData());
                 } else {
                     ToastUtils.showToast("无法剪切选择图片");
                 }
-            } else if (requestCode == UCrop.REQUEST_CROP) {
+            } else if (requestCode == UCrop.REQUEST_CROP) { //图片裁剪
                 handleCropResult(data);
+            } else if (requestCode == REQUEST_STORAGE_CAMERA_TAKE_PHOTO) { //相机
+                Uri selectedUri = Uri.fromFile(new File(fileName));
+                if (selectedUri != null) {
+                    startCropActivity(data.getData());
+                } else {
+                    ToastUtils.showToast("无法剪切选择图片");
+                }
             }
         }
     }
@@ -276,7 +296,6 @@ public class AddUserFragment extends BaseFragment<AddUserContract.Presenter> imp
     private void handleCropResult(Intent result) {
         final Uri resultUri = UCrop.getOutput(result);
         if (resultUri != null) {
-//            mIvHead.setImageURI(resultUri);
             Bitmap bmp;
             try {
                 bmp = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), resultUri);
@@ -284,7 +303,6 @@ public class AddUserFragment extends BaseFragment<AddUserContract.Presenter> imp
                 headPath = "img"+System.currentTimeMillis();
                 Utils.saveBmp2Gallery(bmp, headPath, getContext());
                 headPath = Utils.galleryPath + headPath + ".jpg";
-                Log.d("图片地址", headPath);
             } catch (FileNotFoundException e) {
             } catch (IOException e) {
             }

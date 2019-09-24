@@ -41,6 +41,7 @@ public class ChatPresenter extends BasePresenter<ChatContract.View> implements C
         chatBean.setIsMe(true);
         chatBean.setImagePath("");
         chatBean.setUserId(mRootView.getUser().get_id());
+        chatBean.setMyInfoBean(getUserInfo());
         mChatBeanDaoImpl.insertOrReplace(chatBean);
         mRootView.sendMessageSuccess(chatBean);
 
@@ -76,6 +77,7 @@ public class ChatPresenter extends BasePresenter<ChatContract.View> implements C
         chatBean.setUser(mRootView.getUser());
         chatBean.setIsMe(true);
         chatBean.setUserId(mRootView.getUser().get_id());
+        chatBean.setMyInfoBean(getUserInfo());
         mChatBeanDaoImpl.insertOrReplace(chatBean);
         mRootView.sendMessageSuccess(chatBean);
     }

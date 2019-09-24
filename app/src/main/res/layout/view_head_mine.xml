@@ -5,40 +5,59 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
+    android:paddingLeft="23dp"
+    android:paddingRight="23dp"
     android:orientation="vertical">
-    <com.zz.recycleviewmvptest.widget.imageview.CircleImageView
-        android:id="@+id/iv_user_head"
-        android:layout_width="@dimen/user_head"
-        android:layout_height="@dimen/user_head"
-        android:layout_marginTop="40dp"
-        android:layout_gravity="center"
-        app:type="round"
-        android:src="@mipmap/ic_logo"/>
-    <TextView
-        android:id="@+id/tv_name"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/llHead"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="5dp"
-        android:textColor="@color/title_color"
-        android:textSize="@dimen/title_text_size"
-        android:text="掌声"/>
+        android:layout_marginTop="40dp">
+        <com.zz.recycleviewmvptest.widget.imageview.CircleImageView
+            android:id="@+id/iv_user_head"
+            android:layout_width="@dimen/user_head"
+            android:layout_height="@dimen/user_head"
+            android:layout_gravity="center"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            app:type="round"
+            android:src="@mipmap/ico_head_mr"/>
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/iv_user_head"
+            android:textColor="@color/title_color"
+            android:textSize="@dimen/title_text_size"
+            android:text="点击登录"/>
+        <ImageView
+            android:id="@+id/ivMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ico_message_blue"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:paddingTop="5dp"
+            android:paddingLeft="10dp"
+            android:paddingBottom="5dp"/>
+    </RelativeLayout>
 
     <com.zz.recycleviewmvptest.widget.seekbar.RectangleRadioSeekBar
         android:id="@+id/sb_top"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="40dp"
         app:need_text="true"
         app:pro_height="6dp"
         app:pro_color="@color/seek_bar_color"
         app:pro_bg_color="@color/driver_color"
-        app:schedule="0"
+        app:schedule="10"
         app:schedule_max="10"
-        app:center_text="好友赢家"
-        app:end_text="人际达人"
+        app:center_text="基本信息"
+        app:end_text="全部信息"
         app:text_size="12sp"
         app:text_to_seekbar_height="5dp"/>
 
@@ -46,14 +65,14 @@
         android:id="@+id/ll_chess"
         android:layout_width="match_parent"
         android:layout_height="@dimen/user_head"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal"
-        android:paddingStart="15dp"
-        android:paddingEnd="15dp"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:background="@drawable/shape_login_bg_bottom_driver">
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/ic_mine"/>
+            android:src="@mipmap/ico_mine_chess"/>
         <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -66,22 +85,19 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/ic_go_to"/>
+            android:src="@mipmap/ic_go"/>
     </LinearLayout>
     <LinearLayout
-        android:id="@+id/ll_add"
+        android:id="@+id/ll_setting"
         android:layout_width="match_parent"
         android:layout_height="@dimen/user_head"
         android:orientation="horizontal"
-        android:background="@color/white"
         android:gravity="center_vertical"
-        android:layout_marginTop="10dp"
-        android:paddingStart="15dp"
-        android:paddingEnd="15dp">
+        android:background="@drawable/shape_login_bg_bottom_driver">
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@mipmap/ico_add"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ico_mine_setting"/>
         <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -90,11 +106,11 @@
             android:layout_marginLeft="10dp"
             android:textColor="@color/title_color"
             android:textSize="15sp"
-            android:text="添加用户"/>
+            android:text="设置"/>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/ic_go_to"/>
+            android:src="@mipmap/ic_go"/>
     </LinearLayout>
     <View
         android:layout_width="match_parent"

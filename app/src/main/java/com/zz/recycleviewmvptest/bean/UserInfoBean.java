@@ -3,7 +3,11 @@ package com.zz.recycleviewmvptest.bean;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
-
+/**
+ * author: wuyangyi
+ * date: 2019-09-23
+ * 所有用户信息
+ */
 @Entity
 public class UserInfoBean extends BaseListBean {
     public final static int MAN_WOMEN = 0; //匿名
@@ -18,6 +22,10 @@ public class UserInfoBean extends BaseListBean {
     private int sex;
     private String head;
     private long create_time;
+    private String password;
+    private String phone;
+    private boolean isLogin; //是否已登录
+    private boolean isAdmin; //是否是管理员
 
     public UserInfoBean(String nickname) {
         this.nickname = nickname;
@@ -25,9 +33,21 @@ public class UserInfoBean extends BaseListBean {
     }
 
 
-    @Generated(hash = 508122196)
+
+
+
+    @Generated(hash = 1818808915)
+    public UserInfoBean() {
+    }
+
+
+
+
+
+    @Generated(hash = 786346213)
     public UserInfoBean(Long id, String nickname, String school, int age, int sex,
-            String head, long create_time) {
+            String head, long create_time, String password, String phone,
+            boolean isLogin, boolean isAdmin) {
         this.id = id;
         this.nickname = nickname;
         this.school = school;
@@ -35,12 +55,14 @@ public class UserInfoBean extends BaseListBean {
         this.sex = sex;
         this.head = head;
         this.create_time = create_time;
+        this.password = password;
+        this.phone = phone;
+        this.isLogin = isLogin;
+        this.isAdmin = isAdmin;
     }
 
 
-    @Generated(hash = 1818808915)
-    public UserInfoBean() {
-    }
+
 
 
     public Long getId() {
@@ -99,4 +121,67 @@ public class UserInfoBean extends BaseListBean {
         this.create_time = create_time;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public boolean isLogin() {
+        return isLogin;
+    }
+
+    public void setLogin(boolean login) {
+        isLogin = login;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
+
+
+
+
+
+    public boolean getIsLogin() {
+        return this.isLogin;
+    }
+
+
+
+
+
+    public void setIsLogin(boolean isLogin) {
+        this.isLogin = isLogin;
+    }
+
+
+
+
+
+    public boolean getIsAdmin() {
+        return this.isAdmin;
+    }
+
+
+
+
+
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
+    }
 }

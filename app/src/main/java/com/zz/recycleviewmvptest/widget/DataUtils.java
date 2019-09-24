@@ -1,7 +1,12 @@
 package com.zz.recycleviewmvptest.widget;
 
+import com.zz.recycleviewmvptest.bean.MyInfoBean;
+import com.zz.recycleviewmvptest.bean.UserInfoBean;
+
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * author: wuyangyi
@@ -40,5 +45,55 @@ public class DataUtils {
             return true;
         }
         return false;
+    }
+
+    /**
+     * 手机号验证
+     * @param phone
+     * @return
+     */
+    public static boolean checkPhone(String phone) {
+        String check = "^1\\d{10}$";
+        Pattern regex = Pattern.compile(check);
+        Matcher matcher = regex.matcher(phone);
+        boolean isMatched = matcher.matches();
+        return isMatched;
+    }
+
+    //判断姓名是否规范的正则表达式
+    public static boolean checkName(String name) {
+        String check = "^(([\\u4e00-\\u9fa5]{2,8})|([a-zA-Z]{2,16}))$";
+        Pattern regex = Pattern.compile(check);
+        Matcher matcher = regex.matcher(name);
+        boolean isMatched = matcher.matches();
+        return isMatched;
+    }
+    //判断邮箱是否规范的正则表达式
+    public static boolean checkMail(String mail){
+        String check = "^[A-Z0-9a-z._%+-]*@[a-zA-Z0-9][\\w-]*\\.(?:com|cn|net|com.cn|qq.com|com.tw|sina.com|163.com|co.jp|com.hk)$";
+        Pattern regex = Pattern.compile(check);
+        Matcher matcher = regex.matcher(mail);
+        boolean isMatched = matcher.matches();
+        return isMatched;
+    }
+
+    /**
+     * UserInfoBean转MyInfoBean
+     * @param userInfoBean
+     * @return
+     */
+    public static MyInfoBean doChangeUserInfo(UserInfoBean userInfoBean) {
+        MyInfoBean myInfoBean = new MyInfoBean();
+        myInfoBean.setPhone(userInfoBean.getPhone());
+        myInfoBean.setAge(userInfoBean.getAge());
+        myInfoBean.setCreate_time(userInfoBean.getCreate_time());
+        myInfoBean.setHead(userInfoBean.getHead());
+        myInfoBean.setNickname(userInfoBean.getNickname());
+        myInfoBean.setIsAdmin(userInfoBean.isAdmin());
+        myInfoBean.setIsLogin(userInfoBean.getIsLogin());
+        myInfoBean.setSex(userInfoBean.getSex());
+        myInfoBean.setSchool(userInfoBean.getSchool());
+        myInfoBean.setId(userInfoBean.getId());
+        return myInfoBean;
     }
 }

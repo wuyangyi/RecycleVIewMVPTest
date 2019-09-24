@@ -169,5 +169,5 @@
         android:textColor="@color/white"
         android:textSize="@dimen/title_text_size"
         android:gravity="center"
-        android:text="保存"/>
+        android:text="完成"/>
 </LinearLayout>

@@ -34,4 +34,14 @@
     <color name="important_for_white">#FFFFFF</color>
     <color name="general_for_hint">#6C7582</color>
 
+    <color name="login_select_driver">#3388FF</color>
+    <color name="login_driver_color">#E7E7E7</color>
+    <color name="no_select_login_text_color">#363951</color>
+    <color name="color_send_login">#777EFF</color>
+
+    <!--图形验证码默认背景色-->
+    <color name="image_code_bg_color">#efefef</color>
+
+    <color name="layout_color">#F0F0F0</color>
+
 </resources>
