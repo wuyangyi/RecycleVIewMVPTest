@@ -1,15 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--自定义圆形（圆角）图片，也可用于普通图片-->
-    <declare-styleable name="CircleImageView">
-        <attr name="type" format="enum">
-            <enum name="none" value="0" />  <!--普通-->
-            <enum name="round" value="1" />  <!--圆形-->
-            <enum name="rectangle" value="2" /> <!--圆角-->
-        </attr>
-        <attr name="radius" format="dimension"/>
-    </declare-styleable>
-
     <!--自定义圆角（可加边框）ImageView-->
     <declare-styleable name="MLImageView">
         <attr name="ml_border_color" format="color" />

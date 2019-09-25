@@ -59,6 +59,12 @@ public class AddUserFragment extends BaseFragment<AddUserContract.Presenter> imp
 
     private String fileName;
 
+    public static AddUserFragment getInstance(Bundle bundle) {
+        AddUserFragment fragment = new AddUserFragment();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -258,7 +264,7 @@ public class AddUserFragment extends BaseFragment<AddUserContract.Presenter> imp
             if (requestCode == REQUEST_SELECT_PICTURE) { //相册
                 final Uri selectedUri = data.getData();
                 if (selectedUri != null) {
-                    startCropActivity(data.getData());
+                    startCropActivity(selectedUri);
                 } else {
                     ToastUtils.showToast("无法剪切选择图片");
                 }
@@ -267,7 +273,7 @@ public class AddUserFragment extends BaseFragment<AddUserContract.Presenter> imp
             } else if (requestCode == REQUEST_STORAGE_CAMERA_TAKE_PHOTO) { //相机
                 Uri selectedUri = Uri.fromFile(new File(fileName));
                 if (selectedUri != null) {
-                    startCropActivity(data.getData());
+                    startCropActivity(selectedUri);
                 } else {
                     ToastUtils.showToast("无法剪切选择图片");
                 }

@@ -56,7 +56,9 @@ public class ChatItem implements ItemViewDelegate<ChatBean> {
     @Override
     public void convert(ViewHolder holder, ChatBean chatBean, ChatBean lastT, int position, int itemCounts) {
         holder.setText(R.id.tv_time, chatBean.getSend_time().substring(5, 16));
-        holder.getImageViwe(R.id.iv_user_head).setImageBitmap(Utils.getBitmapForPath(chatBean.getMyInfoBean().getHead()));
+        if (chatBean.getMyInfoBean().getHead() != null || !chatBean.getMyInfoBean().getHead().isEmpty()) {
+            holder.getImageViwe(R.id.iv_user_head).setImageBitmap(Utils.getBitmapForPath(chatBean.getMyInfoBean().getHead()));
+        }
         holder.setText(R.id.tv_content, chatBean.getContext());
         if (position == 0) {
             holder.getTextView(R.id.tv_time).setVisibility(View.VISIBLE);

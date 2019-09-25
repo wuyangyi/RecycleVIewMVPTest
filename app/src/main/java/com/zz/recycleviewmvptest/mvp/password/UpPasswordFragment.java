@@ -1,5 +1,6 @@
 package com.zz.recycleviewmvptest.mvp.password;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -81,7 +82,8 @@ public class UpPasswordFragment extends BaseFragment<UpPasswordContract.Presente
             return;
         }
         if (isUpPwd) {
-            mPresenter.upPwd(myInfoBean.getPhone(), newPwd, oldPwd);
+            Log.d("手机号", myInfoBean.getPhone() == null ? "null" : myInfoBean.getPhone());
+//            mPresenter.upPwd(myInfoBean.getPhone(), newPwd, oldPwd);
         } else {
             mPresenter.setPwd(myInfoBean.getPhone(), newPwd);
         }
@@ -91,6 +93,7 @@ public class UpPasswordFragment extends BaseFragment<UpPasswordContract.Presente
     protected void initData() {
         mPresenter = new UpPasswordPresenter(this);
         myInfoBean = ((UpPasswordPresenter) mPresenter).getUserInfo();
+        Log.d("我的暑假", myInfoBean.toString());
         if (myInfoBean.getPassword() == null || myInfoBean.getPassword().isEmpty()) {
             isUpPwd = false;
             llOld.setVisibility(View.GONE);

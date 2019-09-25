@@ -27,6 +27,7 @@ public class UpPasswordPresenter extends BasePresenter<UpPasswordContract.View> 
         UserInfoBean userInfoBean = mUserInfoBeanDaoImpl.selectByPhone(myInfoBean.getPhone());
         userInfoBean.setPassword(pwd);
         mUserInfoBeanDaoImpl.insertOrReplace(userInfoBean);
+        ToastUtils.showLongToast("操作成功");
         mRootView.upPwdSuccess();
     }
 
@@ -41,6 +42,7 @@ public class UpPasswordPresenter extends BasePresenter<UpPasswordContract.View> 
         UserInfoBean userInfoBean = mUserInfoBeanDaoImpl.selectByPhone(myInfoBean.getPhone());
         userInfoBean.setPassword(pwd);
         mUserInfoBeanDaoImpl.insertOrReplace(userInfoBean);
+        ToastUtils.showLongToast("修改成功");
         mRootView.upPwdSuccess();
     }
 }

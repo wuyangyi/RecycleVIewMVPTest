@@ -20,11 +20,11 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="left">
-        <com.zz.recycleviewmvptest.widget.imageview.CircleImageView
+        <com.zz.recycleviewmvptest.widget.imageview.MLImageView
             android:id="@+id/iv_user_head"
             android:layout_width="@dimen/user_head"
             android:layout_height="@dimen/user_head"
-            app:type="round"
+            app:ml_shape_type="round"
             tools:src="@mipmap/ic_logo"/>
         <LinearLayout
             android:layout_width="0dp"

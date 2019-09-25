@@ -74,11 +74,11 @@
             </LinearLayout>
         </LinearLayout>
 
-        <com.zz.recycleviewmvptest.widget.imageview.CircleImageView
+        <com.zz.recycleviewmvptest.widget.imageview.MLImageView
             android:id="@+id/iv_user_head"
             android:layout_width="@dimen/user_head"
             android:layout_height="@dimen/user_head"
-            app:type="round"
+            app:ml_shape_type="round"
             tools:src="@mipmap/ico_head_mr"/>
     </LinearLayout>
 </LinearLayout>

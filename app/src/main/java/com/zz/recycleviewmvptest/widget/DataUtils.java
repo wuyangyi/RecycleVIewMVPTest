@@ -94,6 +94,7 @@ public class DataUtils {
         myInfoBean.setSex(userInfoBean.getSex());
         myInfoBean.setSchool(userInfoBean.getSchool());
         myInfoBean.setId(userInfoBean.getId());
+        myInfoBean.setPassword(userInfoBean.getPassword());
         return myInfoBean;
     }
 }

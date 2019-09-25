@@ -80,7 +80,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.View> implements
     }
 
     private void checkOther() {
-        if (!imageCode.toLowerCase().equals(mRootView.getRealImageCode().toLowerCase())) {
+        if (!imageCode.equals(mRootView.getRealImageCode())) {
             mRootView.loginState(false, true, "图形验证码错误");
             return;
         }

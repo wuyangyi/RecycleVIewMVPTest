@@ -7,7 +7,7 @@
     <LinearLayout
         android:id="@+id/llPwd"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="50dp"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:background="@drawable/shape_login_bg_bottom_driver"
@@ -36,7 +36,7 @@
     <LinearLayout
         android:id="@+id/llAbout"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="50dp"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:background="@drawable/shape_login_bg_bottom_driver"

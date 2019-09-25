@@ -96,7 +96,11 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
     public void getUserInfo(MyInfoBean myInfoBean) {
         if (myInfoBean != null) {
             mMyInfoBean = myInfoBean;
-            mIvUserHead.setImageBitmap(Utils.getBitmapForPath(myInfoBean.getHead()));
+            if (myInfoBean.getHead() == null || myInfoBean.getHead().isEmpty()) {
+                mIvUserHead.setImageResource(R.mipmap.ico_head_mr);
+            } else {
+                mIvUserHead.setImageBitmap(Utils.getBitmapForPath(myInfoBean.getHead()));
+            }
             mTvName.setText(myInfoBean.getNickname());
         }
     }

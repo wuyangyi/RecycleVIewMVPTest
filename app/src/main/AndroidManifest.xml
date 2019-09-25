@@ -87,6 +87,7 @@
         <activity android:name=".mvp.recommend_day.RecommendOneDayActivity" />
         <activity android:name=".mvp.setting.SettingActivity" />
         <activity android:name=".mvp.password.UpPasswordActivity" />
+        <activity android:name=".mvp.about_us.AboutUsActivity" />
 
     </application>
 

@@ -215,4 +215,21 @@ public class MyInfoBean extends BaseListBean implements Serializable, Parcelable
         dest.writeByte((byte) (isAdmin ? 1 : 0));
         dest.writeString(phone);
     }
+
+    @Override
+    public String toString() {
+        return "MyInfoBean{" +
+                "id=" + id +
+                ", nickname='" + nickname + '\'' +
+                ", school='" + school + '\'' +
+                ", age=" + age +
+                ", sex=" + sex +
+                ", head='" + head + '\'' +
+                ", create_time=" + create_time +
+                ", password='" + password + '\'' +
+                ", isLogin=" + isLogin +
+                ", isAdmin=" + isAdmin +
+                ", phone='" + phone + '\'' +
+                '}';
+    }
 }

@@ -13,14 +13,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp">
-        <com.zz.recycleviewmvptest.widget.imageview.CircleImageView
+        <com.zz.recycleviewmvptest.widget.imageview.MLImageView
             android:id="@+id/iv_user_head"
-            android:layout_width="@dimen/user_head"
-            android:layout_height="@dimen/user_head"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
             android:layout_gravity="center"
             android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
-            app:type="round"
+            app:ml_shape_type="round"
             android:src="@mipmap/ico_head_mr"/>
         <TextView
             android:id="@+id/tv_name"

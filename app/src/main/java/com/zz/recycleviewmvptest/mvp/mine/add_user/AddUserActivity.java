@@ -15,7 +15,7 @@ public class AddUserActivity extends BaseActivity {
     public static final String LOGIN_PHONE = "login_phone";
     @Override
     protected Fragment getFragment() {
-        return new AddUserFragment();
+        return AddUserFragment.getInstance(getIntent().getExtras());
     }
 
     @Override

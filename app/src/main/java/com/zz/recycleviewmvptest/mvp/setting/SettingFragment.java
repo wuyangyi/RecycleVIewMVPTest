@@ -6,6 +6,7 @@ import android.widget.Button;
 
 import com.zz.recycleviewmvptest.R;
 import com.zz.recycleviewmvptest.base.BaseFragment;
+import com.zz.recycleviewmvptest.mvp.about_us.AboutUsActivity;
 import com.zz.recycleviewmvptest.mvp.login.LoginActivity;
 import com.zz.recycleviewmvptest.mvp.password.UpPasswordActivity;
 
@@ -16,6 +17,7 @@ import com.zz.recycleviewmvptest.mvp.password.UpPasswordActivity;
 public class SettingFragment extends BaseFragment<SettingContract.Presenter> implements SettingContract.View, View.OnClickListener {
     private Button tvOutLogin;
     private View llPwd;
+    private View llAbout;
     @Override
     protected int getBodyLayoutId() {
         return R.layout.fragment_setting;
@@ -30,12 +32,14 @@ public class SettingFragment extends BaseFragment<SettingContract.Presenter> imp
     protected void initView(View rootView) {
         tvOutLogin = rootView.findViewById(R.id.tvOutLogin);
         llPwd = rootView.findViewById(R.id.llPwd);
+        llAbout = rootView.findViewById(R.id.llAbout);
         initListener();
     }
 
     private void initListener() {
         tvOutLogin.setOnClickListener(this);
         llPwd.setOnClickListener(this);
+        llAbout.setOnClickListener(this);
     }
 
     @Override
@@ -55,6 +59,9 @@ public class SettingFragment extends BaseFragment<SettingContract.Presenter> imp
                 break;
             case R.id.llPwd: //密码管理
                 startActivity(new Intent(getActivity(), UpPasswordActivity.class));
+                break;
+            case R.id.llAbout:
+                startActivity(new Intent(getActivity(), AboutUsActivity.class));
                 break;
         }
     }
