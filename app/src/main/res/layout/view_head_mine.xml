@@ -12,7 +12,7 @@
         android:id="@+id/llHead"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp">
+        android:layout_marginTop="30dp">
         <com.zz.recycleviewmvptest.widget.imageview.MLImageView
             android:id="@+id/iv_user_head"
             android:layout_width="65dp"
@@ -21,6 +21,8 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
             app:ml_shape_type="round"
+            app:ml_border_width="0dp"
+            app:ml_border_color="@color/transparency"
             android:src="@mipmap/ico_head_mr"/>
         <TextView
             android:id="@+id/tv_name"
