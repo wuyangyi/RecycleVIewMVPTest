@@ -39,9 +39,13 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
         return R.color.white;
     }
 
+    @Override
+    protected boolean setUseSatusbar() {
+        return true;
+    }
 
     @Override
-    protected boolean setStatusbarGrey() {
+    protected boolean setUseStatusView() {
         return true;
     }
 
@@ -68,12 +72,6 @@ public class MineFragment extends BaseFragment<MineContract.Presenter> implement
         ivMessage.setOnClickListener(this);
         mLlSetting.setOnClickListener(this);
         llHead.setOnClickListener(this);
-    }
-
-
-    @Override
-    protected boolean setUseStatusView() {
-        return false;
     }
 
     @Override

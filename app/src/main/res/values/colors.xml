@@ -44,4 +44,7 @@
 
     <color name="layout_color">#F0F0F0</color>
 
+    <color name="menu_color">#4c4c4c</color>
+    <color name="menu_select_color">#414141</color>
+
 </resources>

@@ -13,7 +13,7 @@
         android:orientation="horizontal">
         <ImageButton
             android:id="@+id/ib_left_image"
-            android:layout_width="40dp"
+            android:layout_width="@dimen/title_height"
             android:layout_height="match_parent"
             android:background="@color/transparency"
             android:src="@mipmap/ic_go_back"/>
@@ -28,7 +28,7 @@
             tools:text="标题"/>
         <ImageButton
             android:id="@+id/ib_right_image"
-            android:layout_width="40dp"
+            android:layout_width="@dimen/title_height"
             android:layout_height="match_parent"
             android:background="@color/transparency"
             android:src="@mipmap/ic_go_back"

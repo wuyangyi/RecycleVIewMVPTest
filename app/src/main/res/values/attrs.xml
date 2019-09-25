@@ -104,4 +104,11 @@
         <attr name="width" format="dimension" />
         <attr name="height" format="dimension"/>
     </declare-styleable>
+    
+    <!--菜单带背景容器-->
+    <declare-styleable name="MenuGroupView">
+        <attr name="triangle_height" format="dimension"/> <!--三角形的高度-->
+        <attr name="triangle_right_distance" format="dimension"/><!--三角形右边距离-->
+        <attr name="triangle_width" format="dimension" /> <!--三角形宽度-->
+    </declare-styleable>
 </resources>

@@ -14,6 +14,7 @@ import com.zz.recycleviewmvptest.mvp.friend.FriendActivity;
 import com.zz.recycleviewmvptest.mvp.page_list.PageListFragment;
 import com.zz.recycleviewmvptest.mvp.mine.MineFragment;
 import com.zz.recycleviewmvptest.mvp.web_page_list.WebPageListFragment;
+import com.zz.recycleviewmvptest.widget.StatusBarUtils;
 import com.zz.recycleviewmvptest.widget.viewpage.NoScrollViewPager;
 
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     private ImageView mIvMine;
     private TextView mTvMine;
     private List<Fragment> listFragment;
+    private int mPage = PAGE_HOME;
     @Override
     protected void initView(View rootView) {
         mVpHome = rootView.findViewById(R.id.vp_home);
@@ -42,6 +44,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         initViewPage();
         selectItem(PAGE_HOME);
         initListener();
+        upStatusBarTextColor();
     }
 
     private void initListener() {
@@ -80,11 +83,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     }
 
     @Override
-    protected boolean setStatusbarGrey() {
-        return false;
-    }
-
-    @Override
     protected boolean setUseSatusbar() {
         return true;
     }
@@ -94,7 +92,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         return R.layout.fragment_home;
     }
 
-
+    @Override
+    protected boolean setUseStatusView() {
+        return false;
+    }
 
     @Override
     public void setPresenter(Object presenter) {
@@ -117,10 +118,24 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         switch (view.getId()) {
             case R.id.ll_home:
                 selectItem(PAGE_HOME);
+                mPage = PAGE_HOME;
                 break;
             case R.id.ll_mine:
                 selectItem(PAGE_MINE);
+                mPage = PAGE_MINE;
                 break;
+        }
+        upStatusBarTextColor();
+    }
+
+    /**
+     * 设置灰色字体状态栏
+     */
+    private void upStatusBarTextColor() {
+        if (mPage == PAGE_HOME) {
+            StatusBarUtils.statusBarLightModeWhile(getActivity()); //白色
+        } else {
+            StatusBarUtils.statusBarLightMode(getActivity()); //黑色
         }
     }
 }

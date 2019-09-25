@@ -1,6 +1,7 @@
 package com.zz.recycleviewmvptest.mvp.web_page_list;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,20 +14,27 @@ import com.zz.recycleviewmvptest.bean.PageListListBean;
 import com.zz.recycleviewmvptest.mvp.base_adapter.CommonAdapter;
 import com.zz.recycleviewmvptest.mvp.base_adapter.MultiItemTypeAdapter;
 import com.zz.recycleviewmvptest.mvp.base_adapter.ViewHolder;
+import com.zz.recycleviewmvptest.mvp.friend.FriendActivity;
 import com.zz.recycleviewmvptest.mvp.webview.WebViewPageActivity;
 import com.zz.recycleviewmvptest.widget.AntiShakeUtils;
+import com.zz.recycleviewmvptest.widget.DataUtils;
 import com.zz.recycleviewmvptest.widget.Utils;
 import com.zz.recycleviewmvptest.widget.ZXingUtils;
+import com.zz.recycleviewmvptest.widget.popwindow.TopMenuPopWindow;
 import com.zz.recycleviewmvptest.widget.toast.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 资讯
+ */
 public class WebPageListFragment extends BaseListFragment<WebPageListContract.Presenter, PageListListBean.ResultsListBean> implements WebPageListContract.View {
 
     private CommonAdapter<PageListListBean.ResultsListBean> adapter;
     private WebPageListHeader mWebPageListHeader;
     private Dialog dialog;
+    private TopMenuPopWindow topMenuPopWindow;
 
     @Override
     protected void initView(View rootView) {
@@ -37,11 +45,6 @@ public class WebPageListFragment extends BaseListFragment<WebPageListContract.Pr
     private void initHeader() {
         mWebPageListHeader = new WebPageListHeader(getContext());
         mHeaderAndFooterWrapper.addHeaderView(mWebPageListHeader.getmWebPageListHeader());
-    }
-
-    @Override
-    protected int setToolBarBackgroud() {
-        return R.color.white;
     }
 
     @Override
@@ -74,6 +77,9 @@ public class WebPageListFragment extends BaseListFragment<WebPageListContract.Pr
         super.onDestroy();
         if (mWebPageListHeader != null) {
             mWebPageListHeader.getmMZBanner().pause();
+        }
+        if (topMenuPopWindow != null && topMenuPopWindow.isShowing()) {
+            topMenuPopWindow.dismiss();
         }
     }
 
@@ -118,8 +124,18 @@ public class WebPageListFragment extends BaseListFragment<WebPageListContract.Pr
     }
 
     @Override
-    protected boolean showToolbar() {
-        return false;
+    protected String setCenterTitle() {
+        return "资讯";
+    }
+
+    @Override
+    protected int setRightImage() {
+        return R.mipmap.ico_more;
+    }
+
+    @Override
+    protected void setRightImageClick() {
+        showTopMenu();
     }
 
     @Override
@@ -133,6 +149,11 @@ public class WebPageListFragment extends BaseListFragment<WebPageListContract.Pr
     }
 
     @Override
+    protected boolean setUseSatusbar() {
+        return true;
+    }
+
+    @Override
     protected boolean setUseCenterLoadingAnimation() {
         return true;
     }
@@ -142,4 +163,35 @@ public class WebPageListFragment extends BaseListFragment<WebPageListContract.Pr
         super.onNetSuccess(data, isLoadMore);
         closeLoadingView();
     }
+
+    private void showTopMenu() {
+        if (topMenuPopWindow == null) {
+            MenuAdapter adapter = new MenuAdapter(getContext(), R.layout.view_menu_item, DataUtils.getMenuData());
+            adapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
+                    if (position == 0) {
+                        ToastUtils.showToast("正在建设中~");
+                    } else if (position == 1) {
+                        startActivity(new Intent(getActivity(), FriendActivity.class));
+                    }
+                    topMenuPopWindow.hide();
+                }
+
+                @Override
+                public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
+                    return false;
+                }
+            });
+            topMenuPopWindow = TopMenuPopWindow.builder()
+                    .isOutsideTouch(true)
+                    .isFocus(true)
+                    .with(getActivity())
+                    .adater(adapter)
+                    .build();
+        }
+        topMenuPopWindow.show();
+    }
+
+
 }

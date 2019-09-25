@@ -1,8 +1,11 @@
 package com.zz.recycleviewmvptest.widget;
 
+import com.zz.recycleviewmvptest.R;
 import com.zz.recycleviewmvptest.bean.MyInfoBean;
 import com.zz.recycleviewmvptest.bean.UserInfoBean;
+import com.zz.recycleviewmvptest.mvp.web_page_list.MenuAdapter;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -96,5 +99,14 @@ public class DataUtils {
         myInfoBean.setId(userInfoBean.getId());
         myInfoBean.setPassword(userInfoBean.getPassword());
         return myInfoBean;
+    }
+
+    public static List<MenuAdapter.MenuBean> getMenuData() {
+        List<MenuAdapter.MenuBean> data = new ArrayList<>();
+        MenuAdapter.MenuBean menuBean1 = new MenuAdapter.MenuBean("扫一扫", R.mipmap.ico_menu_sys);
+        data.add(menuBean1);
+        MenuAdapter.MenuBean menuBean2 = new MenuAdapter.MenuBean("我的消息", R.mipmap.ico_menu_message);
+        data.add(menuBean2);
+        return data;
     }
 }
