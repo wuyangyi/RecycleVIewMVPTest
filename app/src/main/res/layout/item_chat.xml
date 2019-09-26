@@ -78,6 +78,7 @@
             android:id="@+id/iv_user_head"
             android:layout_width="@dimen/user_head"
             android:layout_height="@dimen/user_head"
+            android:scaleType="center"
             app:ml_shape_type="round"
             app:ml_border_width="0dp"
             app:ml_border_color="@color/transparency"

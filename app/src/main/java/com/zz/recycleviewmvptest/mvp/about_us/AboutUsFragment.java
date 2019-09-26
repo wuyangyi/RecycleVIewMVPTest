@@ -14,7 +14,6 @@ import com.zz.recycleviewmvptest.base.BaseFragment;
  * date: 2019-09-25
  */
 public class AboutUsFragment extends BaseFragment {
-    private TextView tvName;
     private TextView tvNumber;
     @Override
     protected int getBodyLayoutId() {
@@ -23,10 +22,8 @@ public class AboutUsFragment extends BaseFragment {
 
     @Override
     protected void initView(View rootView) {
-        tvName = rootView.findViewById(R.id.tvName);
         tvNumber = rootView.findViewById(R.id.tvNumber);
         tvNumber.setText("当前版本号：v " + packageName(getContext()));
-        tvName.setText("当前第 " + packageCode(getContext()) + " 个版本");
     }
 
     @Override

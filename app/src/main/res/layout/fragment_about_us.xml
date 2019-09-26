@@ -25,14 +25,6 @@
         android:textSize="17sp"
         android:text="当前版本号：v 1.1"/>
     <TextView
-        android:id="@+id/tvName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:textSize="14sp"
-        android:textColor="#6C7582"
-        android:text="当前版本名称"/>
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
