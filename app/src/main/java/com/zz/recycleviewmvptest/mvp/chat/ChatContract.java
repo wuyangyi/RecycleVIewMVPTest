@@ -16,6 +16,8 @@ public interface ChatContract {
 
         void sendMessageSuccess(ChatBean chatBean);
 
+        void removeMessageSuccess(int position);
+
         FlListBean.ResultsListBean getUser();
     }
 
@@ -33,5 +35,8 @@ public interface ChatContract {
          * @param chatBean
          */
         void sendImage(ChatBean chatBean);
+
+        //删除消息
+        void removeMessage(ChatBean chatBean, int position);
     }
 }

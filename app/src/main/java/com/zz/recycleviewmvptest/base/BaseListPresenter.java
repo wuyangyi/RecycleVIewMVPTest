@@ -1,5 +1,7 @@
 package com.zz.recycleviewmvptest.base;
 
+import com.zz.recycleviewmvptest.bean.MyInfoBean;
+
 /**
  * List加载数据的Presenter封装
  * @param <V>

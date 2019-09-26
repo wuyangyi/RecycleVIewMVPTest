@@ -15,6 +15,7 @@ import com.zz.recycleviewmvptest.mvp.base_adapter.CommonAdapter;
 import com.zz.recycleviewmvptest.mvp.base_adapter.MultiItemTypeAdapter;
 import com.zz.recycleviewmvptest.mvp.base_adapter.ViewHolder;
 import com.zz.recycleviewmvptest.mvp.friend.FriendActivity;
+import com.zz.recycleviewmvptest.mvp.login.LoginActivity;
 import com.zz.recycleviewmvptest.mvp.webview.WebViewPageActivity;
 import com.zz.recycleviewmvptest.widget.AntiShakeUtils;
 import com.zz.recycleviewmvptest.widget.DataUtils;
@@ -96,7 +97,6 @@ public class WebPageListFragment extends BaseListFragment<WebPageListContract.Pr
             @Override
             public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
                 if (AntiShakeUtils.isInvalidClick(view)) {
-                    ToastUtils.showToast("请勿重复点击");
                     return;
                 }
 //                context.startActivity(new Intent(context, PageListActivity.class));
@@ -173,7 +173,11 @@ public class WebPageListFragment extends BaseListFragment<WebPageListContract.Pr
                     if (position == 0) {
                         ToastUtils.showToast("正在建设中~");
                     } else if (position == 1) {
-                        startActivity(new Intent(getActivity(), FriendActivity.class));
+                        if (((WebPageListPresenter)mPresenter).isLogin()) {
+                            startActivity(new Intent(getActivity(), FriendActivity.class));
+                        } else {
+                            startActivity(new Intent(getActivity(), LoginActivity.class));
+                        }
                     }
                     topMenuPopWindow.hide();
                 }

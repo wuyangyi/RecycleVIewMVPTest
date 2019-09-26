@@ -74,7 +74,29 @@ public class ChatItem implements ItemViewDelegate<ChatBean> {
             @Override
             public boolean onLongClick(View v) {
                 if (mOnViewLongClick != null) {
-                    mOnViewLongClick.onViewLongClickListener(v.getRight() - (v.getWidth() / 2), v.getBottom() - v.getHeight(), position);
+                    int y = v.getBottom() - v.getHeight();
+                    mOnViewLongClick.onViewLongClickListener(v.getRight() - (v.getWidth() / 2), y - v.getHeight() / 2, position, chatBean.isMe(), DataUtils.MESSAGE_CONTEXT);
+                }
+                return true;
+            }
+        });
+        holder.getView(R.id.iv_image).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (mOnViewLongClick != null) {
+                    int y = v.getBottom() - v.getHeight();
+                    mOnViewLongClick.onViewLongClickListener(v.getRight() - (v.getWidth() / 2), y - v.getHeight() / 2, position, chatBean.isMe(), DataUtils.MESSAGE_IMAGE);
+                }
+                return true;
+            }
+        });
+
+        holder.getView(R.id.llSound).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (mOnViewLongClick != null) {
+                    int y = v.getBottom() - v.getHeight();
+                    mOnViewLongClick.onViewLongClickListener(v.getRight() - (v.getWidth() / 2), y - v.getHeight() / 2, position, chatBean.isMe(), DataUtils.MESSAGE_SOUND);
                 }
                 return true;
             }
@@ -118,7 +140,7 @@ public class ChatItem implements ItemViewDelegate<ChatBean> {
     }
 
     public interface OnViewLongClick{
-        void onViewLongClickListener(int x, int y, int position);
+        void onViewLongClickListener(int x, int y, int position, boolean isMe, String type);
     }
 
     //图片点击事件

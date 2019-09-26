@@ -82,4 +82,11 @@ public class ChatPresenter extends BasePresenter<ChatContract.View> implements C
         mRootView.sendMessageSuccess(chatBean);
     }
 
+    @Override
+    public void removeMessage(ChatBean chatBean, int position) {
+        mChatBeanDaoImpl.deleteSingleCache(chatBean);
+        mRootView.removeMessageSuccess(position);
+    }
+
+
 }

@@ -27,6 +27,7 @@ public class ChatOtherItem implements ItemViewDelegate<ChatBean> {
     public final static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private ChatItem.ImageClick mImageClick;
     private ChatItem.SoundClick mSoundClick;
+    private ChatItem.OnViewLongClick mOnViewLongClick;
 
     public ChatOtherItem(Context context, List<ChatBean> listBean) {
         this.context = context;
@@ -69,6 +70,30 @@ public class ChatOtherItem implements ItemViewDelegate<ChatBean> {
         holder.getView(R.id.tv_content).setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
+                if (mOnViewLongClick != null) {
+                    int y = v.getBottom() - v.getHeight();
+                    mOnViewLongClick.onViewLongClickListener(v.getRight() - (v.getWidth() / 2), y - v.getHeight() / 2, position, chatBean.isMe(), DataUtils.MESSAGE_CONTEXT);
+                }
+                return true;
+            }
+        });
+        holder.getView(R.id.iv_image).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (mOnViewLongClick != null) {
+                    int y = v.getBottom() - v.getHeight();
+                    mOnViewLongClick.onViewLongClickListener(v.getRight() - (v.getWidth() / 2), y - v.getHeight() / 2, position, chatBean.isMe(), DataUtils.MESSAGE_IMAGE);
+                }
+                return true;
+            }
+        });
+        holder.getView(R.id.llSound).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (mOnViewLongClick != null) {
+                    int y = v.getBottom() - v.getHeight();
+                    mOnViewLongClick.onViewLongClickListener(v.getRight() - (v.getWidth() / 2), y - v.getHeight() / 2, position, chatBean.isMe(), DataUtils.MESSAGE_SOUND);
+                }
                 return true;
             }
         });
@@ -123,5 +148,9 @@ public class ChatOtherItem implements ItemViewDelegate<ChatBean> {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public void setOnViewLongClick(ChatItem.OnViewLongClick mOnViewLongClick) {
+        this.mOnViewLongClick = mOnViewLongClick;
     }
 }

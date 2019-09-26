@@ -8,8 +8,6 @@ import android.graphics.Path;
 import android.graphics.RectF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.zz.recycleviewmvptest.R;
@@ -23,7 +21,8 @@ public class MenuGroupView extends LinearLayout {
     private Paint mPaint = null;
     private int triangleHeight; //三角形高度
     private int triangleRightDistance; //三角形右边距离
-    private int triangleWidth;
+    private int triangleWidth; //三角形的宽度
+    private boolean triangOnTop = true; //三角形的方向，默认为上
 
     public MenuGroupView(Context context) {
         this(context, null);
@@ -65,14 +64,30 @@ public class MenuGroupView extends LinearLayout {
     protected void dispatchDraw(Canvas canvas) {
         mPaint.setColor(getResources().getColor(R.color.menu_color));
         mPaint.setStyle(Paint.Style.FILL);
-        canvas.drawRoundRect(new RectF(0, triangleHeight, getWidth(), getHeight()), 6, 6, mPaint);
-        Path path = new Path();
-        path.moveTo(getWidth() - triangleRightDistance - triangleWidth, triangleHeight);
-        path.lineTo(getWidth() - triangleRightDistance, triangleHeight);
-        path.lineTo(getWidth() - triangleRightDistance - triangleWidth / 2, 0);
-        path.close();
-        canvas.drawPath(path, mPaint);
+        if (triangOnTop) {
+            canvas.drawRoundRect(new RectF(0, triangleHeight, getWidth(), getHeight()), 6, 6, mPaint);
+            Path path = new Path();
+            path.moveTo(getWidth() - triangleRightDistance - triangleWidth, triangleHeight);
+            path.lineTo(getWidth() - triangleRightDistance, triangleHeight);
+            path.lineTo(getWidth() - triangleRightDistance - triangleWidth / 2, 0);
+            path.close();
+            canvas.drawPath(path, mPaint);
+        } else {
+            canvas.drawRoundRect(new RectF(0, 0, getWidth(), getHeight()-triangleHeight), 6, 6, mPaint);
+            Path path = new Path();
+            path.moveTo(getWidth() - triangleRightDistance - triangleWidth, getHeight()-triangleHeight);
+            path.lineTo(getWidth() - triangleRightDistance, getHeight()-triangleHeight);
+            path.lineTo(getWidth() - triangleRightDistance - triangleWidth / 2, getHeight());
+            path.close();
+            canvas.drawPath(path, mPaint);
+        }
         super.dispatchDraw(canvas);
+    }
+
+    public void setTriangleRightDistance(int triangleRightDistance, boolean triangOnTop) {
+        this.triangOnTop = triangOnTop;
+        this.triangleRightDistance = triangleRightDistance;
+        postInvalidate();
     }
 
 }

@@ -2,6 +2,8 @@ package com.zz.recycleviewmvptest.widget;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
@@ -64,6 +66,15 @@ public class Utils {
         wm.getDefaultDisplay().getMetrics(outMetrics);
         return outMetrics;
     }
+
+    public static int getScreenHeight(Context context) {
+        return context.getResources().getDisplayMetrics().heightPixels;
+    }
+
+    public static int getScreenWidth(Context context) {
+        return context.getResources().getDisplayMetrics().widthPixels;
+    }
+
 
     /**
      * 隐藏软键盘
@@ -406,5 +417,13 @@ public class Utils {
     public static Bitmap getBitmapByName(Context context, String name) {
         int resID = context.getResources().getIdentifier(name, "mipmap", context.getPackageName());
         return BitmapFactory.decodeResource(context.getResources(), resID);
+    }
+
+    public static void Copy(Context context, String content) {
+        ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clipData = ClipData.newPlainText("text", content);
+        clipboardManager.setPrimaryClip(clipData);
+        ToastUtils.showToast("复制成功");
+
     }
 }

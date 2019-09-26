@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="@dimen/chat_menu_width"
+    android:layout_height="@dimen/chat_menu_width"
+    android:background="@drawable/bg_menu_item"
+    android:gravity="center"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp">
+    <ImageView
+        android:id="@+id/ivLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:src="@mipmap/ico_menu_message"/>
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="@color/white"
+        android:text="撤回"/>
+
+</LinearLayout>

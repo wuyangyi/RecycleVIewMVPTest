@@ -16,6 +16,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -35,6 +36,7 @@ import com.zz.recycleviewmvptest.widget.DataUtils;
 import com.zz.recycleviewmvptest.widget.SoftKeyBoardListener;
 import com.zz.recycleviewmvptest.widget.button.SpeckButton;
 import com.zz.recycleviewmvptest.widget.manager.MediaPlayManager;
+import com.zz.recycleviewmvptest.widget.popwindow.ChatMenuPopWindow;
 import com.zz.recycleviewmvptest.widget.toast.ToastUtils;
 import com.zz.recycleviewmvptest.widget.Utils;
 
@@ -77,6 +79,8 @@ public class ChatFragment extends BaseFragment<ChatContract.Presenter> implement
 
     private boolean mSoundPlayerIsMe; //当前播放的是否是我的
     private ImageView mImageView; //当前播放语音的控件
+
+    private ChatMenuPopWindow chatMenuPopWindow;
 
     public static ChatFragment newInstance(Bundle bundle){
         ChatFragment fragment = new ChatFragment();
@@ -295,6 +299,7 @@ public class ChatFragment extends BaseFragment<ChatContract.Presenter> implement
         ChatOtherItem chatOtherItem = new ChatOtherItem(context, mListBean);
         chatOtherItem.setImageClick(this);
         chatOtherItem.setSoundClick(this);
+        chatOtherItem.setOnViewLongClick(this);
         adapter.addItemViewDelegate(chatOtherItem);
         adapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
             @Override
@@ -340,19 +345,31 @@ public class ChatFragment extends BaseFragment<ChatContract.Presenter> implement
     }
 
     @Override
+    public void removeMessageSuccess(int position) {
+        mListBean.remove(position);
+        mAdapter = getAdapter();
+        mRvList.setAdapter(mAdapter);
+        /**
+         * 滑动
+         */
+        mRvList.scrollToPosition(position - 1);
+    }
+
+    @Override
     public FlListBean.ResultsListBean getUser() {
         return mUser;
     }
 
     @Override
-    public void onViewLongClickListener(int x, int y, int position) {
+    public void onViewLongClickListener(int x, int y, int position, boolean isMe, String type) {
         if (mAdapter.getItemCount() > 0) {
             RecyclerView.ViewHolder holder = mRvList.findViewHolderForAdapterPosition(position);
             if (holder != null && holder instanceof ViewHolder) {
                 ViewHolder viewHolder = (ViewHolder)holder;
                 int[] location = new int[2];
                 viewHolder.getView(R.id.tv_content).getLocationOnScreen(location);
-                Log.d("坐标", "x:" + (location[0]+x) + "  y:" + (location[1]-y));
+                boolean isBottom = (location[1] - y) > (Utils.getScreenHeight(context) / 2);
+                showMenuPopWindow(isMe ? x : x+location[0], isBottom ? location[1] + y : location[1] - y, isMe, isBottom, position, type);
             }
         }
     }
@@ -532,6 +549,46 @@ public class ChatFragment extends BaseFragment<ChatContract.Presenter> implement
         });
     }
 
+    private void showMenuPopWindow(int x, int y, boolean isMe, boolean isBottom, int index, String type) {
+        ChatMenuAdapter chatMenuAdapter = new ChatMenuAdapter(getContext(), R.layout.item_chat_menu, DataUtils.getChatMenuData(type));
+        chatMenuAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
+                if (position == 3) { //复制
+                    Utils.Copy(getContext(), mListBean.get(index).getContext());
+                } else if (position == 0) { //转发
+                    ToastUtils.showToast("正在建设中~");
+                } else if (position == 1) { //撤回
+                    mPresenter.removeMessage(mListBean.get(index), index);
+                } else if (position == 2) { //删除
+                    mPresenter.removeMessage(mListBean.get(index), index);
+                }
+                chatMenuPopWindow.hide();
+            }
+
+            @Override
+            public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
+                return false;
+            }
+        });
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        chatMenuPopWindow = ChatMenuPopWindow.builder()
+                .isOutsideTouch(true)
+                .isFocus(true)
+                .with(getActivity())
+                .adater(chatMenuAdapter)
+                .layoutManager(layoutManager)
+                .gravity(isMe ? Gravity.RIGHT : Gravity.LEFT)
+                .leftMargin(isMe ? 0 : x)
+                .rightMargin(isMe ? Utils.getScreenWidth(getContext()) - x: 0)
+                .topMargin(!isBottom ? Utils.dp2px(getContext(), 10) : 0)
+                .bottomMargin(!isBottom ? 0 : Utils.dp2px(getContext(), 10))
+                .build();
+
+        chatMenuPopWindow.show(x, isBottom ? Utils.getScreenHeight(getContext()) - y : y, isBottom, isMe, type);
+    }
+
     @Override
     public void onPause() {
         super.onPause();
@@ -548,5 +605,6 @@ public class ChatFragment extends BaseFragment<ChatContract.Presenter> implement
     public void onDestroy() {
         super.onDestroy();
         MediaPlayManager.getInstance().release();
+        dissMissPop(chatMenuPopWindow);
     }
 }

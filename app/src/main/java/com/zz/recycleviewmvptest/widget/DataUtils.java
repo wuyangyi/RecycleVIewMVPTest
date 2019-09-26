@@ -17,6 +17,9 @@ import java.util.regex.Pattern;
  * 数据工具类
  */
 public class DataUtils {
+    public static final String MESSAGE_CONTEXT = "message_context";
+    public static final String MESSAGE_IMAGE = "message_image";
+    public static final String MESSAGE_SOUND = "message_sound";
 
     public static final String BQ_START = "emoji_";
     /**
@@ -107,6 +110,21 @@ public class DataUtils {
         data.add(menuBean1);
         MenuAdapter.MenuBean menuBean2 = new MenuAdapter.MenuBean("我的消息", R.mipmap.ico_menu_message);
         data.add(menuBean2);
+        return data;
+    }
+
+    public static List<MenuAdapter.MenuBean> getChatMenuData(String type) {
+        List<MenuAdapter.MenuBean> data = new ArrayList<>();
+        MenuAdapter.MenuBean menuBean2 = new MenuAdapter.MenuBean("转发", R.mipmap.ico_menu_message);
+        data.add(menuBean2);
+        MenuAdapter.MenuBean menuBean3= new MenuAdapter.MenuBean("撤回", R.mipmap.ico_menu_sys);
+        data.add(menuBean3);
+        MenuAdapter.MenuBean menuBean4 = new MenuAdapter.MenuBean("删除", R.mipmap.ico_menu_message);
+        data.add(menuBean4);
+        if (type.equals(MESSAGE_CONTEXT)) {
+            MenuAdapter.MenuBean menuBean1 = new MenuAdapter.MenuBean("复制", R.mipmap.ico_menu_sys);
+            data.add(menuBean1);
+        }
         return data;
     }
 }

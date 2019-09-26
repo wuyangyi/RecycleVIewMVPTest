@@ -39,4 +39,6 @@
     <dimen name="toolbar_left_text_size">16sp</dimen>
     <dimen name="spacing_large">20dp</dimen>
     <dimen name="line_height">3dp</dimen>
+    <!--聊天的菜单宽度-->
+    <dimen name="chat_menu_width">60dp</dimen>
 </resources>

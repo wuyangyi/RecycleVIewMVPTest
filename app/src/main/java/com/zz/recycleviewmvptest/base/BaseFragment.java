@@ -22,6 +22,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.zz.recycleviewmvptest.R;
@@ -455,6 +456,12 @@ public abstract class BaseFragment<P extends IBasePresenter> extends Fragment im
         startActivity(new Intent(mActivity, HomeActivity.class));
         if (isFinish) {
             mActivity.finish();
+        }
+    }
+
+    protected void dissMissPop(PopupWindow popupWindow) {
+        if (popupWindow != null && popupWindow.isShowing()) {
+            popupWindow.dismiss();
         }
     }
 
