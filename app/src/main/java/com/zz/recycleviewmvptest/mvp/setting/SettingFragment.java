@@ -44,7 +44,7 @@ public class SettingFragment extends BaseFragment<SettingContract.Presenter> imp
         llAbout = rootView.findViewById(R.id.llAbout);
         llCheckUp = rootView.findViewById(R.id.llCheckUp);
         tvHint = rootView.findViewById(R.id.tv_hint);
-        tvHint.setText(appVersion);
+
         initListener();
     }
 
@@ -60,6 +60,7 @@ public class SettingFragment extends BaseFragment<SettingContract.Presenter> imp
         mPresenter = new SettingPresenter(this);
         appCode = AboutUsFragment.packageCode(getContext());
         appVersion = AboutUsFragment.packageName(getContext());
+        tvHint.setText(appVersion);
         mPresenter.checkAppVersion();
         if (!((SettingPresenter) mPresenter).isLogin()) {
             tvOutLogin.setVisibility(View.GONE);
@@ -91,7 +92,7 @@ public class SettingFragment extends BaseFragment<SettingContract.Presenter> imp
 
     @Override
     public void checkAppVersionSuccess(AppVersionBean data) {
-        if (data.getApkInfo().getVersionCode() > appCode) {
+        if (data.getVersionCode() > appCode) {
             tvHint.setTextColor(getContext().getResources().getColor(R.color.colorAccent));
             tvHint.setText("检测到新版本");
         }

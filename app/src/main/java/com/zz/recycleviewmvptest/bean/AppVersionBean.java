@@ -1,7 +1,5 @@
 package com.zz.recycleviewmvptest.bean;
 
-import java.util.List;
-
 /**
  * author: wuyangyi
  * date: 2019-11-20
@@ -9,151 +7,48 @@ import java.util.List;
 public class AppVersionBean {
 
     /**
-     * outputType : {"type":"APK"}
-     * apkInfo : {"type":"MAIN","splits":[],"versionCode":2,"versionName":"1.1","enabled":true,"outputFile":"app-release.apk","fullName":"release","baseName":"release"}
-     * path : app-release.apk
-     * properties : {}
+     * versionCode : 3
+     * versionName : 1.2
+     * updateMessage : 1.解决部分bug。
+     2.优化性能，提升用户体验
+     3.增加版本更新。
+     * downloadUrl :
      */
 
-    private OutputTypeBean outputType;
-    private ApkInfoBean apkInfo;
-    private String path;
-    private PropertiesBean properties;
+    private int versionCode;
+    private String versionName;
+    private String updateMessage;
+    private String downloadUrl;
 
-    public OutputTypeBean getOutputType() {
-        return outputType;
+    public int getVersionCode() {
+        return versionCode;
     }
 
-    public void setOutputType(OutputTypeBean outputType) {
-        this.outputType = outputType;
+    public void setVersionCode(int versionCode) {
+        this.versionCode = versionCode;
     }
 
-    public ApkInfoBean getApkInfo() {
-        return apkInfo;
+    public String getVersionName() {
+        return versionName;
     }
 
-    public void setApkInfo(ApkInfoBean apkInfo) {
-        this.apkInfo = apkInfo;
+    public void setVersionName(String versionName) {
+        this.versionName = versionName;
     }
 
-    public String getPath() {
-        return path;
+    public String getUpdateMessage() {
+        return updateMessage;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setUpdateMessage(String updateMessage) {
+        this.updateMessage = updateMessage;
     }
 
-    public PropertiesBean getProperties() {
-        return properties;
+    public String getDownloadUrl() {
+        return downloadUrl;
     }
 
-    public void setProperties(PropertiesBean properties) {
-        this.properties = properties;
-    }
-
-    public static class OutputTypeBean {
-        /**
-         * type : APK
-         */
-
-        private String type;
-
-        public String getType() {
-            return type;
-        }
-
-        public void setType(String type) {
-            this.type = type;
-        }
-    }
-
-    public static class ApkInfoBean {
-        /**
-         * type : MAIN
-         * splits : []
-         * versionCode : 2
-         * versionName : 1.1
-         * enabled : true
-         * outputFile : app-release.apk
-         * fullName : release
-         * baseName : release
-         */
-
-        private String type;
-        private int versionCode;
-        private String versionName;
-        private boolean enabled;
-        private String outputFile;
-        private String fullName;
-        private String baseName;
-        private List<?> splits;
-
-        public String getType() {
-            return type;
-        }
-
-        public void setType(String type) {
-            this.type = type;
-        }
-
-        public int getVersionCode() {
-            return versionCode;
-        }
-
-        public void setVersionCode(int versionCode) {
-            this.versionCode = versionCode;
-        }
-
-        public String getVersionName() {
-            return versionName;
-        }
-
-        public void setVersionName(String versionName) {
-            this.versionName = versionName;
-        }
-
-        public boolean isEnabled() {
-            return enabled;
-        }
-
-        public void setEnabled(boolean enabled) {
-            this.enabled = enabled;
-        }
-
-        public String getOutputFile() {
-            return outputFile;
-        }
-
-        public void setOutputFile(String outputFile) {
-            this.outputFile = outputFile;
-        }
-
-        public String getFullName() {
-            return fullName;
-        }
-
-        public void setFullName(String fullName) {
-            this.fullName = fullName;
-        }
-
-        public String getBaseName() {
-            return baseName;
-        }
-
-        public void setBaseName(String baseName) {
-            this.baseName = baseName;
-        }
-
-        public List<?> getSplits() {
-            return splits;
-        }
-
-        public void setSplits(List<?> splits) {
-            this.splits = splits;
-        }
-    }
-
-    public static class PropertiesBean {
+    public void setDownloadUrl(String downloadUrl) {
+        this.downloadUrl = downloadUrl;
     }
 }

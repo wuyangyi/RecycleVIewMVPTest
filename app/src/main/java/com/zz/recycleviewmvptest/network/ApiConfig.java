@@ -29,10 +29,10 @@ public class ApiConfig {
     /**
      * app版本下载
      */
-    public static final String APP_DOWNLOAD = "wuyangyi/RecycleVIewMVPTest/master/app-release.apk";
+    public static final String APP_DOWNLOAD = "wuyangyi/RecycleVIewMVPTest/master/app/release/app-release.apk";
 
     /**
      * app版本信息
      */
-    public static final String APP_INFO = "wuyangyi/RecycleVIewMVPTest/master/output.json";
+    public static final String APP_INFO = "wuyangyi/RecycleVIewMVPTest/master/about_key/app_info.js";
 }
