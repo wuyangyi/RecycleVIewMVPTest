@@ -42,7 +42,7 @@ public class AboutUsFragment extends BaseFragment {
     }
 
     //获得当前版本号
-    private int packageCode(Context context) {
+    public static int packageCode(Context context) {
         // 获取packagemanager的实例
         PackageManager manager = context.getPackageManager();
         int code = 0;
@@ -55,7 +55,7 @@ public class AboutUsFragment extends BaseFragment {
         return code;
     }
     //获得当前版本名称
-    private String packageName(Context context) {
+    public static String packageName(Context context) {
         PackageManager manager = context.getPackageManager();
         String name = null;
         try {

@@ -62,6 +62,48 @@
             android:layout_height="wrap_content"
             android:src="@mipmap/ic_go"/>
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llCheckUp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@drawable/shape_login_bg_bottom_driver"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ico_check_up"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="9.5dp"
+            android:textColor="@color/title_color"
+            android:textSize="14sp"
+            android:text="版本更新"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="0dp"/>
+
+        <TextView
+            android:id="@+id/tv_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="9.5dp"
+            android:textColor="@color/normal_for_assist_text"
+            android:layout_marginRight="15dp"
+            android:textSize="14sp"
+            android:text=""/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_go"/>
+    </LinearLayout>
+
     <View
         android:layout_width="0dp"
         android:layout_height="0dp"

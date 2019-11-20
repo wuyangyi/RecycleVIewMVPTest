@@ -1,5 +1,6 @@
 package com.zz.recycleviewmvptest.network;
 
+import com.zz.recycleviewmvptest.bean.AppVersionBean;
 import com.zz.recycleviewmvptest.bean.Ask;
 import com.zz.recycleviewmvptest.bean.FlListBean;
 import com.zz.recycleviewmvptest.bean.PageListListBean;
@@ -9,8 +10,10 @@ import com.zz.recycleviewmvptest.bean.Take;
 
 import org.json.JSONObject;
 
+import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -32,4 +35,8 @@ public interface RequestClient {
 
     @GET(ApiConfig.APP_PATH_RECOMMEND)
     Call<ResponseBody> getRecommend();
+
+    //获得app版本信息
+    @GET(ApiConfig.APP_INFO)
+    Observable<Response<AppVersionBean>> getUpAppInfo();
 }
