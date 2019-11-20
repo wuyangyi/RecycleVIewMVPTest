@@ -34,5 +34,5 @@ public class ApiConfig {
     /**
      * app版本信息
      */
-    public static final String APP_INFO = "wuyangyi/RecycleVIewMVPTest/master/about_key/app_info.js";
+    public static final String APP_INFO = "wuyangyi/RecycleVIewMVPTest/master/about_key/app_info.json";
 }
