@@ -21,7 +21,7 @@ public class DownInfo {
     //下载唯一的HttpDownloadService
     private HttpDownloadService service;
     //超时设置
-    private int DEFAULT_TIMEOUT = 6;
+    private int DEFAULT_TIMEOUT = 20;
     //下载状态
     private DownState state;
 

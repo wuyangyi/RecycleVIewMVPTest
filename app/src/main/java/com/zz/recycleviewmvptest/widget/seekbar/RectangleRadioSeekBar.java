@@ -90,6 +90,7 @@ public class RectangleRadioSeekBar extends View {
 
     public void setProgressNow(int mProgressNow) {
         this.mProgressNow = mProgressNow;
+        invalidate(); //设置进度后重绘
     }
 
     //获取自定义属性的值

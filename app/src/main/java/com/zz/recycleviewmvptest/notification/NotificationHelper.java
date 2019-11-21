@@ -69,12 +69,29 @@ public class NotificationHelper {
         getManager().notify(NOTIFICATION_ID, builder.build());
     }
 
+
+    /**
+     * 暂停下载
+     */
+    public void stopProgress(int progress) {
+
+        String text = "已暂停";
+
+        PendingIntent pendingintent = PendingIntent.getActivity(mContext, 0, new Intent(), PendingIntent.FLAG_UPDATE_CURRENT);
+
+        NotificationCompat.Builder builder = getNofity(text)
+                .setProgress(100, progress, false)
+                .setContentIntent(pendingintent);
+
+        getManager().notify(NOTIFICATION_ID, builder.build());
+    }
+
     private NotificationCompat.Builder getNofity(String text) {
         return new NotificationCompat.Builder(mContext.getApplicationContext(), CHANNEL_ID)
                 .setTicker("发现新版本，点击进行升级")
                 .setContentTitle("版本更新")
                 .setContentText(text)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.mipmap.ic_logo)
                 .setAutoCancel(true)
                 .setOnlyAlertOnce(true)
                 .setWhen(System.currentTimeMillis())

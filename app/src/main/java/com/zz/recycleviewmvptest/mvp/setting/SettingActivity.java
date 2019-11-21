@@ -41,9 +41,8 @@ public class SettingActivity extends BaseActivity<SettingPresenter, SettingFragm
     BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction() == DownloadService.DOWNLOAD_UP) {
+            if (intent.getAction().equals(DownloadService.DOWNLOAD_UP)) {
                 int progress = intent.getIntExtra("progress", 0);
-//                mSbDownload.setProgressNow(progress);
                 mContanierFragment.upProgress(progress);
             }
         }

@@ -3,6 +3,7 @@ package com.zz.recycleviewmvptest.widget.dialog;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import com.zz.recycleviewmvptest.R;
 import com.zz.recycleviewmvptest.bean.AppVersionBean;
 import com.zz.recycleviewmvptest.network.ApiConfig;
+import com.zz.recycleviewmvptest.network.download.DownState;
 import com.zz.recycleviewmvptest.notification.NotificationHelper;
 import com.zz.recycleviewmvptest.service.DownloadService;
 import com.zz.recycleviewmvptest.widget.seekbar.RectangleRadioSeekBar;
@@ -34,7 +36,10 @@ public class AppUpDateDialog {
 
     private Activity mActivity;
 
-    NotificationHelper notificationHelper;
+    private NotificationHelper notificationHelper;
+
+    private DownState state;
+    private int mProgress;
 
     public static AppUpDateDialog appUpDateDialog; //单利
 
@@ -43,9 +48,9 @@ public class AppUpDateDialog {
      * @param activity
      * @param bean
      */
-    public static void showAppUpDialog(final Activity activity, AppVersionBean bean) {
+    public static void showAppUpDialog(final Activity activity, AppVersionBean bean, int progress, DownState state) {
         if (activity != null && bean != null) {
-            appUpDateDialog = new AppUpDateDialog(activity, bean);
+            appUpDateDialog = new AppUpDateDialog(activity, bean, progress, state);
         }
     }
 
@@ -57,19 +62,23 @@ public class AppUpDateDialog {
         if (appUpDateDialog == null) {
             return;
         }
-        appUpDateDialog.mSbDownload.setProgressNow(progress);
-        appUpDateDialog.mTvValue.setText(progress + "%");
-        if (progress == 100) {
-            appUpDateDialog.hideDialog();
+        if (progress == -1) {
+            appUpDateDialog.btUp.setText("继续");
+        } else {
+            appUpDateDialog.mProgress = progress;
+            appUpDateDialog.mSbDownload.setProgressNow(progress);
+            appUpDateDialog.mTvValue.setText(progress + "%");
         }
+//        if (progress == 100) {
+//            appUpDateDialog.hideDialog();
+//        }
     }
 
-    public AppUpDateDialog(Activity activity, AppVersionBean data) {
+    public AppUpDateDialog(Activity activity, AppVersionBean data, int progress, DownState state) {
         appVersionBean = data;
         mActivity = activity;
-
-
-
+        this.state = state;
+        mProgress = progress;
         initDialog();
     }
 
@@ -77,8 +86,8 @@ public class AppUpDateDialog {
         if (mActivity == null){
             return;
         }
+        Log.d("dialogprogress:", "" + mProgress  +  "    "  + state);
         notificationHelper = new NotificationHelper(mActivity);
-        notificationHelper.showNotification(appVersionBean.getUpdateMessage(), appVersionBean.getDownloadUrl());
         layoutView = LayoutInflater.from(mActivity).inflate(R.layout.dialog_up_app, null);
         tvTitle = layoutView.findViewById(R.id.tv_title);
         tvDesc = layoutView.findViewById(R.id.tv_desc);
@@ -88,20 +97,55 @@ public class AppUpDateDialog {
         mTvValue = layoutView.findViewById(R.id.tv_value);
         tvTitle.setText(appVersionBean.getVersionName() + "更新啦");
         tvDesc.setText(appVersionBean.getUpdateMessage());
+
+        initFinishButtonStatus(mProgress);
         btUp.setOnClickListener(v -> {
             mLlSeekBar.setVisibility(View.VISIBLE);
             Intent intent = new Intent(mActivity, DownloadService.class);
             intent.putExtra(ApiConfig.DOWNLOAD_URL, appVersionBean.getDownloadUrl());
+            if (state == null || state == DownState.FINISH){ //点击升级
+                intent.setAction(DownloadService.DOWNLOAD_START);
+                state = DownState.START;
+                btUp.setText("暂停");
+                notificationHelper.updateProgress(mProgress == -1 ? 0 : mProgress);
+            } else if(state == DownState.START) { //点击暂停
+                intent.setAction(DownloadService.DOWNLOAD_STOP);
+                state = DownState.PAUSE;
+                btUp.setText("继续");
+                notificationHelper.stopProgress(mProgress == -1 ? 0 : mProgress);
+            } else if (state == DownState.PAUSE) { //点击继续
+                intent.setAction(DownloadService.DOWNLOAD_GO_ON_START);
+                state = DownState.START;
+                btUp.setText("暂停");
+                notificationHelper.updateProgress(mProgress == -1 ? 0 : mProgress);
+            }
             mActivity.startService(intent);
         });
         dialog = new AlertDialog.Builder(mActivity, R.style.loadingDialogStyle)
                 .setCancelable(true)
                 .create();
-        dialog.setCanceledOnTouchOutside(true);
+        dialog.setCanceledOnTouchOutside(false);
         dialog.setOnDismissListener(dialog -> setWindowAlpha(1.0f));
         showDialog();
         dialog.setContentView(layoutView);
+        if (mProgress != -1) {
+            mLlSeekBar.setVisibility(View.VISIBLE);
+            Log.d("进度", ""+mProgress);
+            mTvValue.setText(mProgress + "%");
+            mSbDownload.setProgressNow(mProgress);
+        }
 
+    }
+
+    private void initFinishButtonStatus(int progress) {
+        if (state == null || state == DownState.FINISH){
+            btUp.setText("升级");
+        } else if(state == DownState.START) {
+            btUp.setText("暂停");
+        } else if (state == DownState.PAUSE) {
+            notificationHelper.stopProgress(progress == -1 ? 0 : progress);
+            btUp.setText("继续");
+        }
     }
 
 

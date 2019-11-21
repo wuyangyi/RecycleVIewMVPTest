@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -15,6 +16,8 @@ import com.zz.recycleviewmvptest.mvp.about_us.AboutUsActivity;
 import com.zz.recycleviewmvptest.mvp.about_us.AboutUsFragment;
 import com.zz.recycleviewmvptest.mvp.login.LoginActivity;
 import com.zz.recycleviewmvptest.mvp.password.UpPasswordActivity;
+import com.zz.recycleviewmvptest.network.download.DownState;
+import com.zz.recycleviewmvptest.notification.NotificationHelper;
 import com.zz.recycleviewmvptest.service.DownloadService;
 import com.zz.recycleviewmvptest.widget.dialog.AppUpDateDialog;
 import com.zz.recycleviewmvptest.widget.toast.ToastUtils;
@@ -35,6 +38,9 @@ public class SettingFragment extends BaseFragment<SettingContract.Presenter> imp
     private boolean byDownCheck = false;
 
     AppVersionBean appVersionBean; //获取的新版本信息
+    private int mProgress = -1; //当前下载进度
+    private DownState downState;
+    private NotificationHelper notificationHelper;
 
     @Override
     protected int getBodyLayoutId() {
@@ -107,7 +113,7 @@ public class SettingFragment extends BaseFragment<SettingContract.Presenter> imp
                     mWaiteDialog.showStateIng("检查中");
                     mPresenter.checkAppVersion();
                 } else {
-                    AppUpDateDialog.showAppUpDialog(getActivity(), appVersionBean);
+                    AppUpDateDialog.showAppUpDialog(getActivity(), appVersionBean, mProgress, downState);
                 }
                 break;
         }
@@ -126,7 +132,9 @@ public class SettingFragment extends BaseFragment<SettingContract.Presenter> imp
         mWaiteDialog.showStateEnd();
         if (appVersionBean.getVersionCode() > appCode) {
             tvHint.setVisibility(View.VISIBLE);
-            AppUpDateDialog.showAppUpDialog(getActivity(), appVersionBean);
+            notificationHelper = new NotificationHelper(mActivity);
+            notificationHelper.showNotification(appVersionBean.getUpdateMessage(), appVersionBean.getDownloadUrl());
+            AppUpDateDialog.showAppUpDialog(getActivity(), appVersionBean, mProgress, downState);
         } else {
             tvHint.setVisibility(View.GONE);
             if (byDownCheck){
@@ -148,6 +156,13 @@ public class SettingFragment extends BaseFragment<SettingContract.Presenter> imp
 
     //更新进度条
     public void upProgress(int progress) {
+        if (progress != -1) {
+            mProgress = progress;
+            downState = DownState.START;
+        } else {
+            downState = DownState.PAUSE;
+        }
+        Log.d("SetFragmentprogress:", "" + mProgress  +  "    "  + downState);
         AppUpDateDialog.upProgress(progress);
     }
 }
