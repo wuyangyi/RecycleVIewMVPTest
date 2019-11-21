@@ -44,26 +44,19 @@ public class SettingPresenter extends BasePresenter<SettingContract.View> implem
     //检查更新
     @Override
     public void checkAppVersion() {
-        Observable<Response<AppVersionBean>> observable = mRequestRepository.getAppVersion();
-        Observer<Response<AppVersionBean>> observer = new RequestSubscriber<Response<AppVersionBean>>() {
+        Observable<AppVersionBean> observable = mRequestRepository.getAppVersion();
+        Observer<AppVersionBean> observer = new RequestSubscriber<AppVersionBean>() {
             @Override
-            protected void onSuccess(Response<AppVersionBean> appVersionBean) {
-                if(appVersionBean.isSuccessful()) {
-                    AppVersionBean data = appVersionBean.body();
-                  if (data != null) {
-                      mRootView.checkAppVersionSuccess(data);
-                  } else {
-                      Log.d("data为空：", appVersionBean.toString());
-                  }
-                } else {
-                    Log.d("失败：", appVersionBean.toString());
+            protected void onSuccess(AppVersionBean appVersionBean) {
+                if (appVersionBean == null) {
+                    return;
                 }
-
+                mRootView.checkAppVersionSuccess(appVersionBean);
             }
 
             @Override
             protected void onFailure(String msg) {
-                Log.d("请求失败", msg);
+                mRootView.checkAppVersionFail(msg);
             }
         };
         observable.subscribe(observer);

@@ -57,7 +57,7 @@ public class RequestRepository {
      * app版本信息
      * @return
      */
-    public Observable<Response<AppVersionBean>> getAppVersion() {
+    public Observable<AppVersionBean> getAppVersion() {
         return mRequestClientHb.getUpAppInfo()
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())

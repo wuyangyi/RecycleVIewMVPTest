@@ -14,6 +14,8 @@ public class NetWorkManager {
     private static Retrofit mTlRetrofit;
     private static Retrofit mGHRetrofit; //github
     private static volatile RequestClient request = null;
+    private static volatile RequestClient requestTl = null;
+    private static volatile RequestClient requestGb = null;
 
     public static NetWorkManager getInstance() {
         if (mInstance == null) {
@@ -35,8 +37,6 @@ public class NetWorkManager {
                 .build();
 
         OkHttpClient clients = new OkHttpClient.Builder()
-                .connectTimeout(15 * 1000, TimeUnit.SECONDS)
-                .readTimeout(60 * 1000, TimeUnit.MICROSECONDS)
                 .build();
 
         // 初始化Retrofit
@@ -72,20 +72,20 @@ public class NetWorkManager {
     }
 
     public static RequestClient getRequestTL() {
-        if (request == null) {
+        if (requestTl == null) {
             synchronized (RequestClient.class) {
-                request = mTlRetrofit.create(RequestClient.class);
+                requestTl = mTlRetrofit.create(RequestClient.class);
             }
         }
-        return request;
+        return requestTl;
     }
 
     public static RequestClient getRequestHB() {
-        if (request == null) {
+        if (requestGb == null) {
             synchronized (RequestClient.class) {
-                request = mGHRetrofit.create(RequestClient.class);
+                requestGb = mGHRetrofit.create(RequestClient.class);
             }
         }
-        return request;
+        return requestGb;
     }
 }

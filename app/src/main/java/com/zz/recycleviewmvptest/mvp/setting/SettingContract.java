@@ -13,6 +13,8 @@ public interface SettingContract {
         void outLoginSuccess();
 
         void checkAppVersionSuccess(AppVersionBean data);
+
+        void checkAppVersionFail(String msg);
     }
 
     interface Presenter extends IBasePresenter {

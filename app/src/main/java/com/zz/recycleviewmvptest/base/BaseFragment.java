@@ -30,6 +30,7 @@ import com.zz.recycleviewmvptest.mvp.home.HomeActivity;
 import com.zz.recycleviewmvptest.widget.AntiShakeUtils;
 import com.zz.recycleviewmvptest.widget.DeviceUtils;
 import com.zz.recycleviewmvptest.widget.StatusBarUtils;
+import com.zz.recycleviewmvptest.widget.dialog.LoadingDialog;
 
 import org.simple.eventbus.EventBus;
 
@@ -49,6 +50,11 @@ public abstract class BaseFragment<P extends IBasePresenter> extends Fragment im
     protected TextView mTvCenterTitle; //中间标题
     protected ImageButton mIbRightImage; //右边的图片按钮
     protected LinearLayout mLlTitle; //标题栏布局
+
+    /**
+     * 加载弹框
+     */
+    protected LoadingDialog mWaiteDialog;
     /**
      * 当侵入状态栏时， 状态栏的占位控件
      */
@@ -167,6 +173,7 @@ public abstract class BaseFragment<P extends IBasePresenter> extends Fragment im
         } else {
             linearLayout.addView(bodyContainer);
         }
+        mWaiteDialog = new LoadingDialog(getActivity());
         return linearLayout;
     }
 

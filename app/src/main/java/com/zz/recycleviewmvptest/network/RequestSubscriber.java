@@ -46,11 +46,11 @@ public abstract class RequestSubscriber<T> implements Observer<T> {
     public void onError(Throwable e) {
         String msg;
         if (e instanceof SocketTimeoutException) {
-            msg = "请求超时。请稍后重试！";
+            msg = "请求超时，请稍后重试！";
         } else if (e instanceof ConnectException) {
-            msg = "请求超时。请稍后重试！";
+            msg = "请求超时，请稍后重试！";
         } else {
-            msg = "请求未能成功，请稍后重试！";
+            msg = "请求失败，请稍后重试！";
         }
         if (!TextUtils.isEmpty(msg)) {
             onFailure(msg);

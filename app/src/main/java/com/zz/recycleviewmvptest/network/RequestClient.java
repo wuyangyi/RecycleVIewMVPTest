@@ -16,8 +16,12 @@ import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Streaming;
+import retrofit2.http.Url;
 
 /**
  * 请求网络接口
@@ -38,5 +42,5 @@ public interface RequestClient {
 
     //获得app版本信息
     @GET(ApiConfig.APP_INFO)
-    Observable<Response<AppVersionBean>> getUpAppInfo();
+    Observable<AppVersionBean> getUpAppInfo();
 }
