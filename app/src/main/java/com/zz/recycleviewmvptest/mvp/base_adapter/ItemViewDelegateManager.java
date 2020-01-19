@@ -36,40 +36,32 @@ public class ItemViewDelegateManager<T>
         return this;
     }
 
-    public ItemViewDelegateManager<T> removeDelegate(ItemViewDelegate<T> delegate)
-    {
-        if (delegate == null)
-        {
+    public ItemViewDelegateManager<T> removeDelegate(ItemViewDelegate<T> delegate) {
+        if (delegate == null) {
             throw new NullPointerException("ItemViewDelegate is null");
         }
         int indexToRemove = delegates.indexOfValue(delegate);
 
-        if (indexToRemove >= 0)
-        {
+        if (indexToRemove >= 0) {
             delegates.removeAt(indexToRemove);
         }
         return this;
     }
 
-    public ItemViewDelegateManager<T> removeDelegate(int itemType)
-    {
+    public ItemViewDelegateManager<T> removeDelegate(int itemType) {
         int indexToRemove = delegates.indexOfKey(itemType);
 
-        if (indexToRemove >= 0)
-        {
+        if (indexToRemove >= 0) {
             delegates.removeAt(indexToRemove);
         }
         return this;
     }
 
-    public int getItemViewType(T item, int position)
-    {
+    public int getItemViewType(T item, int position) {
         int delegatesCount = delegates.size();
-        for (int i = delegatesCount - 1; i >= 0; i--)
-        {
+        for (int i = delegatesCount - 1; i >= 0; i--) {
             ItemViewDelegate<T> delegate = delegates.valueAt(i);
-            if (delegate.isForViewType( item, position))
-            {
+            if (delegate.isForViewType( item, position)) {
                 return delegates.keyAt(i);
             }
         }
@@ -77,15 +69,12 @@ public class ItemViewDelegateManager<T>
                 "No ItemViewDelegate added that matches position=" + position + " in data source");
     }
 
-    public void convert(ViewHolder holder, T item, T lastItem,int position,int itemCounts)
-    {
+    public void convert(ViewHolder holder, T item, T lastItem,int position,int itemCounts) {
         int delegatesCount = delegates.size();
-        for (int i = 0; i < delegatesCount; i++)
-        {
+        for (int i = 0; i < delegatesCount; i++) {
             ItemViewDelegate<T> delegate = delegates.valueAt(i);
 
-            if (delegate.isForViewType( item, position))
-            {
+            if (delegate.isForViewType( item, position)) {
                 delegate.convert(holder, item,lastItem, position,itemCounts);
                 return;
             }
@@ -100,13 +89,11 @@ public class ItemViewDelegateManager<T>
         return delegates.get(viewType);
     }
 
-    public int getItemViewLayoutId(int viewType)
-    {
+    public int getItemViewLayoutId(int viewType) {
         return getItemViewDelegate(viewType).getItemViewLayoutId();
     }
 
-    public int getItemViewType(ItemViewDelegate itemViewDelegate)
-    {
+    public int getItemViewType(ItemViewDelegate itemViewDelegate) {
         return delegates.indexOfValue(itemViewDelegate);
     }
 }

@@ -18,5 +18,5 @@ public interface BaseListView<P, B> extends BaseView<P> {
     /**
      * 手动刷新
      */
-    void startRefrsh();
+    void startRefresh();
 }

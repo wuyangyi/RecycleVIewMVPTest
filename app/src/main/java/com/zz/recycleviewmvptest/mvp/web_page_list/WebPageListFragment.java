@@ -54,7 +54,7 @@ public class WebPageListFragment extends BaseListFragment<WebPageListContract.Pr
         if (mPresenter == null) {
             mPresenter = new WebPageListPresenter(this);
         }
-        startRefrsh();
+        startRefresh();
         List<String> list = new ArrayList<>();
         list.add("http://img0.imgtn.bdimg.com/it/u=1352823040,1166166164&fm=27&gp=0.jpg");
         list.add("http://img3.imgtn.bdimg.com/it/u=2293177440,3125900197&fm=27&gp=0.jpg");

@@ -56,13 +56,25 @@ public class ChatPresenter extends BasePresenter<ChatContract.View> implements C
                 .enqueue(new Callback<Take>() {
                     @Override
                     public void onResponse(Call<Take> call, Response<Take> response) {
-//                        ChatBean chatBean = new ChatBean(response.body().getResults().get(0).getValues().getText());
-//                        chatBean.setUser(mRootView.getUser());
-//                        chatBean.setIsMe(false);
-//                        chatBean.setUserId(mRootView.getUser().get_id());
-//                        mChatBeanDaoImpl.insertOrReplace(chatBean);
-//                        mRootView.sendMessageSuccess(chatBean);
-                        Log.d("输出", response.toString());
+                        Take take = response.body();
+                        if (take.getIntent().getCode() != 4000) {
+                            for (Take.ResultsBean resultsBean :response.body().getResults()) {
+                                ChatBean chatBean = new ChatBean(resultsBean.getValues().getText());
+                                chatBean.setUser(mRootView.getUser());
+                                chatBean.setIsMe(false);
+                                chatBean.setUserId(mRootView.getUser().get_id());
+                                mChatBeanDaoImpl.insertOrReplace(chatBean);
+                                mRootView.sendMessageSuccess(chatBean);
+                            }
+                        }else {
+                            ChatBean chatBean = new ChatBean("你说什么？我没听清除~");
+                            chatBean.setUser(mRootView.getUser());
+                            chatBean.setIsMe(false);
+                            chatBean.setUserId(mRootView.getUser().get_id());
+                            mChatBeanDaoImpl.insertOrReplace(chatBean);
+                            mRootView.sendMessageSuccess(chatBean);
+                        }
+
                     }
 
                     @Override

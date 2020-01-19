@@ -14,11 +14,11 @@ import java.util.List;
  * date: 2019-09-18
  * Viewpage的adapter
  */
-public class ViewPagerAdapte extends FragmentStatePagerAdapter {
+public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     private List<Fragment> list;
     private String[] mLitles;
 
-    public ViewPagerAdapte(FragmentManager fragmentManager) {
+    public ViewPagerAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
     }
 

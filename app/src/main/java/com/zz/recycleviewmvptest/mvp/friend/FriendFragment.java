@@ -27,7 +27,7 @@ public class FriendFragment  extends BaseListFragment<FriendContract.Presenter, 
     protected void initData() {
         super.initData();
         mPresenter = new FriendPresenter(this);
-        startRefrsh();
+        startRefresh();
     }
 
     @Override

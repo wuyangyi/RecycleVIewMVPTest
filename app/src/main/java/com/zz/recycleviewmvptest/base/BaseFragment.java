@@ -56,7 +56,7 @@ public abstract class BaseFragment<P extends IBasePresenter> extends Fragment im
      */
     protected LoadingDialog mWaiteDialog;
     /**
-     * 当侵入状态栏时， 状态栏的占位控件
+     * 当沉浸式状态栏时， 状态栏的占位控件
      */
     protected View mStatusPlaceholderView;
 

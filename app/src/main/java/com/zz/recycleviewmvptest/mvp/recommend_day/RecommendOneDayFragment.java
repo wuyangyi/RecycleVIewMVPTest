@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide;
 import com.zz.recycleviewmvptest.R;
 import com.zz.recycleviewmvptest.base.BaseFragment;
 import com.zz.recycleviewmvptest.bean.RecommendBean;
-import com.zz.recycleviewmvptest.mvp.base_adapter.ViewPagerAdapte;
+import com.zz.recycleviewmvptest.mvp.base_adapter.ViewPagerAdapter;
 import com.zz.recycleviewmvptest.mvp.recommend_day.recomend_list.RecommendListFragment;
 import com.zz.recycleviewmvptest.widget.toast.ToastUtils;
 import com.zz.recycleviewmvptest.widget.viewpage_indicator.TabIndicator;
@@ -44,7 +44,7 @@ public class RecommendOneDayFragment extends BaseFragment<RecommendOneDayContrac
 
     private List<String> mTitle = new ArrayList<>();
     private List<Fragment> mFragmentList = new ArrayList<>();
-    private ViewPagerAdapte viewPagerAdapter = null;
+    private ViewPagerAdapter viewPagerAdapter = null;
 
     public static RecommendOneDayFragment newInstance(Bundle bundle) {
         RecommendOneDayFragment fragment = new RecommendOneDayFragment();
@@ -102,7 +102,7 @@ public class RecommendOneDayFragment extends BaseFragment<RecommendOneDayContrac
     private void initViewPager() {
         mTsvToolbar.setVisibility(View.VISIBLE); //加载完显示
         vpFragment.setVisibility(View.VISIBLE); //加载完显示
-        viewPagerAdapter = new ViewPagerAdapte(getChildFragmentManager());
+        viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
         viewPagerAdapter.bindData(mFragmentList);
         vpFragment.setAdapter(viewPagerAdapter);
         mTsvToolbar.initTabView(vpFragment, mTitle);

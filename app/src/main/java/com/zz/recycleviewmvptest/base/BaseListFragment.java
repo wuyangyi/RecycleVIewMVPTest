@@ -208,7 +208,7 @@ public abstract class BaseListFragment<P extends IBaseListPresenter, B extends B
      * 手动刷新
      */
     @Override
-    public void startRefrsh() {
+    public void startRefresh() {
         mSrlLayout.post(new Runnable() {
             @Override
             public void run() {
